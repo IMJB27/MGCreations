@@ -13,18 +13,18 @@ namespace MGCreations.Models
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class admin
     {
-        
-        public int Admin_Id { get; set; }
-        [DisplayName("Username")]
 
+        public int Admin_Id { get; set; }
+
+        [DisplayName("Username")]
         [Required(ErrorMessage = "This Field is Required")]
         public string Admin_Username { get; set; }
 
         [DisplayName("Password")]
-        [Required (ErrorMessage = "This Field is Required")]
+        [Required(ErrorMessage = "This Field is Required")]
         [DataType(DataType.Password)]
         public string Admin_Password { get; set; }
 

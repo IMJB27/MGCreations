@@ -29,7 +29,12 @@
           <Property Name="Customer_DOB" Type="date" Nullable="false" />
           <Property Name="Customer_Email" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Customer_ContactNo" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Customer_Address" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Customer_AddressLine1" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Customer_AddressLine2" Type="varchar" MaxLength="100" />
+          <Property Name="Customer_City" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Customer_County" Type="varchar" MaxLength="100" />
+          <Property Name="Customer_Country" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Customer_PostCode" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="order">
           <Key>
@@ -145,8 +150,13 @@
           <Property Name="Customer_DOB" Type="DateTime" Nullable="false" />
           <Property Name="Customer_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Customer_ContactNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Customer_Address" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="orders" Relationship="Self.Customer" FromRole="customer_details" ToRole="order" />
+          <Property Name="Customer_AddressLine1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_County" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_Country" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_PostCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="order">
           <Key>
@@ -261,6 +271,12 @@
           <EntitySetMapping Name="customer_details">
             <EntityTypeMapping TypeName="mgcreationsModel.customer_details">
               <MappingFragment StoreEntitySet="customer_details">
+                <ScalarProperty Name="Customer_PostCode" ColumnName="Customer_PostCode" />
+                <ScalarProperty Name="Customer_Country" ColumnName="Customer_Country" />
+                <ScalarProperty Name="Customer_County" ColumnName="Customer_County" />
+                <ScalarProperty Name="Customer_City" ColumnName="Customer_City" />
+                <ScalarProperty Name="Customer_AddressLine2" ColumnName="Customer_AddressLine2" />
+                <ScalarProperty Name="Customer_AddressLine1" ColumnName="Customer_AddressLine1" />
                 <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
                 <ScalarProperty Name="Customer_Username" ColumnName="Customer_Username" />
                 <ScalarProperty Name="Customer_Password" ColumnName="Customer_Password" />
@@ -269,7 +285,6 @@
                 <ScalarProperty Name="Customer_DOB" ColumnName="Customer_DOB" />
                 <ScalarProperty Name="Customer_Email" ColumnName="Customer_Email" />
                 <ScalarProperty Name="Customer_ContactNo" ColumnName="Customer_ContactNo" />
-                <ScalarProperty Name="Customer_Address" ColumnName="Customer_Address" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

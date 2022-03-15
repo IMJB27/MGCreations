@@ -283,10 +283,11 @@
     <Content Include="Views\Admin\Admin_Details.cshtml" />
     <Content Include="Views\Admin\Update_Admin_Details.cshtml" />
     <Content Include="Views\Admin\Delete_Admin.cshtml" />
+    <Content Include="Views\Customer\Customer_Registration.cshtml" />
+    <Content Include="Views\Customer\Customer_Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
