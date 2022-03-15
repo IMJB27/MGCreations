@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="mgcreationsModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="Admin_Id" />
+          </Key>
+          <Property Name="Admin_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Admin_Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Admin_Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Admin_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Admin_Surname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Admin_Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Admin_ContactNo" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="customer_details">
+          <Key>
+            <PropertyRef Name="Customer_ID" />
+          </Key>
+          <Property Name="Customer_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Customer_Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Customer_Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Customer_Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Customer_Surname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Customer_DOB" Type="date" Nullable="false" />
+          <Property Name="Customer_Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Customer_ContactNo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Customer_Address" Type="varchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Customer_ID" Type="int" Nullable="false" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="Product_Quantity" Type="int" Nullable="false" />
+          <Property Name="Order_TotalAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Order_Status" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="product_category">
+          <Key>
+            <PropertyRef Name="Category_ID" />
+          </Key>
+          <Property Name="Category_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category_Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product_details">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="Product_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_Name" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Category_ID" Type="int" Nullable="false" />
+          <Property Name="Product_Description" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Product_Quantity" Type="int" Nullable="false" />
+          <Property Name="Product_Colour" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Product_Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="isPersonalisable" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <Association Name="Customer">
+          <End Role="customer_details" Type="Self.customer_details" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer_details">
+              <PropertyRef Name="Customer_ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="Customer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product">
+          <End Role="product_details" Type="Self.product_details" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_details">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product_Category1">
+          <End Role="product_category" Type="Self.product_category" Multiplicity="1" />
+          <End Role="product_details" Type="Self.product_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_category">
+              <PropertyRef Name="Category_ID" />
+            </Principal>
+            <Dependent Role="product_details">
+              <PropertyRef Name="Category_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="mgcreationsModelStoreContainer">
+          <EntitySet Name="admin" EntityType="Self.admin" Schema="mgcreations" store:Type="Tables" />
+          <EntitySet Name="customer_details" EntityType="Self.customer_details" Schema="mgcreations" store:Type="Tables" />
+          <EntitySet Name="order" EntityType="Self.order" Schema="mgcreations" store:Type="Tables" />
+          <EntitySet Name="product_category" EntityType="Self.product_category" Schema="mgcreations" store:Type="Tables" />
+          <EntitySet Name="product_details" EntityType="Self.product_details" Schema="mgcreations" store:Type="Tables" />
+          <AssociationSet Name="Customer" Association="Self.Customer">
+            <End Role="customer_details" EntitySet="customer_details" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="Product" Association="Self.Product">
+            <End Role="product_details" EntitySet="product_details" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
+          <AssociationSet Name="Product_Category1" Association="Self.Product_Category1">
+            <End Role="product_category" EntitySet="product_category" />
+            <End Role="product_details" EntitySet="product_details" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="mgcreationsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="Admin_Id" />
+          </Key>
+          <Property Name="Admin_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Admin_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Admin_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Admin_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Admin_Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Admin_Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Admin_ContactNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="customer_details">
+          <Key>
+            <PropertyRef Name="Customer_ID" />
+          </Key>
+          <Property Name="Customer_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customer_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_DOB" Type="DateTime" Nullable="false" />
+          <Property Name="Customer_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_ContactNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_Address" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="orders" Relationship="Self.Customer" FromRole="customer_details" ToRole="order" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Customer_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Order_TotalAmount" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="customer_details" Relationship="Self.Customer" FromRole="order" ToRole="customer_details" />
+          <NavigationProperty Name="product_details" Relationship="Self.Product" FromRole="order" ToRole="product_details" />
+          <Property Name="Order_Status" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="product_category">
+          <Key>
+            <PropertyRef Name="Category_ID" />
+          </Key>
+          <Property Name="Category_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="product_details" Relationship="Self.Product_Category1" FromRole="product_category" ToRole="product_details" />
+        </EntityType>
+        <EntityType Name="product_details">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="Product_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_Name" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Category_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Product_Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Product_Colour" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Product_Price" Type="Decimal" Nullable="false" />
+          <Property Name="isPersonalisable" Type="SByte" Nullable="false" />
+          <NavigationProperty Name="orders" Relationship="Self.Product" FromRole="product_details" ToRole="order" />
+          <NavigationProperty Name="product_category" Relationship="Self.Product_Category1" FromRole="product_details" ToRole="product_category" />
+        </EntityType>
+        <Association Name="Customer">
+          <End Role="customer_details" Type="Self.customer_details" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer_details">
+              <PropertyRef Name="Customer_ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="Customer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product">
+          <End Role="product_details" Type="Self.product_details" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_details">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product_Category1">
+          <End Role="product_category" Type="Self.product_category" Multiplicity="1" />
+          <End Role="product_details" Type="Self.product_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_category">
+              <PropertyRef Name="Category_ID" />
+            </Principal>
+            <Dependent Role="product_details">
+              <PropertyRef Name="Category_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="mgcreationsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="admins" EntityType="Self.admin" />
+          <EntitySet Name="customer_details" EntityType="Self.customer_details" />
+          <EntitySet Name="orders" EntityType="Self.order" />
+          <EntitySet Name="product_category" EntityType="Self.product_category" />
+          <EntitySet Name="product_details" EntityType="Self.product_details" />
+          <AssociationSet Name="Customer" Association="Self.Customer">
+            <End Role="customer_details" EntitySet="customer_details" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="Product" Association="Self.Product">
+            <End Role="product_details" EntitySet="product_details" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="Product_Category1" Association="Self.Product_Category1">
+            <End Role="product_category" EntitySet="product_category" />
+            <End Role="product_details" EntitySet="product_details" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="mgcreationsModelStoreContainer" CdmEntityContainer="mgcreationsEntities">
+          <EntitySetMapping Name="admins">
+            <EntityTypeMapping TypeName="mgcreationsModel.admin">
+              <MappingFragment StoreEntitySet="admin">
+                <ScalarProperty Name="Admin_ContactNo" ColumnName="Admin_ContactNo" />
+                <ScalarProperty Name="Admin_Email" ColumnName="Admin_Email" />
+                <ScalarProperty Name="Admin_Surname" ColumnName="Admin_Surname" />
+                <ScalarProperty Name="Admin_Name" ColumnName="Admin_Name" />
+                <ScalarProperty Name="Admin_Id" ColumnName="Admin_Id" />
+                <ScalarProperty Name="Admin_Username" ColumnName="Admin_Username" />
+                <ScalarProperty Name="Admin_Password" ColumnName="Admin_Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer_details">
+            <EntityTypeMapping TypeName="mgcreationsModel.customer_details">
+              <MappingFragment StoreEntitySet="customer_details">
+                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+                <ScalarProperty Name="Customer_Username" ColumnName="Customer_Username" />
+                <ScalarProperty Name="Customer_Password" ColumnName="Customer_Password" />
+                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+                <ScalarProperty Name="Customer_Surname" ColumnName="Customer_Surname" />
+                <ScalarProperty Name="Customer_DOB" ColumnName="Customer_DOB" />
+                <ScalarProperty Name="Customer_Email" ColumnName="Customer_Email" />
+                <ScalarProperty Name="Customer_ContactNo" ColumnName="Customer_ContactNo" />
+                <ScalarProperty Name="Customer_Address" ColumnName="Customer_Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="mgcreationsModel.order">
+              <MappingFragment StoreEntitySet="order">
+                <ScalarProperty Name="Order_Status" ColumnName="Order_Status" />
+                <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Product_Quantity" ColumnName="Product_Quantity" />
+                <ScalarProperty Name="Order_TotalAmount" ColumnName="Order_TotalAmount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_category">
+            <EntityTypeMapping TypeName="mgcreationsModel.product_category">
+              <MappingFragment StoreEntitySet="product_category">
+                <ScalarProperty Name="Category_ID" ColumnName="Category_ID" />
+                <ScalarProperty Name="Category_Name" ColumnName="Category_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_details">
+            <EntityTypeMapping TypeName="mgcreationsModel.product_details">
+              <MappingFragment StoreEntitySet="product_details">
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+                <ScalarProperty Name="Category_ID" ColumnName="Category_ID" />
+                <ScalarProperty Name="Product_Description" ColumnName="Product_Description" />
+                <ScalarProperty Name="Product_Quantity" ColumnName="Product_Quantity" />
+                <ScalarProperty Name="Product_Colour" ColumnName="Product_Colour" />
+                <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
+                <ScalarProperty Name="isPersonalisable" ColumnName="isPersonalisable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

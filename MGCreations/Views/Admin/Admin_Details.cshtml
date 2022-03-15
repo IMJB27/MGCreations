@@ -1,0 +1,66 @@
+﻿@model MGCreations.Models.admin
+
+@{
+    ViewBag.Title = "Admin_Details";
+}
+
+<h2>Admin_Details</h2>
+
+<div>
+    <h4>admin</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Admin_ContactNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Admin_ContactNo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Update_Admin_Details", new { a_id = Model.Admin_Id }) |
+    @Html.ActionLink("Back to List", "Admin_List")
+</p>
