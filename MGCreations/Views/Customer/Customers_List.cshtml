@@ -1,0 +1,105 @@
+﻿@model IEnumerable<MGCreations.Models.customer_details>
+
+@{
+    ViewBag.Title = "Customers_List";
+}
+
+<h2>Customers_List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Customer_Registration")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_ContactNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_AddressLine1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_AddressLine2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_County)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer_PostCode)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_DOB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_ContactNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_AddressLine1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_AddressLine2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_County)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_Country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer_PostCode)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update_Customer_Details", new { c_id=item.Customer_ID }) |
+            @Html.ActionLink("Details", "Customer_Details", new { c_id=item.Customer_ID }) |
+            @Html.ActionLink("Delete", "Delete_Customer", new { c_id=item.Customer_ID })
+        </td>
+    </tr>
+}
+
+</table>

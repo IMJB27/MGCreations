@@ -285,6 +285,10 @@
     <Content Include="Views\Admin\Delete_Admin.cshtml" />
     <Content Include="Views\Customer\Customer_Registration.cshtml" />
     <Content Include="Views\Customer\Customer_Login.cshtml" />
+    <Content Include="Views\Customer\Customers_List.cshtml" />
+    <Content Include="Views\Customer\Customer_Details.cshtml" />
+    <Content Include="Views\Customer\Update_Customer_Details.cshtml" />
+    <Content Include="Views\Customer\Delete_Customer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

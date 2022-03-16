@@ -1,0 +1,128 @@
+﻿@model MGCreations.Models.customer_details
+
+@{
+    ViewBag.Title = "Delete_Customer";
+}
+
+<h2>Delete_Customer</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>customer_details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_DOB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_DOB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_ContactNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_ContactNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_AddressLine1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_AddressLine1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_AddressLine2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_AddressLine2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_County)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_County)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer_PostCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer_PostCode)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Customers_List")
+        </div>
+    }
+</div>
