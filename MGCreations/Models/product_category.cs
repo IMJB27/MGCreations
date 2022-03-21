@@ -11,7 +11,8 @@ namespace MGCreations.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class product_category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,6 +22,8 @@ namespace MGCreations.Models
         }
     
         public int Category_ID { get; set; }
+        [DisplayName("Product Category")]
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "This Field is Required")]
         public string Category_Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

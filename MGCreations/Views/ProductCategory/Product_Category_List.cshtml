@@ -1,0 +1,33 @@
+﻿@model IEnumerable<MGCreations.Models.product_category>
+
+@{
+    ViewBag.Title = "Product_Category_List";
+}
+
+<h2>Product_Category_List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Category_Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category_Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Update_Product_Category", new { pc_id=item.Category_ID }) |
+            @Html.ActionLink("Details", "Product_Category_Details", new { pc_id = item.Category_ID }) |
+            @Html.ActionLink("Delete", "Delete_Product_Category", new { pc_id = item.Category_ID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,26 @@
+﻿@model MGCreations.Models.product_category
+
+@{
+    ViewBag.Title = "Product_Category_Details";
+}
+
+<h2>Product_Category_Details</h2>
+
+<div>
+    <h4>product_category</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Update_Product_Category", new { pc_id = Model.Category_ID }) |
+    @Html.ActionLink("Back to List", "Product_Category_List")
+</p>

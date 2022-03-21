@@ -42,6 +42,7 @@ namespace MGCreations.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Customer_Registration(customer_details customer)
         {
             customer_details c = new customer_details();

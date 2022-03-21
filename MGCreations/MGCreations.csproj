@@ -181,6 +181,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -289,6 +290,11 @@
     <Content Include="Views\Customer\Customer_Details.cshtml" />
     <Content Include="Views\Customer\Update_Customer_Details.cshtml" />
     <Content Include="Views\Customer\Delete_Customer.cshtml" />
+    <Content Include="Views\ProductCategory\Add_Product_Category.cshtml" />
+    <Content Include="Views\ProductCategory\Product_Category_List.cshtml" />
+    <Content Include="Views\ProductCategory\Update_Product_Category.cshtml" />
+    <Content Include="Views\ProductCategory\Delete_Product_Category.cshtml" />
+    <Content Include="Views\ProductCategory\Product_Category_Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
