@@ -67,6 +67,14 @@
           <Property Name="Product_Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="isPersonalisable" Type="tinyint" Nullable="false" />
         </EntityType>
+        <EntityType Name="product_images">
+          <Key>
+            <PropertyRef Name="Product_Images_ID" />
+          </Key>
+          <Property Name="Product_Images_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="Product_Image_URL" Type="varchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
         <Association Name="Customer">
           <End Role="customer_details" Type="Self.customer_details" Multiplicity="1" />
           <End Role="order" Type="Self.order" Multiplicity="*" />
@@ -103,12 +111,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Product_ID">
+          <End Role="product_details" Type="Self.product_details" Multiplicity="1" />
+          <End Role="product_images" Type="Self.product_images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_details">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="product_images">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="mgcreationsModelStoreContainer">
           <EntitySet Name="admin" EntityType="Self.admin" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="customer_details" EntityType="Self.customer_details" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="order" EntityType="Self.order" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="product_category" EntityType="Self.product_category" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="product_details" EntityType="Self.product_details" Schema="mgcreations" store:Type="Tables" />
+          <EntitySet Name="product_images" EntityType="Self.product_images" Schema="mgcreations" store:Type="Tables" />
           <AssociationSet Name="Customer" Association="Self.Customer">
             <End Role="customer_details" EntitySet="customer_details" />
             <End Role="order" EntitySet="order" />
@@ -120,6 +141,10 @@
           <AssociationSet Name="Product_Category1" Association="Self.Product_Category1">
             <End Role="product_category" EntitySet="product_category" />
             <End Role="product_details" EntitySet="product_details" />
+          </AssociationSet>
+          <AssociationSet Name="Product_ID" Association="Self.Product_ID">
+            <End Role="product_details" EntitySet="product_details" />
+            <End Role="product_images" EntitySet="product_images" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -193,6 +218,7 @@
           <Property Name="isPersonalisable" Type="SByte" Nullable="false" />
           <NavigationProperty Name="orders" Relationship="Self.Product" FromRole="product_details" ToRole="order" />
           <NavigationProperty Name="product_category" Relationship="Self.Product_Category1" FromRole="product_details" ToRole="product_category" />
+          <NavigationProperty Name="product_images" Relationship="mgcreationsModel.Product_ID" FromRole="product_details" ToRole="product_images" />
         </EntityType>
         <Association Name="Customer">
           <End Role="customer_details" Type="Self.customer_details" Multiplicity="1" />
@@ -248,7 +274,33 @@
             <End Role="product_category" EntitySet="product_category" />
             <End Role="product_details" EntitySet="product_details" />
           </AssociationSet>
+          <EntitySet Name="product_images" EntityType="mgcreationsModel.product_images" />
+          <AssociationSet Name="Product_ID" Association="mgcreationsModel.Product_ID">
+            <End Role="product_details" EntitySet="product_details" />
+            <End Role="product_images" EntitySet="product_images" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="product_images">
+          <Key>
+            <PropertyRef Name="Product_Images_ID" />
+          </Key>
+          <Property Name="Product_Images_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_Image_URL" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="product_details" Relationship="mgcreationsModel.Product_ID" FromRole="product_images" ToRole="product_details" />
+        </EntityType>
+        <Association Name="Product_ID">
+          <End Type="mgcreationsModel.product_details" Role="product_details" Multiplicity="1" />
+          <End Type="mgcreationsModel.product_images" Role="product_images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_details">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="product_images">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -319,6 +371,15 @@
                 <ScalarProperty Name="Product_Colour" ColumnName="Product_Colour" />
                 <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
                 <ScalarProperty Name="isPersonalisable" ColumnName="isPersonalisable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_images">
+            <EntityTypeMapping TypeName="mgcreationsModel.product_images">
+              <MappingFragment StoreEntitySet="product_images">
+                <ScalarProperty Name="Product_Image_URL" ColumnName="Product_Image_URL" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Product_Images_ID" ColumnName="Product_Images_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

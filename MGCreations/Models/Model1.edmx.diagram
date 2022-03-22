@@ -6,13 +6,15 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c5ca12d22d2944898fdbb35dd284cfe4" Name="Diagram1">
         <EntityTypeShape EntityType="mgcreationsModel.admin" PointX="0.75" PointY="4.75" Width="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.customer_details" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.customer_details" Width="1.5" PointX="7.5" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="mgcreationsModel.order" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="mgcreationsModel.product_category" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.product_details" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.product_details" Width="1.5" PointX="3.125" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="mgcreationsModel.Customer" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.Product" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.Product_Category1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="mgcreationsModel.product_images" Width="1.5" PointX="3.125" PointY="5.125" />
+        <AssociationConnector Association="mgcreationsModel.Product_ID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

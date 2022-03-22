@@ -18,6 +18,7 @@ namespace MGCreations.Models
         public product_details()
         {
             this.orders = new HashSet<order>();
+            this.product_images = new HashSet<product_images>();
         }
     
         public int Product_ID { get; set; }
@@ -32,5 +33,7 @@ namespace MGCreations.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> orders { get; set; }
         public virtual product_category product_category { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<product_images> product_images { get; set; }
     }
 }
