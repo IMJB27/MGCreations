@@ -30,7 +30,7 @@ namespace MGCreations.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add_Product_Details(product_details product_Details)
+        public ActionResult Add_Product_Details(product_details product_Details, product_images product_Images)
         {
             return View();
         }

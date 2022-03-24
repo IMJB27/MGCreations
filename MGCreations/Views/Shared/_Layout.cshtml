@@ -8,22 +8,40 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:blue; border-color: blue">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" style="background-color:blue; border-color: blue">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("MGCreations", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse" style="background-color:blue; border-color: blue">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Login", "Customer_Login", "Customer")</li>
+
+                    @if ((Session["Customer_ID"] == null) && (Session["Admin_ID"] == null))
+                    {
+
+                        {
+                             <li>@Html.ActionLink("Login", "Customer_Login", "Customer")</li>
+                        }
+                     }
+
+                    @if (User.Identity.IsAuthenticated)
+                    { 
+                        <li>@Html.ActionLink("Hello " + User.Identity.Name, "","")</li>
+                    }
+
+                    @if ((Session["Customer_ID"] != null) && (Session["Admin_ID"] == null))
+                    {
+                    <li>@Html.ActionLink("Logout", "Customer_Logout", "Customer")</li>
+                    }
+
                 </ul>
             </div>
         </div>
@@ -32,8 +50,16 @@
         @RenderBody()
         <hr />
         <footer>
-            <a>@Html.ActionLink("Admin Login", "Admin_Login", "Admin")</a>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            @if ((Session["Admin_ID"] == null) && (Session["Customer_ID"] == null))
+            {
+                <a>@Html.ActionLink("Admin Login", "Admin_Login", "Admin")</a>
+            }
+
+            @if ((Session["Admin_ID"] != null) && (Session["Customer_ID"] == null))
+            {
+                <a>@Html.ActionLink("Admin Logout", "Admin_Logout", "Admin")</a>
+            }
+            <p>&copy; @DateTime.Now.Year -MGCreations</p>
 
         </footer>
     </div>

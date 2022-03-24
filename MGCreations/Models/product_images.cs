@@ -16,6 +16,7 @@ namespace MGCreations.Models
     {
         public int Product_Images_ID { get; set; }
         public int Product_ID { get; set; }
+
         public string Product_Image_URL { get; set; }
     
         public virtual product_details product_details { get; set; }

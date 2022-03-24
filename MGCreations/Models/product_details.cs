@@ -11,7 +11,9 @@ namespace MGCreations.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class product_details
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,12 +24,32 @@ namespace MGCreations.Models
         }
     
         public int Product_ID { get; set; }
+
+        [DisplayName("Product Name")]
+        [Required(ErrorMessage= "This Field is Required")]
         public string Product_Name { get; set; }
+
+
         public int Category_ID { get; set; }
+
+        [DisplayName("Product Name")]
+        [Required(ErrorMessage = "This Field is Required")]
         public string Product_Description { get; set; }
+
+        [DisplayName("Product Quantity")]
+        [Required(ErrorMessage = "This Field is Required")]
         public int Product_Quantity { get; set; }
+
+        [DisplayName("Product Colour")]
+        [Required(ErrorMessage = "This Field is Required")]
         public string Product_Colour { get; set; }
+
+        [DisplayName("Product Price")]
+        [Required(ErrorMessage = "This Field is Required")]
         public decimal Product_Price { get; set; }
+
+        [DisplayName("Is Personalisable")]
+        [Required(ErrorMessage = "This Field is Required")]
         public sbyte isPersonalisable { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

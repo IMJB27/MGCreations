@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MGCreations.Models;
 using MySql.Data;
 using System.Net;
+using System.Web.Security;
 
 namespace MGCreations.Controllers
 {
@@ -27,6 +28,7 @@ namespace MGCreations.Controllers
             if (c != null)
             {
                 Session["Customer_ID"] = c.Customer_ID.ToString();
+                FormsAuthentication.SetAuthCookie(c.Customer_Username, false);
                 return Redirect("~/Home/Index");
             }
             else
@@ -66,6 +68,7 @@ namespace MGCreations.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Customers_List()
         {
             return View(db.customer_details.ToList());
@@ -124,7 +127,7 @@ namespace MGCreations.Controllers
             c.Customer_PostCode = customer.Customer_PostCode;
             db.Entry(customer).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Customer_List");
+            return RedirectToAction("Customer_Details");
         }
 
         [HttpGet]
@@ -150,6 +153,13 @@ namespace MGCreations.Controllers
             db.customer_details.Remove(customer);
             db.SaveChanges();
             return RedirectToAction("Customers_List");
+        }
+
+        public ActionResult Customer_Logout()
+        {
+            Session["Customer_ID"] = null;
+            FormsAuthentication.SignOut();
+            return Redirect("~/Home/Index");
         }
     }
 }

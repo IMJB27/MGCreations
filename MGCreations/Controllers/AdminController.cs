@@ -6,10 +6,11 @@ using System.Web.Mvc;
 using MGCreations.Models;
 using MySql.Data;
 using System.Net;
+using System.Web.Security;
 
 namespace MGCreations.Controllers
 {
-    //  [Authorize]
+
     public class AdminController : Controller
     {
         mgcreationsEntities db = new mgcreationsEntities();
@@ -18,16 +19,27 @@ namespace MGCreations.Controllers
         // GET: Admin
         public ActionResult Admin_Login()
         {
-            return View();
+            if (Session["Customer_ID"] != null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else if (Session["Admin_ID"] != null)
+            {
+                return RedirectToAction("Admin_List");
+            }
+            else
+            {
+                return View();
+            }
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Admin_Login(admin admin1)
         {
             admin a = db.admins.Where(x => x.Admin_Username == admin1.Admin_Username && x.Admin_Password == admin1.Admin_Password).SingleOrDefault();
             if (a != null)
             {
                 Session["Admin_ID"] = a.Admin_Id.ToString();
+                FormsAuthentication.SetAuthCookie(a.Admin_Username, false);
                 return RedirectToAction("Admin_List");
             }
             else
@@ -40,7 +52,14 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Admin_Register()
         {
-            return View();
+            if (Session["Admin_ID"] == null)
+            {
+                return RedirectToAction("Admin_Login");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
@@ -65,39 +84,63 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Admin_List()
         {
-            return View(db.admins.ToList());
+            if (Session["Admin_ID"] == null)
+            {
+                return RedirectToAction("Admin_Login");
+            }
+            else
+            {
+                return View(db.admins.ToList());
+            }
+
         }
 
         [HttpGet]
         public ActionResult Admin_Details(int? a_id)
         {
-            if (a_id == null)
+
+            if (Session["Admin_ID"] == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Admin_Login");
             }
-            admin admin1 = db.admins.Find(a_id);
-            if (admin1 == null)
+            else
             {
-                return HttpNotFound();
+                if (a_id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                admin admin1 = db.admins.Find(a_id);
+                if (admin1 == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(admin1);
             }
 
-            return View(admin1);
         }
 
         [HttpGet]
         public ActionResult Update_Admin_Details(int? a_id)
         {
-            if (a_id == null)
+            if (Session["Admin_ID"] == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Admin_Login");
             }
-            admin admin1 = db.admins.Find(a_id);
-            if (admin1 == null)
+            else
             {
-                return HttpNotFound();
-            }
+                if (a_id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                admin admin1 = db.admins.Find(a_id);
+                if (admin1 == null)
+                {
+                    return HttpNotFound();
+                }
 
-            return View(admin1);
+                return View(admin1);
+            }
         }
 
         [HttpPost]
@@ -119,16 +162,24 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Delete_Admin(int? a_id)
         {
-            if (a_id == null)
+            if (Session["Admin_ID"] == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Admin_Login");
             }
-            admin admin1 = db.admins.Find(a_id);
-            if (admin1 == null)
+            else
             {
-                return HttpNotFound();
+                if (a_id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                admin admin1 = db.admins.Find(a_id);
+                if (admin1 == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(admin1);
             }
-            return View(admin1);
         }
 
         [HttpPost, ActionName("Delete_Admin")]
@@ -141,5 +192,18 @@ namespace MGCreations.Controllers
             return RedirectToAction("Admin_List");
         }
 
+        [HttpGet]
+        public ActionResult Admin_Logout()
+        {
+            Session["Admin_ID"] = null;
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Admin_Login");
+        }
+
+        [HttpGet]
+        public ActionResult Admin_Dashboard()
+        {
+                 return View();
+        }
     }
 }
