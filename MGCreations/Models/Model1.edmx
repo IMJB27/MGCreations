@@ -75,6 +75,20 @@
           <Property Name="Product_ID" Type="int" Nullable="false" />
           <Property Name="Product_Image_URL" Type="varchar" MaxLength="1000" Nullable="false" />
         </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Username" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="User_Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="User_FirstName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="User_LastName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="User_Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="User_ContactNo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="User_DOB" Type="date" Nullable="false" />
+          <Property Name="User_Type" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <Association Name="Customer">
           <End Role="customer_details" Type="Self.customer_details" Multiplicity="1" />
           <End Role="order" Type="Self.order" Multiplicity="*" />
@@ -130,6 +144,7 @@
           <EntitySet Name="product_category" EntityType="Self.product_category" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="product_details" EntityType="Self.product_details" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="product_images" EntityType="Self.product_images" Schema="mgcreations" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="mgcreations" store:Type="Tables" />
           <AssociationSet Name="Customer" Association="Self.Customer">
             <End Role="customer_details" EntitySet="customer_details" />
             <End Role="order" EntitySet="order" />
@@ -279,6 +294,7 @@
             <End Role="product_details" EntitySet="product_details" />
             <End Role="product_images" EntitySet="product_images" />
           </AssociationSet>
+          <EntitySet Name="users" EntityType="mgcreationsModel.user" />
         </EntityContainer>
         <EntityType Name="product_images">
           <Key>
@@ -301,6 +317,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="User_Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="User_FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="User_LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="User_Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="User_ContactNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="User_DOB" Type="DateTime" Nullable="false" />
+          <Property Name="User_Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -380,6 +410,21 @@
                 <ScalarProperty Name="Product_Image_URL" ColumnName="Product_Image_URL" />
                 <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
                 <ScalarProperty Name="Product_Images_ID" ColumnName="Product_Images_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="mgcreationsModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="User_Type" ColumnName="User_Type" />
+                <ScalarProperty Name="User_DOB" ColumnName="User_DOB" />
+                <ScalarProperty Name="User_ContactNo" ColumnName="User_ContactNo" />
+                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+                <ScalarProperty Name="User_LastName" ColumnName="User_LastName" />
+                <ScalarProperty Name="User_FirstName" ColumnName="User_FirstName" />
+                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

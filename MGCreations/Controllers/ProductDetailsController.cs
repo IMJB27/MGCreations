@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MGCreations.Models;
 
+
 namespace MGCreations.Controllers
 {
     public class ProductDetailsController : Controller
@@ -26,12 +27,18 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Add_Product_Details()
         {
-            return View();
+            product_details product_Details = new product_details();
+            using (db)
+            {
+                //product_Details.Category_List = db.product_category.ToList<product_category>();
+            }
+                return View(product_Details);
         }
 
         [HttpPost]
         public ActionResult Add_Product_Details(product_details product_Details, product_images product_Images)
         {
+
             return View();
         }
 

@@ -11,9 +11,7 @@ namespace MGCreations.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class customer_details
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,63 +19,22 @@ namespace MGCreations.Models
         {
             this.orders = new HashSet<order>();
         }
-
+    
         public int Customer_ID { get; set; }
-
-        [DisplayName("Username")]
-        [Required(ErrorMessage = "This Field is Required")]
         public string Customer_Username { get; set; }
-
-        [DisplayName("Password")]
-        [Required(ErrorMessage = "This Field is Required")]
-        [DataType(DataType.Password)]
         public string Customer_Password { get; set; }
-
-        [DisplayName("First Name")]
-        [Required(ErrorMessage = "This Field is Required")]
         public string Customer_Name { get; set; }
-
-        [DisplayName("Last Name")]
-        [Required(ErrorMessage = "This Field is Required")]
         public string Customer_Surname { get; set; }
-
-        [DisplayName("Date of Birth")]
-        [Required(ErrorMessage = "This Field is Required")]
-        [DataType(DataType.Date)]
         public System.DateTime Customer_DOB { get; set; }
-
-        [DisplayName("Email")]
-        [Required(ErrorMessage = "This Field is Required")]
-        [DataType(DataType.EmailAddress)]
         public string Customer_Email { get; set; }
-
-        [DisplayName("Mobile Number")]
-        [Required(ErrorMessage = "This Field is Required")]
-        [DataType(DataType.PhoneNumber)]
         public string Customer_ContactNo { get; set; }
-
-        [DisplayName("Address Line 1")]
-        [Required(ErrorMessage = "This Field is Required")]
         public string Customer_AddressLine1 { get; set; }
-
-        [DisplayName("Address Line 2")]
         public string Customer_AddressLine2 { get; set; }
-
-        [DisplayName("City")]
-        [Required(ErrorMessage = "This Field is Required")]
         public string Customer_City { get; set; }
-
-        [DisplayName("County")]
         public string Customer_County { get; set; }
-
-        [DisplayName("Country")]
-        [Required(ErrorMessage = "This Field is Required")]
         public string Customer_Country { get; set; }
-
-        [DisplayName("Postcode")]
-        [Required(ErrorMessage = "This Field is Required")]
         public string Customer_PostCode { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> orders { get; set; }
     }

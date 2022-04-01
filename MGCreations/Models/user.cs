@@ -12,14 +12,16 @@ namespace MGCreations.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class admin
+    public partial class user
     {
-        public int Admin_Id { get; set; }
-        public string Admin_Username { get; set; }
-        public string Admin_Password { get; set; }
-        public string Admin_Name { get; set; }
-        public string Admin_Surname { get; set; }
-        public string Admin_Email { get; set; }
-        public string Admin_ContactNo { get; set; }
+        public int User_ID { get; set; }
+        public string User_Username { get; set; }
+        public string User_Password { get; set; }
+        public string User_FirstName { get; set; }
+        public string User_LastName { get; set; }
+        public string User_Email { get; set; }
+        public string User_ContactNo { get; set; }
+        public System.DateTime User_DOB { get; set; }
+        public string User_Type { get; set; }
     }
 }

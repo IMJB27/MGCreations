@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c5ca12d22d2944898fdbb35dd284cfe4" Name="Diagram1">
+      <Diagram DiagramId="c5ca12d22d2944898fdbb35dd284cfe4" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="mgcreationsModel.admin" PointX="0.75" PointY="4.75" Width="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="mgcreationsModel.customer_details" Width="1.5" PointX="7.5" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="mgcreationsModel.order" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
@@ -15,6 +15,7 @@
         <AssociationConnector Association="mgcreationsModel.Product_Category1" ManuallyRouted="false" />
         <EntityTypeShape EntityType="mgcreationsModel.product_images" Width="1.5" PointX="3.125" PointY="5.125" />
         <AssociationConnector Association="mgcreationsModel.Product_ID" />
+        <EntityTypeShape EntityType="mgcreationsModel.user" Width="1.5" PointX="5.375" PointY="5.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -31,5 +31,6 @@ namespace MGCreations.Models
         public virtual DbSet<product_category> product_category { get; set; }
         public virtual DbSet<product_details> product_details { get; set; }
         public virtual DbSet<product_images> product_images { get; set; }
+        public virtual DbSet<user> users { get; set; }
     }
 }
