@@ -35,6 +35,7 @@ namespace MGCreations.Controllers
                 if (u != null)
                 {
                     Session["User_ID"] = u.User_ID.ToString();
+                    Session["User_Name"] = u.User_Username.ToString();
                     Session["User_Type"] = u.User_Type.ToString();
                     FormsAuthentication.SetAuthCookie(u.User_Username, false);
                     return Redirect("~/Home/Index");
@@ -54,12 +55,12 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Register_User()
         {
-            if (Session["User_ID"] != null)
+            if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Customer"))
             {
                 return Redirect("~/Home/Index");
             }
-            else {
-                ViewBag.DefaultValue = "Customer"; 
+            else
+            {
                 return View();
             }
         }
@@ -68,6 +69,7 @@ namespace MGCreations.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register_User(user User)
         {
+           
             user u = new user();
             u.User_Username = User.User_Username;
             u.User_Password = User.User_Password;
@@ -76,8 +78,14 @@ namespace MGCreations.Controllers
             u.User_Email = User.User_Email;
             u.User_ContactNo = User.User_ContactNo;
             u.User_DOB = User.User_DOB;
-            u.User_Type = User.User_Type;
-
+            if (Session["User_ID"] == null)
+            {
+                u.User_Type = "Customer";
+            }
+            else
+            {
+                u.User_Type = User.User_Type;
+            }
             db.users.Add(u);
             db.SaveChanges();
             ModelState.Clear();
@@ -89,40 +97,59 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult User_Logout()
         {
-            return View();
+            Session["User_ID"] = null;
+            Session["User_Name"] = null;
+            Session["User_Type"] = null;
+            FormsAuthentication.SignOut();
+            return Redirect("~/Home/Index");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult User_Logout(user User)
-        {
-            return View();
-        }
 
         [HttpGet]
+     
         public ActionResult User_List()
         {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult User_List(user User)
-        {
-            return View();
+            if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+            {
+                return View(db.users.ToList());
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
 
         [HttpGet]
-        public ActionResult View_User()
+        public ActionResult User_Details(int? u_id)
         {
-            return View();
-        }
+            if (Session["User_ID"] == null)
+            {
+                return RedirectToAction("User_Login");
+            }
+            else
+            {
+                if (u_id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult View_User(user User)
-        {
-            return View();
+                
+                user user1 = db.users.Find(u_id);
+
+                if (user1 == null)
+                {
+                    return HttpNotFound();
+                }
+                else if ((Session["User_Type"].ToString() == "Customer") && (Session["User_ID"].ToString() != u_id.ToString()))
+                {
+                    return HttpNotFound();
+                }
+                else 
+                {
+                    
+                }
+                return View(user1);
+            }
         }
 
         [HttpGet]

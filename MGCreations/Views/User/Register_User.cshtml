@@ -69,14 +69,16 @@
             @Html.ValidationMessageFor(model => model.User_DOB, "", new { @class = "text-danger" })
         </div>
     </div>
-    @if(Session[User_ID])
+    @if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+    {
     <div class="form-group">
         @Html.LabelFor(model => model.User_Type, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.User_Type, new { htmlAttributes = new { @class = "form-control", @Value = ViewBag.DefaultValue} })
+            @Html.EditorFor(model => model.User_Type, new { htmlAttributes = new { @class = "form-control"} })
             @Html.ValidationMessageFor(model => model.User_Type, "", new { @class = "text-danger" })
         </div>
     </div>
+    }
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
