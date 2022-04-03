@@ -144,10 +144,6 @@ namespace MGCreations.Controllers
                 {
                     return HttpNotFound();
                 }
-                else 
-                {
-                    
-                }
                 return View(user1);
             }
         }
