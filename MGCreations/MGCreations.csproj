@@ -228,6 +228,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Logo\Logo.jpeg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -300,6 +301,9 @@
     <Content Include="Views\User\Register_User.cshtml" />
     <Content Include="Views\User\User_List.cshtml" />
     <Content Include="Views\User\User_Details.cshtml" />
+    <Content Include="Views\User\Update_User.cshtml" />
+    <Content Include="Views\User\Delete_User.cshtml" />
+    <Content Include="Views\User\Admin_Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

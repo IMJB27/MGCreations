@@ -35,17 +35,39 @@ namespace MGCreations.Controllers
         [HttpPost]
         public ActionResult Admin_Login(admin admin1)
         {
-            admin a = db.admins.Where(x => x.Admin_Username == admin1.Admin_Username && x.Admin_Password == admin1.Admin_Password).SingleOrDefault();
-            if (a != null)
+            HttpCookie admincookie = new HttpCookie("Admin");
+
+            if (ModelState.IsValid == true)
             {
-                Session["Admin_ID"] = a.Admin_Id.ToString();
-                FormsAuthentication.SetAuthCookie(a.Admin_Username, false);
-                return RedirectToAction("Admin_List");
+                if (admin1.rememberme == true)
+                {
+                    admincookie["uname"] = admin1.Admin_Username;
+                    admincookie["password"] = admin1.Admin_Password;
+                    admincookie.Expires = DateTime.Now.AddMinutes(120);
+                    HttpContext.Response.Cookies.Add(admincookie);
+                }
+                else
+                {
+                    admincookie.Expires = DateTime.Now.AddMinutes(120);
+                    HttpContext.Response.Cookies.Add(admincookie);
+                }
+
+                admin a = db.admins.Where(x => x.Admin_Username == admin1.Admin_Username && x.Admin_Password == admin1.Admin_Password).SingleOrDefault();
+                if (a != null)
+                {
+                    Session["Admin_ID"] = a.Admin_Id.ToString();
+                    FormsAuthentication.SetAuthCookie(a.Admin_Username, false);
+                    return RedirectToAction("Admin_List");
+                }
+                else
+                {
+                    ViewBag.error = "Username or Password is Incorrect!";
+                    return View();
+                }
             }
             else
             {
-                ViewBag.error = "Username or Password is Incorrect!";
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
 

@@ -29,9 +29,23 @@ namespace MGCreations.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult User_Login(user User)
         {
-            try 
+            try
             {
-                user u = db.users.Where(x => x.User_Username == User.User_Username && x.User_Password == User.User_Password).SingleOrDefault();
+                HttpCookie admincookie = new HttpCookie("Users");
+
+                    if (User.User_RememberMe == true)
+                    {
+                        admincookie["Username"] = User.User_Username;
+                        admincookie["password"] = User.User_Password;
+                        admincookie.Expires = DateTime.Now.AddMinutes(120);
+                        HttpContext.Response.Cookies.Add(admincookie);
+                    }
+                    else
+                    {
+                        admincookie.Expires = DateTime.Now.AddMinutes(-1);
+                        HttpContext.Response.Cookies.Add(admincookie);
+                    }
+                    user u = db.users.Where(x => x.User_Username == User.User_Username && x.User_Password == User.User_Password).SingleOrDefault();
                 if (u != null)
                 {
                     Session["User_ID"] = u.User_ID.ToString();
@@ -69,7 +83,6 @@ namespace MGCreations.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register_User(user User)
         {
-           
             user u = new user();
             u.User_Username = User.User_Username;
             u.User_Password = User.User_Password;
@@ -89,7 +102,7 @@ namespace MGCreations.Controllers
             db.users.Add(u);
             db.SaveChanges();
             ModelState.Clear();
-            ViewBag.Success = "New"+ u.User_Type + "Created Successfully";
+            ViewBag.Success = "New "+ u.User_Type + " Created Successfully";
 
             return View();
         }
@@ -133,7 +146,6 @@ namespace MGCreations.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                
                 user user1 = db.users.Find(u_id);
 
                 if (user1 == null)
@@ -149,33 +161,113 @@ namespace MGCreations.Controllers
         }
 
         [HttpGet]
-        public ActionResult Update_User()
+        public ActionResult Update_User(int? u_id)
         {
-            return View();
+            if (Session["User_ID"] == null)
+            {
+                return RedirectToAction("User_Login");
+            }
+            else
+            {
+                if (u_id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                user user1 = db.users.Find(u_id);
+
+                if (user1 == null)
+                {
+                    return HttpNotFound();
+                }
+                else if ((Session["User_Type"].ToString() == "Customer") && (Session["User_ID"].ToString() != u_id.ToString()))
+                {
+                    return HttpNotFound();
+                }
+                return View(user1);
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Update_User(user User)
         {
-            return View();
+
+            user u = new user();
+            u.User_Username = User.User_Username;
+            u.User_Password = User.User_Password;
+            u.User_FirstName = User.User_FirstName;
+            u.User_LastName = User.User_LastName;
+            u.User_Email = User.User_Email;
+            u.User_ContactNo = User.User_ContactNo;
+            u.User_DOB = User.User_DOB;
+            u.User_Type = User.User_Type;
+            db.Entry(User).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("User_Details", new { u_id = User.User_ID });
         }
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete_User()
+        public ActionResult Delete_User(int? u_id)
         {
-            return View();
+            if (Session["User_ID"] == null)
+            {
+                return RedirectToAction("User_Login");
+            }
+            else
+            {
+                if (u_id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                user user1 = db.users.Find(u_id);
+
+                if (user1 == null)
+                {
+                    return HttpNotFound();
+                }
+                else if ((Session["User_Type"].ToString() == "Customer") && (Session["User_ID"].ToString() != u_id.ToString()))
+                {
+                    return HttpNotFound();
+                }
+                return View(user1);
+            }
         }
 
+        [HttpPost, ActionName("Delete_User")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int u_id)
+        {
+            user User = db.users.Find(u_id);
+            
+            db.users.Remove(User);
+            db.SaveChanges();
+            if (Session["User_Type"].ToString() == "Customer")
+            {
+                return RedirectToAction("User_Logout");
+            }
+            return Redirect("~/Home/Index");
+        }
+
+        [HttpGet]
+        public ActionResult Admin_Dashboard()
+        {
+            if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+            {
+                return View();
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete_User(user User)
+        public ActionResult Admin_Dashboard(user user1)
         {
             return View();
         }
-
-
 
 
     }

@@ -10,7 +10,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar  navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -18,26 +18,37 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+              
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                    <img src="~/Content/Logo/Logo.jpeg" alt="Site Logo" style="height:50px; width: 50px" />
+                </a>
                 @Html.ActionLink("MGCreations", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
+                    <li>@Html.ActionLink("Products", "Product_List", "Product")</li>
+                    @if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+                    {
+                        <li>@Html.ActionLink("Dashboard", "Admin_Dashboard", "User")</li>
+                    }
+                    </ul>
+               
+                <ul class="nav navbar-nav navbar-right">
                     @if (Session["User_ID"] == null)
                     {
 
                         {
+
                             <li>@Html.ActionLink("Login", "User_Login", "User")</li>
+                            <li>@Html.ActionLink("Register", "Register_User", "User")</li>
                         }
                     }
 
                     @if ((Session["User_Name"] != null))
                     {
-                        
-                        <li>@Html.ActionLink("Hello " + Session["User_Name"].ToString(), "User_Details", "User", new { u_id = Session["User_ID"].ToString()}, null)</li>
+
+                        <li>@Html.ActionLink("Hello " + Session["User_Name"].ToString(), "User_Details", "User", new { u_id = Session["User_ID"].ToString() }, null)</li>
                     }
 
                     @if (Session["User_ID"] != null)
@@ -53,6 +64,8 @@
         @RenderBody()
         <hr />
         <footer>
+            <li>@Html.ActionLink("About", "About", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
             <p>&copy; @DateTime.Now.Year -MGCreations</p>
 
         </footer>

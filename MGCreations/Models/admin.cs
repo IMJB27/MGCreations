@@ -21,5 +21,6 @@ namespace MGCreations.Models
         public string Admin_Surname { get; set; }
         public string Admin_Email { get; set; }
         public string Admin_ContactNo { get; set; }
+        public bool rememberme { get; set; }
     }
 }

@@ -1,11 +1,12 @@
 ﻿@model MGCreations.Models.user
 
 @{
-    ViewBag.Title = "User_Details";
+    ViewBag.Title = "Delete_User";
 }
 
-<h2>User_Details</h2>
+<h2>Delete_User</h2>
 
+<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>user</h4>
     <hr />
@@ -75,9 +76,13 @@
         </dd>
 
     </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back", "User_Details", new { u_id = Model.User_ID })
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Update_User", new { u_id = Model.User_ID }) |
-    @Html.ActionLink("Delete", "Delete_User", new { u_id = Model.User_ID }) |
-    @Html.ActionLink("Back to Home", "Index", "Home")
-</p>

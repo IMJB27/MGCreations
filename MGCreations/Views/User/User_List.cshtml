@@ -7,7 +7,7 @@
 <h2>User_List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New User", "Register_User")
 </p>
 <table class="table">
     <tr>
@@ -65,9 +65,9 @@
             @Html.DisplayFor(modelItem => item.User_Type)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.User_ID }) |
+            @Html.ActionLink("Edit", "Update_User", new { u_id=item.User_ID }) |
             @Html.ActionLink("Details", "User_Details", new { u_id=item.User_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.User_ID })
+            @Html.ActionLink("Delete", "Delete_User", new { u_id=item.User_ID })
         </td>
     </tr>
 }

@@ -11,17 +11,36 @@ namespace MGCreations.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class user
     {
         public int User_ID { get; set; }
+        [Required]
+        [DisplayName("Username")]
         public string User_Username { get; set; }
+        [Required]
+        [DisplayName("Password ")]
         public string User_Password { get; set; }
+        [Required]
+        [DisplayName("Firstname")]
         public string User_FirstName { get; set; }
+        [Required]
+        [DisplayName("Lastname")]
         public string User_LastName { get; set; }
+        [Required]
+        [DisplayName("Email Address")]
         public string User_Email { get; set; }
+        [Required]
+        [DisplayName("Contact Number")]
         public string User_ContactNo { get; set; }
+        [Required]
+        [DisplayName("Date of Birth")]
         public System.DateTime User_DOB { get; set; }
+        [DisplayName("User Type")]
         public string User_Type { get; set; }
+
+        public bool User_RememberMe { get; set; }
     }
 }
