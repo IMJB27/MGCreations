@@ -15,7 +15,7 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Product_Details_List()
         {
-            return View();
+            return View(db.products.ToList());
         } 
         
         [HttpGet]
@@ -27,7 +27,7 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Add_Product_Details()
         {
-            product_details product_Details = new product_details();
+            product product_Details = new product();
             using (db)
             {
                 //product_Details.Category_List = db.product_category.ToList<product_category>();
@@ -36,7 +36,7 @@ namespace MGCreations.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add_Product_Details(product_details product_Details, product_images product_Images)
+        public ActionResult Add_Product_Details(product product_Details, product_images product_Images)
         {
 
             return View();
@@ -49,7 +49,7 @@ namespace MGCreations.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update_Product_Details(product_details product_Details)
+        public ActionResult Update_Product_Details(product product_Details)
         {
             return View();
         }
@@ -61,7 +61,7 @@ namespace MGCreations.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete_Product_Details(product_details product_Details)
+        public ActionResult Delete_Product_Details(product product_Details)
         {
             return View();
         }

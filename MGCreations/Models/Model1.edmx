@@ -4,57 +4,42 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="mgcreationsModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="admin">
+      <Schema Namespace="mgcreationsModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cart">
           <Key>
-            <PropertyRef Name="Admin_Id" />
+            <PropertyRef Name="Cart_ID" />
           </Key>
-          <Property Name="Admin_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Admin_Username" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Admin_Password" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Admin_Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Admin_Surname" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Admin_Email" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Admin_ContactNo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Cart_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="Product_Quantity" Type="int" Nullable="false" />
+          <Property Name="Cart_Total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
-        <EntityType Name="customer_details">
+        <EntityType Name="delivery_address">
           <Key>
-            <PropertyRef Name="Customer_ID" />
+            <PropertyRef Name="Delivery_Address_ID" />
           </Key>
-          <Property Name="Customer_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Customer_Username" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Customer_Password" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Customer_Name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Customer_Surname" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Customer_DOB" Type="date" Nullable="false" />
-          <Property Name="Customer_Email" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Customer_ContactNo" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Customer_AddressLine1" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="Customer_AddressLine2" Type="varchar" MaxLength="100" />
-          <Property Name="Customer_City" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Customer_County" Type="varchar" MaxLength="100" />
-          <Property Name="Customer_Country" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Customer_PostCode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Delivery_Address_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="Delivery_Address_Line1" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Delivery_Address_Line2" Type="varchar" MaxLength="100" />
+          <Property Name="Delivery_Address_City" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Delivery_Address_County" Type="varchar" MaxLength="100" />
+          <Property Name="Delivery_Address_Country" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Delivery_Address_Postcode" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="order">
           <Key>
             <PropertyRef Name="Order_ID" />
           </Key>
           <Property Name="Order_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Customer_ID" Type="int" Nullable="false" />
-          <Property Name="Product_ID" Type="int" Nullable="false" />
-          <Property Name="Product_Quantity" Type="int" Nullable="false" />
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="Cart_ID" Type="int" Nullable="false" />
           <Property Name="Order_TotalAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="Order_Status" Type="varchar" MaxLength="45" />
+          <Property Name="Order_Status" Type="varchar" MaxLength="50" />
+          <Property Name="Order_Date" Type="date" Nullable="false" />
         </EntityType>
-        <EntityType Name="product_category">
-          <Key>
-            <PropertyRef Name="Category_ID" />
-          </Key>
-          <Property Name="Category_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Category_Name" Type="varchar" MaxLength="100" Nullable="false" />
-        </EntityType>
-        <EntityType Name="product_details">
+        <EntityType Name="product">
           <Key>
             <PropertyRef Name="Product_ID" />
           </Key>
@@ -63,9 +48,15 @@
           <Property Name="Category_ID" Type="int" Nullable="false" />
           <Property Name="Product_Description" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="Product_Quantity" Type="int" Nullable="false" />
-          <Property Name="Product_Colour" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Product_Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="isPersonalisable" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product_category">
+          <Key>
+            <PropertyRef Name="Category_ID" />
+          </Key>
+          <Property Name="Category_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category_Name" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="product_images">
           <Key>
@@ -89,47 +80,35 @@
           <Property Name="User_DOB" Type="date" Nullable="false" />
           <Property Name="User_Type" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <Association Name="Customer">
-          <End Role="customer_details" Type="Self.customer_details" Multiplicity="1" />
+        <Association Name="Cart1">
+          <End Role="cart" Type="Self.cart" Multiplicity="1" />
           <End Role="order" Type="Self.order" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="customer_details">
-              <PropertyRef Name="Customer_ID" />
+            <Principal Role="cart">
+              <PropertyRef Name="Cart_ID" />
             </Principal>
             <Dependent Role="order">
-              <PropertyRef Name="Customer_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Product">
-          <End Role="product_details" Type="Self.product_details" Multiplicity="1" />
-          <End Role="order" Type="Self.order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product_details">
-              <PropertyRef Name="Product_ID" />
-            </Principal>
-            <Dependent Role="order">
-              <PropertyRef Name="Product_ID" />
+              <PropertyRef Name="Cart_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="Product_Category1">
           <End Role="product_category" Type="Self.product_category" Multiplicity="1" />
-          <End Role="product_details" Type="Self.product_details" Multiplicity="*" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="product_category">
               <PropertyRef Name="Category_ID" />
             </Principal>
-            <Dependent Role="product_details">
+            <Dependent Role="product">
               <PropertyRef Name="Category_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="Product_ID">
-          <End Role="product_details" Type="Self.product_details" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="1" />
           <End Role="product_images" Type="Self.product_images" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="product_details">
+            <Principal Role="product">
               <PropertyRef Name="Product_ID" />
             </Principal>
             <Dependent Role="product_images">
@@ -137,89 +116,137 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Products">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="cart" Type="Self.cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Cart">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="cart" Type="Self.cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Delivery_Address">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="delivery_address" Type="Self.delivery_address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="delivery_address">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Order">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="mgcreationsModelStoreContainer">
-          <EntitySet Name="admin" EntityType="Self.admin" Schema="mgcreations" store:Type="Tables" />
-          <EntitySet Name="customer_details" EntityType="Self.customer_details" Schema="mgcreations" store:Type="Tables" />
+          <EntitySet Name="cart" EntityType="Self.cart" Schema="mgcreations" store:Type="Tables" />
+          <EntitySet Name="delivery_address" EntityType="Self.delivery_address" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="order" EntityType="Self.order" Schema="mgcreations" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="product_category" EntityType="Self.product_category" Schema="mgcreations" store:Type="Tables" />
-          <EntitySet Name="product_details" EntityType="Self.product_details" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="product_images" EntityType="Self.product_images" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="mgcreations" store:Type="Tables" />
-          <AssociationSet Name="Customer" Association="Self.Customer">
-            <End Role="customer_details" EntitySet="customer_details" />
-            <End Role="order" EntitySet="order" />
-          </AssociationSet>
-          <AssociationSet Name="Product" Association="Self.Product">
-            <End Role="product_details" EntitySet="product_details" />
+          <AssociationSet Name="Cart1" Association="Self.Cart1">
+            <End Role="cart" EntitySet="cart" />
             <End Role="order" EntitySet="order" />
           </AssociationSet>
           <AssociationSet Name="Product_Category1" Association="Self.Product_Category1">
             <End Role="product_category" EntitySet="product_category" />
-            <End Role="product_details" EntitySet="product_details" />
+            <End Role="product" EntitySet="product" />
           </AssociationSet>
           <AssociationSet Name="Product_ID" Association="Self.Product_ID">
-            <End Role="product_details" EntitySet="product_details" />
+            <End Role="product" EntitySet="product" />
             <End Role="product_images" EntitySet="product_images" />
           </AssociationSet>
+          <AssociationSet Name="Products" Association="Self.Products">
+            <End Role="product" EntitySet="product" />
+            <End Role="cart" EntitySet="cart" />
+          </AssociationSet>
+          <AssociationSet Name="User_Cart" Association="Self.User_Cart">
+            <End Role="users" EntitySet="users" />
+            <End Role="cart" EntitySet="cart" />
+          </AssociationSet>
+          <AssociationSet Name="User_Delivery_Address" Association="Self.User_Delivery_Address">
+            <End Role="users" EntitySet="users" />
+            <End Role="delivery_address" EntitySet="delivery_address" />
+          </AssociationSet>
+          <AssociationSet Name="User_Order" Association="Self.User_Order">
+            <End Role="users" EntitySet="users" />
+            <End Role="order" EntitySet="order" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="mgcreationsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="admin">
+        <EntityType Name="cart">
           <Key>
-            <PropertyRef Name="Admin_Id" />
+            <PropertyRef Name="Cart_ID" />
           </Key>
-          <Property Name="Admin_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Admin_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Admin_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Admin_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Admin_Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Admin_Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Admin_ContactNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Cart_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="Product_Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Cart_Total" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="orders" Relationship="Self.Cart1" FromRole="cart" ToRole="order" />
+          <NavigationProperty Name="product" Relationship="Self.Products" FromRole="cart" ToRole="product" />
+          <NavigationProperty Name="user" Relationship="Self.User_Cart" FromRole="cart" ToRole="users" />
         </EntityType>
-        <EntityType Name="customer_details">
+        <EntityType Name="delivery_address">
           <Key>
-            <PropertyRef Name="Customer_ID" />
+            <PropertyRef Name="Delivery_Address_ID" />
           </Key>
-          <Property Name="Customer_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Customer_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Customer_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Customer_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Customer_Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Customer_DOB" Type="DateTime" Nullable="false" />
-          <Property Name="Customer_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Customer_ContactNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="orders" Relationship="Self.Customer" FromRole="customer_details" ToRole="order" />
-          <Property Name="Customer_AddressLine1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Customer_AddressLine2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Customer_City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Customer_County" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Customer_Country" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Customer_PostCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Delivery_Address_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="Delivery_Address_Line1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Delivery_Address_Line2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Delivery_Address_City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Delivery_Address_County" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Delivery_Address_Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Delivery_Address_Postcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.User_Delivery_Address" FromRole="delivery_address" ToRole="users" />
         </EntityType>
         <EntityType Name="order">
           <Key>
             <PropertyRef Name="Order_ID" />
           </Key>
           <Property Name="Order_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Customer_ID" Type="Int32" Nullable="false" />
-          <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="Product_Quantity" Type="Int32" Nullable="false" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="Cart_ID" Type="Int32" Nullable="false" />
           <Property Name="Order_TotalAmount" Type="Decimal" Nullable="false" />
-          <NavigationProperty Name="customer_details" Relationship="Self.Customer" FromRole="order" ToRole="customer_details" />
-          <NavigationProperty Name="product_details" Relationship="Self.Product" FromRole="order" ToRole="product_details" />
-          <Property Name="Order_Status" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Order_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Order_Date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="cart" Relationship="Self.Cart1" FromRole="order" ToRole="cart" />
+          <NavigationProperty Name="user" Relationship="Self.User_Order" FromRole="order" ToRole="users" />
         </EntityType>
-        <EntityType Name="product_category">
-          <Key>
-            <PropertyRef Name="Category_ID" />
-          </Key>
-          <Property Name="Category_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Category_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="product_details" Relationship="Self.Product_Category1" FromRole="product_category" ToRole="product_details" />
-        </EntityType>
-        <EntityType Name="product_details">
+        <EntityType Name="product">
           <Key>
             <PropertyRef Name="Product_ID" />
           </Key>
@@ -228,88 +255,123 @@
           <Property Name="Category_ID" Type="Int32" Nullable="false" />
           <Property Name="Product_Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Product_Quantity" Type="Int32" Nullable="false" />
-          <Property Name="Product_Colour" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Product_Price" Type="Decimal" Nullable="false" />
           <Property Name="isPersonalisable" Type="SByte" Nullable="false" />
-          <NavigationProperty Name="orders" Relationship="Self.Product" FromRole="product_details" ToRole="order" />
-          <NavigationProperty Name="product_category" Relationship="Self.Product_Category1" FromRole="product_details" ToRole="product_category" />
-          <NavigationProperty Name="product_images" Relationship="mgcreationsModel.Product_ID" FromRole="product_details" ToRole="product_images" />
+          <NavigationProperty Name="carts" Relationship="Self.Products" FromRole="product" ToRole="cart" />
+          <NavigationProperty Name="product_category" Relationship="Self.Product_Category1" FromRole="product" ToRole="product_category" />
+          <NavigationProperty Name="product_images" Relationship="Self.Product_ID" FromRole="product" ToRole="product_images" />
         </EntityType>
-        <Association Name="Customer">
-          <End Role="customer_details" Type="Self.customer_details" Multiplicity="1" />
-          <End Role="order" Type="Self.order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="customer_details">
-              <PropertyRef Name="Customer_ID" />
-            </Principal>
-            <Dependent Role="order">
-              <PropertyRef Name="Customer_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Product">
-          <End Role="product_details" Type="Self.product_details" Multiplicity="1" />
-          <End Role="order" Type="Self.order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product_details">
-              <PropertyRef Name="Product_ID" />
-            </Principal>
-            <Dependent Role="order">
-              <PropertyRef Name="Product_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Product_Category1">
-          <End Role="product_category" Type="Self.product_category" Multiplicity="1" />
-          <End Role="product_details" Type="Self.product_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product_category">
-              <PropertyRef Name="Category_ID" />
-            </Principal>
-            <Dependent Role="product_details">
-              <PropertyRef Name="Category_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="mgcreationsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="admins" EntityType="Self.admin" />
-          <EntitySet Name="customer_details" EntityType="Self.customer_details" />
-          <EntitySet Name="orders" EntityType="Self.order" />
-          <EntitySet Name="product_category" EntityType="Self.product_category" />
-          <EntitySet Name="product_details" EntityType="Self.product_details" />
-          <AssociationSet Name="Customer" Association="Self.Customer">
-            <End Role="customer_details" EntitySet="customer_details" />
-            <End Role="order" EntitySet="orders" />
-          </AssociationSet>
-          <AssociationSet Name="Product" Association="Self.Product">
-            <End Role="product_details" EntitySet="product_details" />
-            <End Role="order" EntitySet="orders" />
-          </AssociationSet>
-          <AssociationSet Name="Product_Category1" Association="Self.Product_Category1">
-            <End Role="product_category" EntitySet="product_category" />
-            <End Role="product_details" EntitySet="product_details" />
-          </AssociationSet>
-          <EntitySet Name="product_images" EntityType="mgcreationsModel.product_images" />
-          <AssociationSet Name="Product_ID" Association="mgcreationsModel.Product_ID">
-            <End Role="product_details" EntitySet="product_details" />
-            <End Role="product_images" EntitySet="product_images" />
-          </AssociationSet>
-          <EntitySet Name="users" EntityType="mgcreationsModel.user" />
-        </EntityContainer>
+        <EntityType Name="product_category">
+          <Key>
+            <PropertyRef Name="Category_ID" />
+          </Key>
+          <Property Name="Category_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="products" Relationship="Self.Product_Category1" FromRole="product_category" ToRole="product" />
+        </EntityType>
         <EntityType Name="product_images">
           <Key>
             <PropertyRef Name="Product_Images_ID" />
           </Key>
           <Property Name="Product_Images_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="Product_Image_URL" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="product_details" Relationship="mgcreationsModel.Product_ID" FromRole="product_images" ToRole="product_details" />
+          <Property Name="Product_Image_URL" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="product" Relationship="Self.Product_ID" FromRole="product_images" ToRole="product" />
         </EntityType>
-        <Association Name="Product_ID">
-          <End Type="mgcreationsModel.product_details" Role="product_details" Multiplicity="1" />
-          <End Type="mgcreationsModel.product_images" Role="product_images" Multiplicity="*" />
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="User_Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="User_FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="User_LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="User_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="User_ContactNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="User_DOB" Type="DateTime" Nullable="false" />
+          <Property Name="User_Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="carts" Relationship="Self.User_Cart" FromRole="users" ToRole="cart" />
+          <NavigationProperty Name="delivery_address" Relationship="Self.User_Delivery_Address" FromRole="users" ToRole="delivery_address" />
+          <NavigationProperty Name="orders" Relationship="Self.User_Order" FromRole="users" ToRole="order" />
+        </EntityType>
+        <Association Name="Cart1">
+          <End Role="cart" Type="Self.cart" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="product_details">
+            <Principal Role="cart">
+              <PropertyRef Name="Cart_ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="Cart_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Products">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="cart" Type="Self.cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Cart">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="cart" Type="Self.cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Delivery_Address">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="delivery_address" Type="Self.delivery_address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="delivery_address">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Order">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="order" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="order">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product_Category1">
+          <End Role="product_category" Type="Self.product_category" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_category">
+              <PropertyRef Name="Category_ID" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="Category_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Product_ID">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="product_images" Type="Self.product_images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
               <PropertyRef Name="Product_ID" />
             </Principal>
             <Dependent Role="product_images">
@@ -317,68 +379,96 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="user">
-          <Key>
-            <PropertyRef Name="User_ID" />
-          </Key>
-          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_Username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="User_Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="User_FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="User_LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="User_Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="User_ContactNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="User_DOB" Type="DateTime" Nullable="false" />
-          <Property Name="User_Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-        </EntityType>
+        <EntityContainer Name="mgcreationsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="carts" EntityType="Self.cart" />
+          <EntitySet Name="delivery_address" EntityType="Self.delivery_address" />
+          <EntitySet Name="orders" EntityType="Self.order" />
+          <EntitySet Name="products" EntityType="Self.product" />
+          <EntitySet Name="product_category" EntityType="Self.product_category" />
+          <EntitySet Name="product_images" EntityType="Self.product_images" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="Cart1" Association="Self.Cart1">
+            <End Role="cart" EntitySet="carts" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="Products1" Association="Self.Products">
+            <End Role="product" EntitySet="products" />
+            <End Role="cart" EntitySet="carts" />
+          </AssociationSet>
+          <AssociationSet Name="User_Cart" Association="Self.User_Cart">
+            <End Role="users" EntitySet="users" />
+            <End Role="cart" EntitySet="carts" />
+          </AssociationSet>
+          <AssociationSet Name="User_Delivery_Address" Association="Self.User_Delivery_Address">
+            <End Role="users" EntitySet="users" />
+            <End Role="delivery_address" EntitySet="delivery_address" />
+          </AssociationSet>
+          <AssociationSet Name="User_Order" Association="Self.User_Order">
+            <End Role="users" EntitySet="users" />
+            <End Role="order" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="Product_Category1" Association="Self.Product_Category1">
+            <End Role="product_category" EntitySet="product_category" />
+            <End Role="product" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="Product_ID" Association="Self.Product_ID">
+            <End Role="product" EntitySet="products" />
+            <End Role="product_images" EntitySet="product_images" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="mgcreationsModelStoreContainer" CdmEntityContainer="mgcreationsEntities">
-          <EntitySetMapping Name="admins">
-            <EntityTypeMapping TypeName="mgcreationsModel.admin">
-              <MappingFragment StoreEntitySet="admin">
-                <ScalarProperty Name="Admin_ContactNo" ColumnName="Admin_ContactNo" />
-                <ScalarProperty Name="Admin_Email" ColumnName="Admin_Email" />
-                <ScalarProperty Name="Admin_Surname" ColumnName="Admin_Surname" />
-                <ScalarProperty Name="Admin_Name" ColumnName="Admin_Name" />
-                <ScalarProperty Name="Admin_Id" ColumnName="Admin_Id" />
-                <ScalarProperty Name="Admin_Username" ColumnName="Admin_Username" />
-                <ScalarProperty Name="Admin_Password" ColumnName="Admin_Password" />
+          <EntitySetMapping Name="carts">
+            <EntityTypeMapping TypeName="mgcreationsModel.cart">
+              <MappingFragment StoreEntitySet="cart">
+                <ScalarProperty Name="Cart_ID" ColumnName="Cart_ID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Product_Quantity" ColumnName="Product_Quantity" />
+                <ScalarProperty Name="Cart_Total" ColumnName="Cart_Total" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="customer_details">
-            <EntityTypeMapping TypeName="mgcreationsModel.customer_details">
-              <MappingFragment StoreEntitySet="customer_details">
-                <ScalarProperty Name="Customer_PostCode" ColumnName="Customer_PostCode" />
-                <ScalarProperty Name="Customer_Country" ColumnName="Customer_Country" />
-                <ScalarProperty Name="Customer_County" ColumnName="Customer_County" />
-                <ScalarProperty Name="Customer_City" ColumnName="Customer_City" />
-                <ScalarProperty Name="Customer_AddressLine2" ColumnName="Customer_AddressLine2" />
-                <ScalarProperty Name="Customer_AddressLine1" ColumnName="Customer_AddressLine1" />
-                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
-                <ScalarProperty Name="Customer_Username" ColumnName="Customer_Username" />
-                <ScalarProperty Name="Customer_Password" ColumnName="Customer_Password" />
-                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
-                <ScalarProperty Name="Customer_Surname" ColumnName="Customer_Surname" />
-                <ScalarProperty Name="Customer_DOB" ColumnName="Customer_DOB" />
-                <ScalarProperty Name="Customer_Email" ColumnName="Customer_Email" />
-                <ScalarProperty Name="Customer_ContactNo" ColumnName="Customer_ContactNo" />
+          <EntitySetMapping Name="delivery_address">
+            <EntityTypeMapping TypeName="mgcreationsModel.delivery_address">
+              <MappingFragment StoreEntitySet="delivery_address">
+                <ScalarProperty Name="Delivery_Address_ID" ColumnName="Delivery_Address_ID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Delivery_Address_Line1" ColumnName="Delivery_Address_Line1" />
+                <ScalarProperty Name="Delivery_Address_Line2" ColumnName="Delivery_Address_Line2" />
+                <ScalarProperty Name="Delivery_Address_City" ColumnName="Delivery_Address_City" />
+                <ScalarProperty Name="Delivery_Address_County" ColumnName="Delivery_Address_County" />
+                <ScalarProperty Name="Delivery_Address_Country" ColumnName="Delivery_Address_Country" />
+                <ScalarProperty Name="Delivery_Address_Postcode" ColumnName="Delivery_Address_Postcode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="orders">
             <EntityTypeMapping TypeName="mgcreationsModel.order">
               <MappingFragment StoreEntitySet="order">
-                <ScalarProperty Name="Order_Status" ColumnName="Order_Status" />
                 <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
-                <ScalarProperty Name="Customer_ID" ColumnName="Customer_ID" />
-                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
-                <ScalarProperty Name="Product_Quantity" ColumnName="Product_Quantity" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Cart_ID" ColumnName="Cart_ID" />
                 <ScalarProperty Name="Order_TotalAmount" ColumnName="Order_TotalAmount" />
+                <ScalarProperty Name="Order_Status" ColumnName="Order_Status" />
+                <ScalarProperty Name="Order_Date" ColumnName="Order_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="mgcreationsModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+                <ScalarProperty Name="Category_ID" ColumnName="Category_ID" />
+                <ScalarProperty Name="Product_Description" ColumnName="Product_Description" />
+                <ScalarProperty Name="Product_Quantity" ColumnName="Product_Quantity" />
+                <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
+                <ScalarProperty Name="isPersonalisable" ColumnName="isPersonalisable" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -390,41 +480,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="product_details">
-            <EntityTypeMapping TypeName="mgcreationsModel.product_details">
-              <MappingFragment StoreEntitySet="product_details">
-                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
-                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
-                <ScalarProperty Name="Category_ID" ColumnName="Category_ID" />
-                <ScalarProperty Name="Product_Description" ColumnName="Product_Description" />
-                <ScalarProperty Name="Product_Quantity" ColumnName="Product_Quantity" />
-                <ScalarProperty Name="Product_Colour" ColumnName="Product_Colour" />
-                <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
-                <ScalarProperty Name="isPersonalisable" ColumnName="isPersonalisable" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="product_images">
             <EntityTypeMapping TypeName="mgcreationsModel.product_images">
               <MappingFragment StoreEntitySet="product_images">
-                <ScalarProperty Name="Product_Image_URL" ColumnName="Product_Image_URL" />
-                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
                 <ScalarProperty Name="Product_Images_ID" ColumnName="Product_Images_ID" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Product_Image_URL" ColumnName="Product_Image_URL" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="mgcreationsModel.user">
               <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="User_Type" ColumnName="User_Type" />
-                <ScalarProperty Name="User_DOB" ColumnName="User_DOB" />
-                <ScalarProperty Name="User_ContactNo" ColumnName="User_ContactNo" />
-                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
-                <ScalarProperty Name="User_LastName" ColumnName="User_LastName" />
-                <ScalarProperty Name="User_FirstName" ColumnName="User_FirstName" />
-                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
-                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+                <ScalarProperty Name="User_FirstName" ColumnName="User_FirstName" />
+                <ScalarProperty Name="User_LastName" ColumnName="User_LastName" />
+                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+                <ScalarProperty Name="User_ContactNo" ColumnName="User_ContactNo" />
+                <ScalarProperty Name="User_DOB" ColumnName="User_DOB" />
+                <ScalarProperty Name="User_Type" ColumnName="User_Type" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -27,12 +27,13 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Category", "Product_Category_List", "ProductCategory")</li>
                     <li>@Html.ActionLink("Products", "Product_List", "Product")</li>
                     @if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
                     {
                         <li>@Html.ActionLink("Dashboard", "Admin_Dashboard", "User")</li>
                     }
-                    </ul>
+                </ul>
                
                 <ul class="nav navbar-nav navbar-right">
                     @if (Session["User_ID"] == null)

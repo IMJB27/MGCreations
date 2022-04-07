@@ -17,13 +17,13 @@ namespace MGCreations.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public product_category()
         {
-            this.product_details = new HashSet<product_details>();
+            this.products = new HashSet<product>();
         }
     
         public int Category_ID { get; set; }
         public string Category_Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<product_details> product_details { get; set; }
+        public virtual ICollection<product> products { get; set; }
     }
 }

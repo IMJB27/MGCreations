@@ -31,19 +31,19 @@ namespace MGCreations.Controllers
         {
             try
             {
-                HttpCookie admincookie = new HttpCookie("Users");
+                HttpCookie usercookie = new HttpCookie("Users");
 
                     if (User.User_RememberMe == true)
                     {
-                        admincookie["Username"] = User.User_Username;
-                        admincookie["password"] = User.User_Password;
-                        admincookie.Expires = DateTime.Now.AddMinutes(120);
-                        HttpContext.Response.Cookies.Add(admincookie);
+                        usercookie["Username"] = User.User_Username;
+                        usercookie["password"] = User.User_Password;
+                        usercookie.Expires = DateTime.Now.AddMinutes(120);
+                        HttpContext.Response.Cookies.Add(usercookie);
                     }
                     else
                     {
-                        admincookie.Expires = DateTime.Now.AddMinutes(-1);
-                        HttpContext.Response.Cookies.Add(admincookie);
+                        usercookie.Expires = DateTime.Now.AddMinutes(-1);
+                        HttpContext.Response.Cookies.Add(usercookie);
                     }
                     user u = db.users.Where(x => x.User_Username == User.User_Username && x.User_Password == User.User_Password).SingleOrDefault();
                 if (u != null)
@@ -239,15 +239,26 @@ namespace MGCreations.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int u_id)
         {
-            user User = db.users.Find(u_id);
-            
-            db.users.Remove(User);
-            db.SaveChanges();
-            if (Session["User_Type"].ToString() == "Customer")
+
+            int admin_Count = db.users.Where(x => x.User_Type == "Admin").Count();
+           
+            if ((admin_Count == 1) && (Session["User_Type"].ToString() == "Admin"))
             {
-                return RedirectToAction("User_Logout");
+                ViewBag.AlertMessage = "User Cant be Deleted";
+                return View(db.users.Find(u_id));
             }
-            return Redirect("~/Home/Index");
+            else
+            {
+                user User = db.users.Find(u_id);
+                db.users.Remove(User);
+                db.SaveChanges();
+                if (Session["User_Type"].ToString() == "Customer")
+                {
+                    return RedirectToAction("User_Logout");
+                }
+                return Redirect("~/Home/Index");
+            }
+           
         }
 
         [HttpGet]

@@ -16,7 +16,14 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Add_Product_Category()
         {
-            return View();
+            if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+            {
+                return View();
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
 
         [HttpPost]
@@ -41,32 +48,49 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Product_Category_Details(int? pc_id)
         {
-            if (pc_id == null)
+            if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+            {
+                if (pc_id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                product_category pc = db.product_category.Find(pc_id);
+                if (pc == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(pc);
+            }
+            else
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            product_category pc = db.product_category.Find(pc_id);
-            if (pc == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pc);
+
         }
 
-            [HttpGet]
+        [HttpGet]
         public ActionResult Update_Product_Category(int? pc_id)
         {
-            if(pc_id == null)
+            if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+            {
+                if (pc_id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                product_category pc = db.product_category.Find(pc_id);
+                if (pc == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(pc);
+            }
+            else
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            product_category pc = db.product_category.Find(pc_id);
-            if(pc == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(pc);
+           
         }
 
         [HttpPost]
@@ -82,17 +106,24 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Delete_Product_Category(int? pc_id)
         {
-            if (pc_id == null)
+            if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+            {
+                if (pc_id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                product_category pc = db.product_category.Find(pc_id);
+                if (pc == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(pc);
+            }
+            else
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            product_category pc = db.product_category.Find(pc_id);
-            if (pc == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(pc);
         }
 
         [HttpPost, ActionName("Delete_Product_Category")]

@@ -12,12 +12,12 @@ namespace MGCreations.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class product_details
+    public partial class product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public product_details()
+        public product()
         {
-            this.orders = new HashSet<order>();
+            this.carts = new HashSet<cart>();
             this.product_images = new HashSet<product_images>();
         }
     
@@ -26,12 +26,11 @@ namespace MGCreations.Models
         public int Category_ID { get; set; }
         public string Product_Description { get; set; }
         public int Product_Quantity { get; set; }
-        public string Product_Colour { get; set; }
         public decimal Product_Price { get; set; }
         public sbyte isPersonalisable { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<order> orders { get; set; }
+        public virtual ICollection<cart> carts { get; set; }
         public virtual product_category product_category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<product_images> product_images { get; set; }

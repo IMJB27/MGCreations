@@ -80,9 +80,20 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("Back", "User_Details", new { u_id = Model.User_ID })
-        </div>
+<div class="form-actions no-color">
+    <input type="submit" value="Delete" class="btn btn-danger" /> |
+    @Html.ActionLink("Back", "User_Details", new { u_id = Model.User_ID })
+
+    @if (ViewBag.AlertMessage != null)
+    {
+        <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.AlertMessage");
+            };
+        </script>
+
+    }
+</div>
     }
 </div>

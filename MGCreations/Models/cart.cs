@@ -12,30 +12,23 @@ namespace MGCreations.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class customer_details
+    public partial class cart
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public customer_details()
+        public cart()
         {
             this.orders = new HashSet<order>();
         }
     
-        public int Customer_ID { get; set; }
-        public string Customer_Username { get; set; }
-        public string Customer_Password { get; set; }
-        public string Customer_Name { get; set; }
-        public string Customer_Surname { get; set; }
-        public System.DateTime Customer_DOB { get; set; }
-        public string Customer_Email { get; set; }
-        public string Customer_ContactNo { get; set; }
-        public string Customer_AddressLine1 { get; set; }
-        public string Customer_AddressLine2 { get; set; }
-        public string Customer_City { get; set; }
-        public string Customer_County { get; set; }
-        public string Customer_Country { get; set; }
-        public string Customer_PostCode { get; set; }
+        public int Cart_ID { get; set; }
+        public int User_ID { get; set; }
+        public int Product_ID { get; set; }
+        public int Product_Quantity { get; set; }
+        public decimal Cart_Total { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> orders { get; set; }
+        public virtual product product { get; set; }
+        public virtual user user { get; set; }
     }
 }

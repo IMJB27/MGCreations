@@ -16,6 +16,14 @@ namespace MGCreations.Models
 
     public partial class user
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public user()
+        {
+            this.carts = new HashSet<cart>();
+            this.delivery_address = new HashSet<delivery_address>();
+            this.orders = new HashSet<order>();
+        }
+
         public int User_ID { get; set; }
         [Required]
         [DisplayName("Username")]
@@ -42,5 +50,12 @@ namespace MGCreations.Models
         public string User_Type { get; set; }
 
         public bool User_RememberMe { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cart> carts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<delivery_address> delivery_address { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<order> orders { get; set; }
     }
 }

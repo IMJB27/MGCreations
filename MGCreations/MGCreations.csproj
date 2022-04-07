@@ -178,8 +178,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductDetailsController.cs" />
@@ -187,10 +185,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\admin.cs">
+    <Compile Include="Models\cart.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\customer_details.cs">
+    <Compile Include="Models\delivery_address.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model1.Context.cs">
@@ -211,10 +209,10 @@
     <Compile Include="Models\order.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\product_category.cs">
+    <Compile Include="Models\product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\product_details.cs">
+    <Compile Include="Models\product_category.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\product_images.cs">
@@ -232,6 +230,16 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -242,16 +250,6 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
@@ -278,24 +276,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Admin\Admin_Login.cshtml" />
-    <Content Include="Views\Admin\Admin_Register.cshtml" />
-    <Content Include="Views\Admin\Admin_List.cshtml" />
-    <Content Include="Views\Admin\Admin_Details.cshtml" />
-    <Content Include="Views\Admin\Update_Admin_Details.cshtml" />
-    <Content Include="Views\Admin\Delete_Admin.cshtml" />
-    <Content Include="Views\Customer\Customer_Registration.cshtml" />
-    <Content Include="Views\Customer\Customer_Login.cshtml" />
-    <Content Include="Views\Customer\Customers_List.cshtml" />
-    <Content Include="Views\Customer\Customer_Details.cshtml" />
-    <Content Include="Views\Customer\Update_Customer_Details.cshtml" />
-    <Content Include="Views\Customer\Delete_Customer.cshtml" />
     <Content Include="Views\ProductCategory\Add_Product_Category.cshtml" />
     <Content Include="Views\ProductCategory\Product_Category_List.cshtml" />
     <Content Include="Views\ProductCategory\Update_Product_Category.cshtml" />
     <Content Include="Views\ProductCategory\Delete_Product_Category.cshtml" />
     <Content Include="Views\ProductCategory\Product_Category_Details.cshtml" />
-    <Content Include="Views\Admin\Admin_Dashboard.cshtml" />
     <Content Include="Views\ProductDetails\Add_Product_Details.cshtml" />
     <Content Include="Views\User\User_Login.cshtml" />
     <Content Include="Views\User\Register_User.cshtml" />
@@ -304,6 +289,7 @@
     <Content Include="Views\User\Update_User.cshtml" />
     <Content Include="Views\User\Delete_User.cshtml" />
     <Content Include="Views\User\Admin_Dashboard.cshtml" />
+    <Content Include="Views\ProductDetails\Product_Details_List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
