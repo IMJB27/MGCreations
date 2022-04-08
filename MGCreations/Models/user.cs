@@ -13,6 +13,8 @@ namespace MGCreations.Models
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+ 
 
     public partial class user
     {
@@ -25,30 +27,41 @@ namespace MGCreations.Models
         }
 
         public int User_ID { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "This field is Required")]
         [DisplayName("Username")]
         public string User_Username { get; set; }
-        [Required]
-        [DisplayName("Password ")]
+
+        [Required(ErrorMessage = "This field is Required")]
+        [DisplayName("Password")]
+        [DataType(DataType.Password)]
         public string User_Password { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "This field is Required")]
         [DisplayName("Firstname")]
         public string User_FirstName { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "This field is Required")]
         [DisplayName("Lastname")]
         public string User_LastName { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "This field is Required")]
         [DisplayName("Email Address")]
         public string User_Email { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "This field is Required")]
         [DisplayName("Contact Number")]
         public string User_ContactNo { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "This field is Required")]
         [DisplayName("Date of Birth")]
         public System.DateTime User_DOB { get; set; }
+        
+        
         [DisplayName("User Type")]
         public string User_Type { get; set; }
 
+        [NotMapped]
         public bool User_RememberMe { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
