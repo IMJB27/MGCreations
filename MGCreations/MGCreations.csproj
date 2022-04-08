@@ -180,7 +180,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
-    <Compile Include="Controllers\ProductDetailsController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProductImagesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -281,7 +282,6 @@
     <Content Include="Views\ProductCategory\Update_Product_Category.cshtml" />
     <Content Include="Views\ProductCategory\Delete_Product_Category.cshtml" />
     <Content Include="Views\ProductCategory\Product_Category_Details.cshtml" />
-    <Content Include="Views\ProductDetails\Add_Product_Details.cshtml" />
     <Content Include="Views\User\User_Login.cshtml" />
     <Content Include="Views\User\Register_User.cshtml" />
     <Content Include="Views\User\User_List.cshtml" />
@@ -289,11 +289,13 @@
     <Content Include="Views\User\Update_User.cshtml" />
     <Content Include="Views\User\Delete_User.cshtml" />
     <Content Include="Views\User\Admin_Dashboard.cshtml" />
-    <Content Include="Views\ProductDetails\Product_Details_List.cshtml" />
+    <Content Include="Views\Product\Product_List.cshtml" />
+    <Content Include="Views\Product\Add_Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\ProductImages\" />
+    <Folder Include="Views\ProductImages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

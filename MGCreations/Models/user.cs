@@ -37,6 +37,16 @@ namespace MGCreations.Models
         [DataType(DataType.Password)]
         public string User_Password { get; set; }
 
+
+        [NotMapped]
+        [Required(ErrorMessage = "This field is Required")]
+        [DisplayName("Confirm Password")]
+        [Compare("User_Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [DataType(DataType.Password)]
+        public string Confirm_Password { get; set; }
+
+
+
         [Required(ErrorMessage = "This field is Required")]
         [DisplayName("Firstname")]
         public string User_FirstName { get; set; }

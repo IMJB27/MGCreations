@@ -85,61 +85,57 @@ namespace MGCreations.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register_User(user User)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View(User);
-            }
-            
-                try
+                int count = db.users.Where(x => x.User_Username.Contains(User.User_Username)).Count();
+                if (count == 0)
                 {
-                    int count = db.users.Where(x => x.User_Username.Contains(User.User_Username)).Count();
-                    if (count == 0)
+                    user u = new user();
+                    
+                    u.User_Username = User.User_Username;
+                    u.User_Password = User.User_Password;
+                    u.Confirm_Password = User.Confirm_Password;
+                    u.User_FirstName = User.User_FirstName;
+                    u.User_LastName = User.User_LastName;
+                    u.User_Email = User.User_Email;
+                    u.User_ContactNo = User.User_ContactNo;
+                    u.User_DOB = User.User_DOB;
+                    if (Session["User_ID"] == null)
                     {
-                        user u = new user();
-                        u.User_Username = User.User_Username;
-                        u.User_Password = User.User_Password;
-                        u.User_FirstName = User.User_FirstName;
-                        u.User_LastName = User.User_LastName;
-                        u.User_Email = User.User_Email;
-                        u.User_ContactNo = User.User_ContactNo;
-                        u.User_DOB = User.User_DOB;
-                        if (Session["User_ID"] == null)
-                        {
-                            u.User_Type = "Customer";
-                        }
-                        else
-                        {
-                            u.User_Type = User.User_Type;
-                        }
-                        db.users.Add(u);
-                        db.SaveChanges();
-                        ModelState.Clear();
-                        ViewBag.Success = "New " + u.User_Type + " Created Successfully";
+                        u.User_Type = "Customer";
                     }
                     else
                     {
-                        ViewBag.Error = "Username Already Exist";
+                        u.User_Type = User.User_Type;
                     }
-                    return View();
+                    db.users.Add(u);
+                    db.SaveChanges();
+                    ModelState.Clear();
+                    ViewBag.Success = "New " + u.User_Type + " Created Successfully";
                 }
-                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                else
                 {
-                    Exception raise = dbEx;
-                    foreach (var validationErrors in dbEx.EntityValidationErrors)
-                    {
-                        foreach (var validationError in validationErrors.ValidationErrors)
-                        {
-                            string message = string.Format("{0}:{1}",
-                                validationErrors.Entry.Entity.ToString(),
-                                validationError.ErrorMessage);
-                            // raise a new exception nesting  
-                            // the current instance as InnerException  
-                            raise = new InvalidOperationException(message, raise);
-                        }
-                    }
-                    throw raise;
+                    ViewBag.Error = "Username Already Exist";
                 }
-       
+                return View();
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            {
+                Exception raise = dbEx;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        string message = string.Format("{0}:{1}",
+                            validationErrors.Entry.Entity.ToString(),
+                            validationError.ErrorMessage);
+                        // raise a new exception nesting  
+                        // the current instance as InnerException  
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+                throw raise;
+            }
         }
 
 
@@ -276,16 +272,16 @@ namespace MGCreations.Controllers
         public ActionResult DeleteConfirmed(int u_id)
         {
 
+            user User = db.users.Find(u_id);
             int admin_Count = db.users.Where(x => x.User_Type == "Admin").Count();
            
-            if ((admin_Count == 1) && (Session["User_Type"].ToString() == "Admin"))
+            if ((User.User_Type == "Admin")&&(admin_Count <= 1))
             {
                 ViewBag.AlertMessage = "User Cant be Deleted";
                 return View(db.users.Find(u_id));
             }
             else
             {
-                user User = db.users.Find(u_id);
                 db.users.Remove(User);
                 db.SaveChanges();
                 if (Session["User_Type"].ToString() == "Customer")
