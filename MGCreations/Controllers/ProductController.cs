@@ -50,7 +50,7 @@ namespace MGCreations.Controllers
             ModelState.Clear();
             ViewBag.Success = "New Product Created Successfully";
            //Get_Categories();
-            return View();
+            return RedirectToAction("Add_Product_Images","ProductImages", new { p_id = p.Product_ID});
         }
 
         [HttpGet]

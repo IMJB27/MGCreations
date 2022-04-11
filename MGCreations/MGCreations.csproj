@@ -291,11 +291,11 @@
     <Content Include="Views\User\Admin_Dashboard.cshtml" />
     <Content Include="Views\Product\Product_List.cshtml" />
     <Content Include="Views\Product\Add_Product.cshtml" />
+    <Content Include="Views\ProductImages\Add_Product_Images.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\ProductImages\" />
-    <Folder Include="Views\ProductImages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
