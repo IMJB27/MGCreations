@@ -1,14 +1,18 @@
 ﻿@model IEnumerable<MGCreations.Models.product>
-
+@using MGCreations.Controllers
 @{
     ViewBag.Title = "Product_Details_List";
+    ProductController pc = new ProductController(); 
 }
 
-<h2>Product_Details_List</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>Product_Details_List</h2>
+@if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+{
+    <p>
+        @Html.ActionLink("Add Product", "Add_Product")
+    </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -34,31 +38,46 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+<tr>
+    <td>
+        @foreach (var items in pc.Get_Product_Images(item.Product_ID))
+        {
+            <img src="@Url.Content(@items.Product_Image_URL)" width="100" height="100" />
+        }
+    </td>
+    
+    <td>
+        @Html.DisplayFor(modelItem => item.Product_Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Product_Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Product_Quantity)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Product_Price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.isPersonalisable)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.product_category.Category_Name)
+    </td>
+    <td>
+        @Html.ActionLink("View Product", "View_Product_Details", new { p_id = item.Product_ID })
+    </td>
+
+        @if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+        {
             <td>
-                @Html.DisplayFor(modelItem => item.Product_Name)
+                @Html.ActionLink("Edit", "Update_Product_Details", new { p_id = item.Product_ID })|
+                @Html.ActionLink("Delete", "Delete_Product", new { p_id = item.Product_ID })
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product_Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product_Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product_Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.isPersonalisable)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.product_category.Category_Name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Product_ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Product_ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Product_ID })
-            </td>
-        </tr>
+        }
+
+    
+</tr>
     }
 
 </table>

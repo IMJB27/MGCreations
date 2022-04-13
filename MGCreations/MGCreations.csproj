@@ -292,6 +292,9 @@
     <Content Include="Views\Product\Product_List.cshtml" />
     <Content Include="Views\Product\Add_Product.cshtml" />
     <Content Include="Views\ProductImages\Add_Product_Images.cshtml" />
+    <Content Include="Views\Product\View_Product_Details.cshtml" />
+    <Content Include="Views\Product\Update_Product_Details.cshtml" />
+    <Content Include="Views\Product\Delete_Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

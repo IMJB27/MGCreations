@@ -1,0 +1,75 @@
+﻿@model MGCreations.Models.product
+@using MGCreations.Controllers
+@{
+    ViewBag.Title = "View_Product_Details";
+    ProductController productController = new ProductController();
+}
+
+<h2>View_Product_Details</h2>
+
+<div>
+    <h4>product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dd>
+            @foreach (var items in productController.Get_Product_Images(Model.Product_ID))
+            {
+                <img src="@Url.Content(@items.Product_Image_URL)" width="100" height="100" />
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product_Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product_Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product_Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isPersonalisable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isPersonalisable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product_category.Category_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product_category.Category_Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Product_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
