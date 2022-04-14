@@ -65,7 +65,7 @@
         @Html.DisplayFor(modelItem => item.product_category.Category_Name)
     </td>
     <td>
-        @Html.ActionLink("View Product", "View_Product_Details", new { p_id = item.Product_ID })
+        @Html.ActionLink("View Product", "View_Product_Details", new { p_id = item.Product_ID })|
     </td>
 
         @if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
@@ -74,7 +74,7 @@
                 @Html.ActionLink("Edit", "Update_Product_Details", new { p_id = item.Product_ID })|
                 @Html.ActionLink("Delete", "Delete_Product", new { p_id = item.Product_ID })
             </td>
-        }
+        }                                                           
 
     
 </tr>
