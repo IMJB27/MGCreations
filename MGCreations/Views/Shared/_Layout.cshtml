@@ -55,6 +55,7 @@
                     @if (Session["User_ID"] != null)
                     {
                         <li>@Html.ActionLink("Logout", "User_Logout", "User")</li>
+                    <li>@Html.ActionLink("Cart", "View_Cart", "Cart")</li>
                     }
 
                 </ul>

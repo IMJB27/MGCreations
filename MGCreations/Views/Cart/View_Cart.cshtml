@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MGCreations.Models.cart>
+@using MGCreations.Controllers
+@{
+    ViewBag.Title = "View_Cart";
+    ProductController productController = new ProductController();
+    int total = 0;
+}
+
+<h2>View_Cart</h2>
+@if (Model.Count() == 0)
+{
+    <p> Cart Empty </p>
+}
+else
+{
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Product_Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cart_Total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product.Product_Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+       
+<tr>
+    <td>
+        <input type="number" class="form-control" value="@item.Product_Quantity" id="qty" name="Quantity" min="1" max="@productController.Get_Product_Quantity(item.Product_ID)" />
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Cart_Total)
+        @{
+            total = total + Convert.ToInt32(item.Cart_Total);
+        }
+    </td>
+
+    
+    <td>
+        @Html.DisplayFor(modelItem => item.product.Product_Name)
+    </td>
+    <td>
+        @Html.ActionLink("Delete", "Delete_Cart", new { p_id = item.Cart_ID })
+    </td>
+
+</tr>
+    }
+
+</table>
+    <p>order total= @total</p>
+
+}

@@ -54,14 +54,13 @@ namespace MGCreations.Controllers
                         db.SaveChanges();
                         ModelState.Clear();
                         ViewBag.Success = "New Image for " + TempData["Product_Name"] + " Uploaded Successfully";
-                    }
-                    return View();
+                    }    
                 }
                 catch (Exception ex)
                 {
-                    Response.Write("<script>alert('" + ex.Message + "');</script>");
-                    return View();
-                }          
+                    Response.Write("<script>alert('" + ex.Message + "');</script>");                 
+                }
+                return View();
             }
             else
             {

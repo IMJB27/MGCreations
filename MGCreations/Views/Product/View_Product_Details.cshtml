@@ -1,4 +1,5 @@
 ﻿@model MGCreations.Models.product
+
 @using MGCreations.Controllers
 @{
     ViewBag.Title = "View_Product_Details";
@@ -6,6 +7,8 @@
 }
 
 <h2>View_Product_Details</h2>
+
+    @Html.AntiForgeryToken()
 
 <div>
     <h4>product</h4>
@@ -35,13 +38,7 @@
             @Html.DisplayFor(model => model.Product_Description)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Product_Quantity)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Product_Quantity)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Product_Price)
@@ -68,8 +65,26 @@
         </dd>
 
     </dl>
+
+    @using (Html.BeginForm("AddtoCart", "Product", new { p_id = Model.Product_ID, }, FormMethod.Post))
+    {
+        if (Model.Product_Quantity < 1)
+        {
+            <p style="color:Red"> Out of Stock </p>
+        }
+        else
+        {
+            @Html.DisplayNameFor(model => model.Product_Quantity)
+            <input type="number" class="form-control" value="1" id="qty" name="Quantity" min="1" max="@Model.Product_Quantity" />
+            <p style="color:Green"> Available </p>
+            <input type="submit" value="ADD TO CART" class="btn btn-success" />
+        }
+
+    }
+    @if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+    {
+    <p>
+        @Html.ActionLink("Edit", "Update_Product_Details", new { p_id = Model.Product_ID })
+    </p>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Product_ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
