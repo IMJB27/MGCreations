@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "View_Cart";
     ProductController productController = new ProductController();
-    int total = 0;
+    decimal total = 0;
 }
 
 <h2>View_Cart</h2>
@@ -13,46 +13,69 @@
 }
 else
 {
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Product_Quantity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cart_Total)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.product.Product_Name)
-        </th>
-        <th></th>
-    </tr>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product_Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cart_Total)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.product.Product_Name)
+            </th>
+            <th></th>
+        </tr>
 
-    @foreach (var item in Model)
-    {
-       
-<tr>
-    <td>
-        <input type="number" class="form-control" value="@item.Product_Quantity" id="qty" name="Quantity" min="1" max="@productController.Get_Product_Quantity(item.Product_ID)" />
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Cart_Total)
-        @{
-            total = total + Convert.ToInt32(item.Cart_Total);
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    <input type="number" class="form-control Quantity" value="@item.Product_Quantity" data-id="@item.Cart_ID" id="Quantity" name="Quantityof-@item.product.Product_Name" min="1" max="@productController.Get_Product_Quantity(item.Product_ID)" />
+                    
+                </td>
+                <td id="cart-total-@item.Cart_ID">
+                    @Html.DisplayFor(modelItem => item.Cart_Total)
+                    @{
+                        total = total + item.Cart_Total;
+                    }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.product.Product_Name)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Delete", "Delete_Cart", new { p_id = item.Cart_ID })
+                </td>
+
+            </tr>
         }
-    </td>
 
-    
-    <td>
-        @Html.DisplayFor(modelItem => item.product.Product_Name)
-    </td>
-    <td>
-        @Html.ActionLink("Delete", "Delete_Cart", new { p_id = item.Cart_ID })
-    </td>
-
-</tr>
+    </table>
+<div id="test"></div>
+    using (Html.BeginForm("Checkout", "Cart", FormMethod.Post))
+    {
+        <p id="Order-Total">order total= @total</p>
+        <input type="submit" value="Place Order" class="btn btn-success" />
     }
-
-</table>
-    <p>order total= @total</p>
-
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(function () {
+        $(".Quantity").change(function () {
+            var test = $(this).attr("data-id");
+            var quantity = $(this).val();
+           
+            if (test != null) {
+                $.post("/Cart/Update_Cart", { "id": test, "quantity1": quantity },
+                    function (data) {                    
+                        $('#cart-total-' + test).text(data.Cart_Total);
+                        
+                    });
+            }
+
+        });
+    });
+</script>

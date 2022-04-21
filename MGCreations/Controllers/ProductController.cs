@@ -211,7 +211,7 @@ namespace MGCreations.Controllers
                 {
                     int userid = Convert.ToInt32(Session["User_ID"].ToString());
                     cart Cart = new cart();
-                    if (db.carts.Any(x => x.Product_ID == p_id))
+                    if ((db.carts.Any(x => x.User_ID == userid && x.Product_ID == p_id)))
                     {
                         
                         Cart = db.carts.Single(x => x.User_ID == userid && x.Product_ID == p_id);
@@ -227,8 +227,7 @@ namespace MGCreations.Controllers
                         Cart.Product_Quantity = Convert.ToInt32(Quantity);
                         Cart.Cart_Total = Product.Product_Price * Convert.ToInt32(Quantity);
 
-                        db.carts.Add(Cart);
-                       
+                        db.carts.Add(Cart);    
                     }
                     db.SaveChanges();
                     Response.Write("<script>alert('" + Product.Product_Name + " Added to Cart!');</script>");
