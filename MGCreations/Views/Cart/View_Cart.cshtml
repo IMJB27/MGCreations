@@ -16,14 +16,15 @@ else
     <table class="table">
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.product.Product_Name)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Product_Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cart_Total)
+                @Html.DisplayNameFor(model => model.Product_Price)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.product.Product_Name)
-            </th>
+
             <th></th>
         </tr>
 
@@ -32,50 +33,57 @@ else
 
             <tr>
                 <td>
-                    <input type="number" class="form-control Quantity" value="@item.Product_Quantity" data-id="@item.Cart_ID" id="Quantity" name="Quantityof-@item.product.Product_Name" min="1" max="@productController.Get_Product_Quantity(item.Product_ID)" />
-                    
-                </td>
-                <td id="cart-total-@item.Cart_ID">
-                    @Html.DisplayFor(modelItem => item.Cart_Total)
-                    @{
-                        total = total + item.Cart_Total;
-                    }
-                </td>
-
-                <td>
                     @Html.DisplayFor(modelItem => item.product.Product_Name)
                 </td>
+                <td>
+                    <input type="number" class="form-control Quantity" value="@item.Product_Quantity" data-id="@item.Cart_ID" id="Quantity" name="Quantityof-@item.product.Product_Name" min="1" max="@productController.Get_Product_Quantity(item.Product_ID)" />
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product_Price)
+                </td>
 
                 <td>
-                    @Html.ActionLink("Delete", "Delete_Cart", new { p_id = item.Cart_ID })
+                    <a class="btn btn-danger" href="@Url.Action("Delete_Cart", "Cart", new { c_id = item.Cart_ID}) ">&#10008</a>
                 </td>
 
             </tr>
         }
 
     </table>
-<div id="test"></div>
+    <div id="test"></div>
     using (Html.BeginForm("Checkout", "Cart", FormMethod.Post))
     {
-        <p id="Order-Total">order total= @total</p>
+        foreach(var item in Model)
+        {
+            total = total + item.Cart_Total;
+        }
+        <p>Subtotal= </p> <p id="Sub-Total">@total</p>
         <input type="submit" value="Place Order" class="btn btn-success" />
     }
+
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $(function () {
         $(".Quantity").change(function () {
-            var test = $(this).attr("data-id");
+            var cart_id = $(this).attr("data-id");
             var quantity = $(this).val();
-           
-            if (test != null) {
-                $.post("/Cart/Update_Cart", { "id": test, "quantity1": quantity },
-                    function (data) {                    
-                        $('#cart-total-' + test).text(data.Cart_Total);
-                        
-                    });
-            }
+            if (cart_id != null) {
+                if (quantity <= 0) {
+                    $.post("/Cart/Delete_Cart", { "c_id": cart_id },
 
+                    );
+                }
+                else {
+                    $.post("/Cart/Update_Cart", { "c_id": cart_id, "quantity": quantity },
+                        function (data) {
+                            $('#Sub-Total').text(data.Subtotal);
+                        }
+                    );
+                }
+
+            }
         });
     });
 </script>

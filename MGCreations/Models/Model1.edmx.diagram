@@ -4,23 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="76f3a8d775104e2584f930c9b8986959" Name="Diagram1">
-        <EntityTypeShape EntityType="mgcreationsModel.cart" Width="1.5" PointX="6" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.delivery_address" Width="1.5" PointX="9.125" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.order" Width="1.5" PointX="8.5" PointY="0.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.product" Width="1.5" PointX="2.125" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.product_category" Width="1.5" PointX="4" PointY="0.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.product_images" Width="1.5" PointX="2.25" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.user" Width="1.5" PointX="6.25" PointY="4.5" IsExpanded="true" />
+      <Diagram DiagramId="f4a0b505bf4747c9b3262f5c2696875e" Name="Diagram1">
+        <EntityTypeShape EntityType="mgcreationsModel.cart" Width="1.5" PointX="7.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.delivery_address" Width="1.5" PointX="3.125" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.order" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.product" Width="1.5" PointX="2.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.product_category" Width="1.5" PointX="0.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.product_images" Width="1.5" PointX="5.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.user" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
         <AssociationConnector Association="mgcreationsModel.Cart1" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.Products" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.User_Cart" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.User_Delivery_Address" ManuallyRouted="false" />
-        <AssociationConnector Association="mgcreationsModel.User_Order" ManuallyRouted="true" >
-          <ConnectorPoint PointX="7.65625" PointY="4.5" />
-          <ConnectorPoint PointX="7.65625" PointY="3.1509407552083331" />
-          <ConnectorPoint PointX="8.5" PointY="3.1509407552083331" />
-        </AssociationConnector>
+        <AssociationConnector Association="mgcreationsModel.User_Order" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.Product_Category1" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.Product_ID" ManuallyRouted="false" />
       </Diagram>

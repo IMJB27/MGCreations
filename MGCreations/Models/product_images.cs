@@ -24,7 +24,7 @@ namespace MGCreations.Models
         [DisplayName("Product")]
         public int Product_ID { get; set; }
 
-       
+
         [DisplayName("Select Pictures")]
         [DataType(DataType.ImageUrl)]
         public string Product_Image_URL { get; set; }

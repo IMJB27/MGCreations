@@ -211,9 +211,8 @@ namespace MGCreations.Controllers
                 {
                     int userid = Convert.ToInt32(Session["User_ID"].ToString());
                     cart Cart = new cart();
-                    if ((db.carts.Any(x => x.User_ID == userid && x.Product_ID == p_id)))
-                    {
-                        
+                    if ((db.carts.Any(x => x.User_ID == userid && x.Product_ID == p_id && x.Cart_Status.Equals(1))))
+                    {   
                         Cart = db.carts.Single(x => x.User_ID == userid && x.Product_ID == p_id);
                         Cart.Product_Quantity = Cart.Product_Quantity + Convert.ToInt32(Quantity);
                         Cart.Cart_Total = Product.Product_Price * Cart.Product_Quantity;
@@ -225,7 +224,9 @@ namespace MGCreations.Controllers
                         Cart.User_ID = Convert.ToInt32(Session["User_ID"].ToString());
                         Cart.Product_ID = Product.Product_ID;
                         Cart.Product_Quantity = Convert.ToInt32(Quantity);
+                        Cart.Product_Price = Product.Product_Price;
                         Cart.Cart_Total = Product.Product_Price * Convert.ToInt32(Quantity);
+                        Cart.Cart_Status = 1;
 
                         db.carts.Add(Cart);    
                     }
@@ -240,6 +241,7 @@ namespace MGCreations.Controllers
                 return RedirectToAction("View_Product_Details", "Product", new { p_id = Product.Product_ID });
             }
         }
+
 
         [HttpGet]
         public List<product_images> Get_Product_Images(int p_id)

@@ -11,7 +11,8 @@ namespace MGCreations.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class cart
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,9 +24,19 @@ namespace MGCreations.Models
         public int Cart_ID { get; set; }
         public int User_ID { get; set; }
         public int Product_ID { get; set; }
+
+        [DisplayName("Product Price")]
+        public decimal Product_Price { get; set; }
+
+        [DisplayName("Quantity")]
         public int Product_Quantity { get; set; }
+
+        [DisplayName("Subtotal")]
         public decimal Cart_Total { get; set; }
-    
+
+        public sbyte Cart_Status { get; set; }
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> orders { get; set; }
         public virtual product product { get; set; }

@@ -14,7 +14,7 @@ namespace MGCreations.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
- 
+
 
     public partial class user
     {
@@ -66,8 +66,8 @@ namespace MGCreations.Models
         [Required(ErrorMessage = "This field is Required")]
         [DisplayName("Date of Birth")]
         public System.DateTime User_DOB { get; set; }
-        
-        
+
+
         [DisplayName("User Type")]
         public string User_Type { get; set; }
 
