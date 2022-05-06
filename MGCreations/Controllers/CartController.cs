@@ -33,7 +33,7 @@ namespace MGCreations.Controllers
         [HttpPost]
         public ActionResult Checkout(List<cart> Cart)
         {
-            return RedirectToAction("Place_Order", "Order");
+            return RedirectToAction("Add_Delivery_Address", "Address");
         }
 
         [HttpPost]

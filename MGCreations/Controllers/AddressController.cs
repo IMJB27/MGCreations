@@ -30,7 +30,7 @@ namespace MGCreations.Controllers
                 {
                     customer_address customer_Address = new customer_address();
 
-                    customer_Address.User_ID = ca.User_ID;
+                    customer_Address.User_ID = Convert.ToInt32(Session["User_ID"].ToString());
                     customer_Address.Address_Line1 = ca.Address_Line1;
                     customer_Address.Address_Line2 = ca.Address_Line2;
                     customer_Address.Address_City = ca.Address_City;
@@ -73,7 +73,7 @@ namespace MGCreations.Controllers
                 {
                     customer_address customer_Address = new customer_address();
 
-                    customer_Address.User_ID = ca.User_ID;
+                    customer_Address.User_ID = Convert.ToInt32(Session["User_ID"].ToString());
                     customer_Address.Address_Line1 = ca.Address_Line1;
                     customer_Address.Address_Line2 = ca.Address_Line2;
                     customer_Address.Address_City = ca.Address_City;
