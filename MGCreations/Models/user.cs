@@ -22,7 +22,7 @@ namespace MGCreations.Models
         public user()
         {
             this.carts = new HashSet<cart>();
-            this.delivery_address = new HashSet<delivery_address>();
+            this.customer_address = new HashSet<customer_address>();
             this.orders = new HashSet<order>();
         }
 
@@ -77,7 +77,7 @@ namespace MGCreations.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cart> carts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<delivery_address> delivery_address { get; set; }
+        public virtual ICollection<customer_address> customer_address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> orders { get; set; }
     }

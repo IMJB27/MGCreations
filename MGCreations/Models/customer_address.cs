@@ -12,16 +12,17 @@ namespace MGCreations.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class delivery_address
+    public partial class customer_address
     {
-        public int Delivery_Address_ID { get; set; }
+        public int Address_ID { get; set; }
         public int User_ID { get; set; }
-        public string Delivery_Address_Line1 { get; set; }
-        public string Delivery_Address_Line2 { get; set; }
-        public string Delivery_Address_City { get; set; }
-        public string Delivery_Address_County { get; set; }
-        public string Delivery_Address_Country { get; set; }
-        public string Delivery_Address_Postcode { get; set; }
+        public string Address_Line1 { get; set; }
+        public string Address_Line2 { get; set; }
+        public string Address_City { get; set; }
+        public string Address_County { get; set; }
+        public string Address_Country { get; set; }
+        public string Address_Postcode { get; set; }
+        public string Address_Type { get; set; }
     
         public virtual user user { get; set; }
     }

@@ -31,15 +31,9 @@ namespace MGCreations.Controllers
         }
 
         [HttpPost]
-        public ActionResult Checkout(cart Cart)
+        public ActionResult Checkout(List<cart> Cart)
         {
-            int userid = Convert.ToInt32(Session["User_ID"].ToString());
-            List<cart> Cart_List = new List<cart>();
-
-            Cart_List = db.carts.Where(x => x.User_ID.Equals(userid)).ToList();
-
-            TempData["Order"] = Cart_List;
-            return RedirectToAction("View_Order", "Order");
+            return RedirectToAction("Place_Order", "Order");
         }
 
         [HttpPost]
@@ -55,7 +49,7 @@ namespace MGCreations.Controllers
 
             Cart.Product_Quantity = quantity;
             Cart.Cart_Total = Product.Product_Price * Cart.Product_Quantity;
-           // db.Entry(cart).State = System.Data.Entity.EntityState.Modified;
+            db.Entry(Cart).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             var jsonresult = new
             {
@@ -64,12 +58,12 @@ namespace MGCreations.Controllers
                 Product_ID = Cart.Product_ID,
                 Product_Quantity = Cart.Product_Quantity,
                 Cart_Total = Cart.Cart_Total,
-                Subtotal = GetSubTotal()
+                Subtotal = GetSubTotal(Cart.User_ID)
             };
             return Json(jsonresult);
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult Delete_Cart(int? c_id)
         {
             try
@@ -87,9 +81,10 @@ namespace MGCreations.Controllers
             
         }
 
-        public decimal GetSubTotal()
+        [HttpGet]
+        public decimal GetSubTotal(int UserId)
         {
-            int UserId = Convert.ToInt32(Session["User_ID"].ToString());
+            //int UserId = Convert.ToInt32(Session["User_ID"].ToString());
             List<cart> CartList = db.carts.Where(x => x.User_ID.Equals(UserId) && x.Cart_Status.Equals(1)).ToList();
             decimal SubTotal = 0;
             foreach(var item in CartList)

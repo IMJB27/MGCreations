@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="f4a0b505bf4747c9b3262f5c2696875e" Name="Diagram1">
         <EntityTypeShape EntityType="mgcreationsModel.cart" Width="1.5" PointX="7.875" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.delivery_address" Width="1.5" PointX="3.125" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="mgcreationsModel.order" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="mgcreationsModel.product" Width="1.5" PointX="2.75" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="mgcreationsModel.product_category" Width="1.5" PointX="0.625" PointY="0.5" IsExpanded="true" />
@@ -15,10 +14,11 @@
         <AssociationConnector Association="mgcreationsModel.Cart1" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.Products" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.User_Cart" ManuallyRouted="false" />
-        <AssociationConnector Association="mgcreationsModel.User_Delivery_Address" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.User_Order" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.Product_Category1" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.Product_ID" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="mgcreationsModel.customer_address" Width="1.5" PointX="1.125" PointY="8.625" />
+        <AssociationConnector Association="mgcreationsModel.User_Delivery_Address1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

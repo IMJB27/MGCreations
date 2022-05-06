@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="mgcreationsModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="mgcreationsModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="cart">
           <Key>
             <PropertyRef Name="Cart_ID" />
@@ -17,18 +17,19 @@
           <Property Name="Cart_Total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Cart_Status" Type="tinyint" Nullable="false" />
         </EntityType>
-        <EntityType Name="delivery_address">
+        <EntityType Name="customer_address">
           <Key>
-            <PropertyRef Name="Delivery_Address_ID" />
+            <PropertyRef Name="Address_ID" />
           </Key>
-          <Property Name="Delivery_Address_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="User_ID" Type="int" Nullable="false" />
-          <Property Name="Delivery_Address_Line1" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Delivery_Address_Line2" Type="varchar" MaxLength="100" />
-          <Property Name="Delivery_Address_City" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Delivery_Address_County" Type="varchar" MaxLength="100" />
-          <Property Name="Delivery_Address_Country" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Delivery_Address_Postcode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Address_Line1" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address_Line2" Type="varchar" MaxLength="100" />
+          <Property Name="Address_City" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address_County" Type="varchar" MaxLength="100" />
+          <Property Name="Address_Country" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address_Postcode" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Address_Type" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
         <EntityType Name="order">
           <Key>
@@ -144,12 +145,12 @@
         </Association>
         <Association Name="User_Delivery_Address">
           <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="delivery_address" Type="Self.delivery_address" Multiplicity="*" />
+          <End Role="customer_address" Type="Self.customer_address" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="User_ID" />
             </Principal>
-            <Dependent Role="delivery_address">
+            <Dependent Role="customer_address">
               <PropertyRef Name="User_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -168,7 +169,7 @@
         </Association>
         <EntityContainer Name="mgcreationsModelStoreContainer">
           <EntitySet Name="cart" EntityType="Self.cart" Schema="mgcreations" store:Type="Tables" />
-          <EntitySet Name="delivery_address" EntityType="Self.delivery_address" Schema="mgcreations" store:Type="Tables" />
+          <EntitySet Name="customer_address" EntityType="Self.customer_address" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="order" EntityType="Self.order" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="product" EntityType="Self.product" Schema="mgcreations" store:Type="Tables" />
           <EntitySet Name="product_category" EntityType="Self.product_category" Schema="mgcreations" store:Type="Tables" />
@@ -196,15 +197,14 @@
           </AssociationSet>
           <AssociationSet Name="User_Delivery_Address" Association="Self.User_Delivery_Address">
             <End Role="users" EntitySet="users" />
-            <End Role="delivery_address" EntitySet="delivery_address" />
+            <End Role="customer_address" EntitySet="customer_address" />
           </AssociationSet>
           <AssociationSet Name="User_Order" Association="Self.User_Order">
             <End Role="users" EntitySet="users" />
             <End Role="order" EntitySet="order" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="mgcreationsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -222,20 +222,6 @@
           <NavigationProperty Name="orders" Relationship="Self.Cart1" FromRole="cart" ToRole="order" />
           <NavigationProperty Name="product" Relationship="Self.Products" FromRole="cart" ToRole="product" />
           <NavigationProperty Name="user" Relationship="Self.User_Cart" FromRole="cart" ToRole="users" />
-        </EntityType>
-        <EntityType Name="delivery_address">
-          <Key>
-            <PropertyRef Name="Delivery_Address_ID" />
-          </Key>
-          <Property Name="Delivery_Address_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="Delivery_Address_Line1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Delivery_Address_Line2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Delivery_Address_City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Delivery_Address_County" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Delivery_Address_Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Delivery_Address_Postcode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="Self.User_Delivery_Address" FromRole="delivery_address" ToRole="users" />
         </EntityType>
         <EntityType Name="order">
           <Key>
@@ -296,8 +282,8 @@
           <Property Name="User_DOB" Type="DateTime" Nullable="false" />
           <Property Name="User_Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="carts" Relationship="Self.User_Cart" FromRole="users" ToRole="cart" />
-          <NavigationProperty Name="delivery_address" Relationship="Self.User_Delivery_Address" FromRole="users" ToRole="delivery_address" />
           <NavigationProperty Name="orders" Relationship="Self.User_Order" FromRole="users" ToRole="order" />
+          <NavigationProperty Name="customer_address" Relationship="mgcreationsModel.User_Delivery_Address1" FromRole="user" ToRole="customer_address" />
         </EntityType>
         <Association Name="Cart1">
           <End Role="cart" Type="Self.cart" Multiplicity="1" />
@@ -331,18 +317,6 @@
               <PropertyRef Name="User_ID" />
             </Principal>
             <Dependent Role="cart">
-              <PropertyRef Name="User_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="User_Delivery_Address">
-          <End Role="users" Type="Self.user" Multiplicity="1" />
-          <End Role="delivery_address" Type="Self.delivery_address" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="delivery_address">
               <PropertyRef Name="User_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -385,7 +359,6 @@
         </Association>
         <EntityContainer Name="mgcreationsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="carts" EntityType="Self.cart" />
-          <EntitySet Name="delivery_address" EntityType="Self.delivery_address" />
           <EntitySet Name="orders" EntityType="Self.order" />
           <EntitySet Name="products" EntityType="Self.product" />
           <EntitySet Name="product_category" EntityType="Self.product_category" />
@@ -403,10 +376,6 @@
             <End Role="users" EntitySet="users" />
             <End Role="cart" EntitySet="carts" />
           </AssociationSet>
-          <AssociationSet Name="User_Delivery_Address" Association="Self.User_Delivery_Address">
-            <End Role="users" EntitySet="users" />
-            <End Role="delivery_address" EntitySet="delivery_address" />
-          </AssociationSet>
           <AssociationSet Name="User_Order" Association="Self.User_Order">
             <End Role="users" EntitySet="users" />
             <End Role="order" EntitySet="orders" />
@@ -419,7 +388,39 @@
             <End Role="product" EntitySet="products" />
             <End Role="product_images" EntitySet="product_images" />
           </AssociationSet>
+          <EntitySet Name="customer_address" EntityType="mgcreationsModel.customer_address" />
+          <AssociationSet Name="User_Delivery_Address1" Association="mgcreationsModel.User_Delivery_Address1">
+            <End Role="user" EntitySet="users" />
+            <End Role="customer_address" EntitySet="customer_address" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="customer_address">
+          <Key>
+            <PropertyRef Name="Address_ID" />
+          </Key>
+          <Property Name="Address_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="Address_Line1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address_Line2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address_City" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address_County" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address_Country" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address_Postcode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Address_Type" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="mgcreationsModel.User_Delivery_Address1" FromRole="customer_address" ToRole="user" />
+        </EntityType>
+        <Association Name="User_Delivery_Address1">
+          <End Type="mgcreationsModel.user" Role="user" Multiplicity="1" />
+          <End Type="mgcreationsModel.customer_address" Role="customer_address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="customer_address">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -436,20 +437,6 @@
                 <ScalarProperty Name="Product_Quantity" ColumnName="Product_Quantity" />
                 <ScalarProperty Name="Cart_Total" ColumnName="Cart_Total" />
                 <ScalarProperty Name="Cart_Status" ColumnName="Cart_Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="delivery_address">
-            <EntityTypeMapping TypeName="mgcreationsModel.delivery_address">
-              <MappingFragment StoreEntitySet="delivery_address">
-                <ScalarProperty Name="Delivery_Address_ID" ColumnName="Delivery_Address_ID" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="Delivery_Address_Line1" ColumnName="Delivery_Address_Line1" />
-                <ScalarProperty Name="Delivery_Address_Line2" ColumnName="Delivery_Address_Line2" />
-                <ScalarProperty Name="Delivery_Address_City" ColumnName="Delivery_Address_City" />
-                <ScalarProperty Name="Delivery_Address_County" ColumnName="Delivery_Address_County" />
-                <ScalarProperty Name="Delivery_Address_Country" ColumnName="Delivery_Address_Country" />
-                <ScalarProperty Name="Delivery_Address_Postcode" ColumnName="Delivery_Address_Postcode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -507,6 +494,21 @@
                 <ScalarProperty Name="User_ContactNo" ColumnName="User_ContactNo" />
                 <ScalarProperty Name="User_DOB" ColumnName="User_DOB" />
                 <ScalarProperty Name="User_Type" ColumnName="User_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer_address">
+            <EntityTypeMapping TypeName="mgcreationsModel.customer_address">
+              <MappingFragment StoreEntitySet="customer_address">
+                <ScalarProperty Name="Address_Type" ColumnName="Address_Type" />
+                <ScalarProperty Name="Address_Postcode" ColumnName="Address_Postcode" />
+                <ScalarProperty Name="Address_Country" ColumnName="Address_Country" />
+                <ScalarProperty Name="Address_County" ColumnName="Address_County" />
+                <ScalarProperty Name="Address_City" ColumnName="Address_City" />
+                <ScalarProperty Name="Address_Line2" ColumnName="Address_Line2" />
+                <ScalarProperty Name="Address_Line1" ColumnName="Address_Line1" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Address_ID" ColumnName="Address_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
