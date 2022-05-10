@@ -29,29 +29,33 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Order_TotalAmount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Order_Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Order_Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cart.Cart_ID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.user.User_Username)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Order_ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Order_ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Order_ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order_TotalAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order_Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cart.Cart_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user.User_Username)
+            </td>
+
+            <td>
+            </td>
+        </tr>
+    }
 
 </table>
+@using (Html.BeginForm("Checkout", "Cart", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" value="Confirm Order" class="btn btn-success" />
+}

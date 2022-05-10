@@ -12,15 +12,16 @@ namespace MGCreations.Controllers
     public class CartController : Controller
     {
         mgcreationsEntities db = new mgcreationsEntities();
-       
+        
         // GET: Cart
         [HttpGet]
         public ActionResult View_Cart()
         {
+
              List<cart> Cart = new List<cart>();
             if(Session["User_ID"] == null)
             {  
-                return View(Cart);
+                return RedirectToAction("User_Login","User");
             }
             else
             { 
@@ -31,12 +32,14 @@ namespace MGCreations.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Checkout(List<cart> Cart)
         {
-            return RedirectToAction("Add_Delivery_Address", "Address");
+            return RedirectToAction("PaymentWithPaypal", "Paypal");
         }
 
         [HttpPost]
+     
         public ActionResult Update_Cart(int c_id, int quantity)
         {
             if(quantity<=0)

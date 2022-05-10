@@ -51,10 +51,10 @@ else
         }
 
     </table>
-    <div id="test"></div>
     using (Html.BeginForm("Checkout", "Cart", FormMethod.Post))
     {
-        foreach(var item in Model)
+        @Html.AntiForgeryToken();
+        foreach (var item in Model)
         {
             total = total + item.Cart_Total;
         }

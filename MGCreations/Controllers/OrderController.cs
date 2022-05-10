@@ -15,13 +15,16 @@ namespace MGCreations.Controllers
         // GET: Order
         public ActionResult View_Order()
         {
-            return View(db.orders.ToList());
+            int userid = Convert.ToInt32(Session["User_ID"].ToString());
+            return View(db.orders.Where(x => x.User_ID.Equals(userid) && x.Order_Status.Equals("Not Paid")).ToList());
         }
 
         [HttpGet]
         public ActionResult Place_Order()
         {
             int userid = Convert.ToInt32(Session["User_ID"].ToString());
+            var ordertotal = cartController.GetSubTotal(userid);
+
             List<cart> Cart = new List<cart>();
 
             Cart = db.carts.Where(x => x.User_ID.Equals(userid) && x.Cart_Status.Equals(1)).ToList();
@@ -31,8 +34,8 @@ namespace MGCreations.Controllers
                 order Order = new order();
                 Order.User_ID = item.User_ID;
                 Order.Cart_ID = item.Cart_ID;
-                Order.Order_TotalAmount = cartController.GetSubTotal(userid);
-                Order.Order_Status = "Order Placed";
+                Order.Order_TotalAmount = ordertotal;
+                Order.Order_Status = "Not Paid";
                 Order.Order_Date = System.DateTime.Today;
                 db.orders.Add(Order);
                 item.Cart_Status = 0;

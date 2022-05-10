@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Contact";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h2>Contact US</h2>
+                                <h3>MGCreations UK</h3>
+                                <address>
+                                    MGCreations<br />
+                                    41 Wyvern Avenue<br />
+                                    Leicester <br />
+                                    LE4 7HJ <br />
+                                </address>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h2>Mail Us</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 mx-auto">
+                                <label>Name: </label>
+
+                            </div>
+                            <div class="col-md-7 mx-auto">
+                                <input class="form-control" type="text" id="name" name="name" />
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 mx-auto">
+                                <label>Email: </label>
+
+                            </div>
+                            <div class="col-md-7 mx-auto">
+                                <input class="form-control" type="email" id="email" name="email"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 mx-auto">
+                                <label class="control-label">Subject: </label>
+
+                            </div>
+                            <div class="col-md-7 mx-auto">
+                                <input class="form-control" type="text" id="subject" name="subject"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 mx-auto">
+                                <label class="control-label">Message: </label>
+
+                            </div>
+                            <div class="col-md-7 mx-auto">
+                                <textarea class="form-control"  rows="20" id="message" name="message"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 mx-auto">
+                                <input type="submit" id="SubmitForm" class="btn btn-success btn-block" value="Send" />
+                            </div>
+                            <div class="col-md-3 mx-auto">
+                                <input type="button" id="ClearForm" class="btn btn-default btn-block" value="Clear" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+}

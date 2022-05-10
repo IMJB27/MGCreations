@@ -14,10 +14,18 @@ namespace MGCreations.Controllers
        [HttpGet]
         public ActionResult Add_Delivery_Address()
         {
-            return View();
+            if (Session["User_ID"] == null)
+            {
+                return RedirectToAction("User_Login", "User");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Add_Delivery_Address(customer_address ca)
         {
             try
@@ -40,6 +48,7 @@ namespace MGCreations.Controllers
                     customer_Address.Address_Type = "Delivery";
 
                     db.customer_address.Add(customer_Address);
+                    TempData["DeliveryAddress"] = customer_Address;
                     db.SaveChanges();
                     ModelState.Clear();
                     return RedirectToAction("Add_Billing_Address", "Address");
@@ -53,14 +62,53 @@ namespace MGCreations.Controllers
           
         }
 
+        [HttpGet]
+        public ActionResult Delivery_Address_List()
+        {
+            if (Session["User_ID"] == null)
+            {
+                return RedirectToAction("User_Login", "User");
+            }
+            else
+            {
+                int userid = Convert.ToInt32(Session["User_ID"].ToString());
+                List<customer_address> customer_Addresses = db.customer_address.Where(x => x.User_ID.Equals(userid) && x.Address_Type.Equals("Delivery")).ToList();
+                if (customer_Addresses.Count() > 0)
+                {
+                    return View(customer_Addresses);
+                }
+                else
+                {
+                    return RedirectToAction("Add_Delivery_Address", "Address");
+                }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Select_Delivery_Address(int? da_id)
+        {
+            customer_address customer_Address = db.customer_address.Find(da_id);
+            TempData["DeliveryAddress"] = customer_Address;
+            return RedirectToAction("Billing_Address_List", "Address");
+        }
 
         [HttpGet]
         public ActionResult Add_Billing_Address()
         {
-            return View();
+            if (Session["User_ID"] == null)
+            {
+                return RedirectToAction("User_Login", "User");
+            }
+            else
+            {
+                int userid = Convert.ToInt32(Session["User_ID"].ToString());
+                return View();
+            }
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Add_Billing_Address(customer_address ca)
         {
             try
@@ -91,9 +139,65 @@ namespace MGCreations.Controllers
             }
             catch (Exception ex)
             {
+
                 return View();
             }
+        }
 
+        [HttpGet]
+        public ActionResult Billing_Address_List()
+        {
+            if (Session["User_ID"] == null)
+            {
+                return RedirectToAction("User_Login", "User");
+            }
+            else
+            {
+                int userid = Convert.ToInt32(Session["User_ID"].ToString());
+                List<customer_address> customer_Addresses =  db.customer_address.Where(x => x.User_ID.Equals(userid) && x.Address_Type.Equals("Billing")).ToList();
+                if(customer_Addresses.Count() > 0)
+                {
+                    return View(customer_Addresses);
+                }
+                else
+                {
+                    return RedirectToAction("Add_Billing_Address", "Address");
+                }
+                 
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Select_Billing_Address(int? ba_id)
+        {
+            customer_address customer_Address = db.customer_address.Find(ba_id);
+            TempData["BillingAddress"] = customer_Address;
+            return RedirectToAction("Place_Order", "Order");
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetDeliveryAddress()
+        {
+           customer_address Address = TempData["DeliveryAddress"] as customer_address;
+            TempData.Keep();
+            
+           // int UserID = Convert.ToInt32(Session["User_ID"].ToString());
+           // Address = db.customer_address.Where(x => x.User_ID.Equals(UserID)).SingleOrDefault();
+            var jsonresult = new
+            {
+                AddressLine1 = Address.Address_Line1,
+                AddressLine2 = Address.Address_Line2,
+                City = Address.Address_City,
+                County = Address.Address_County,
+                Country = Address.Address_Country,
+                Postcode = Address.Address_Postcode
+            };
+
+            return Json(jsonresult);
         }
 
     }
