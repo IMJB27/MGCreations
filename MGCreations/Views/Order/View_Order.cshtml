@@ -1,61 +1,63 @@
 ﻿@model IEnumerable<MGCreations.Models.order>
+@using MGCreations.Models
 
 @{
     ViewBag.Title = "View_Order";
+    mgcreationsEntities db = new mgcreationsEntities();
+    decimal OrderTotalAmount = 0;
+    TempData.Keep();
 }
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <h2>Order Confirmed</h2>
+                            </center>
+                        </div>
+                        <div class="col">
+                            <Center>
+                                <h3>
+                                    Order Reference Number:  @TempData["OrderReference"].ToString()
 
-<h2>View_Order</h2>
+                                </h3>
+                            </Center>
+                        </div>
+                    </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Order_TotalAmount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Order_Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Order_Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cart.Cart_ID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.user.User_Username)
-        </th>
-        <th></th>
-    </tr>
+                    @foreach (var item in Model)
+                    {
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Order_TotalAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Order_Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Order_Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cart.Cart_ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.user.User_Username)
-            </td>
+                        product Product = db.products.Where(x => x.Product_ID.Equals(item.cart.Product_ID)).SingleOrDefault();
+                        <div>
+                            @Product.Product_Name
+                            </div>
+                            <div>
+                            @Product.Product_Price
+                            @item.cart.Product_Quantity
+                        </div>
 
-            <td>
-            </td>
-        </tr>
-    }
 
-</table>
-@using (Html.BeginForm("Checkout", "Cart", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    <input type="submit" value="Confirm Order" class="btn btn-success" />
-}
+                        OrderTotalAmount = item.Order_TotalAmount;
+
+                        @Html.DisplayFor(modelItem => item.Order_Status)
+
+
+
+                        @Html.DisplayFor(modelItem => item.billing_address.Billing_Address_Line1)
+
+
+
+                        @Html.DisplayFor(modelItem => item.delivery_address.Delivery_Address_Line1)
+                    }
+
+                    <div> @OrderTotalAmount.ToString()</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+﻿@model MGCreations.Models.billing_address
+
+
+@{
+    ViewBag.Title = "Add_Billing_Address";
+}
+
+<h2>Billing Address</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2"> Same as Delivery Address</label>
+            <div class="col-md-10">
+                <input type="checkbox" class="sameaddress" id="sameaddress" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Billing_Address_Line1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Billing_Address_Line1, new { htmlAttributes = new { @class = "form-control", @id = "Address_Line1" } })
+                @Html.ValidationMessageFor(model => model.Billing_Address_Line1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Billing_Address_Line2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Billing_Address_Line2, new { htmlAttributes = new { @class = "form-control", @id = "Address_Line2" } })
+                @Html.ValidationMessageFor(model => model.Billing_Address_Line2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Billing_Address_City, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Billing_Address_City, new { htmlAttributes = new { @class = "form-control", @id = "City" } })
+                @Html.ValidationMessageFor(model => model.Billing_Address_City, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Billing_Address_County, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Billing_Address_County, new { htmlAttributes = new { @class = "form-control", @id = "County" } })
+                @Html.ValidationMessageFor(model => model.Billing_Address_County, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Billing_Address_Country, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Billing_Address_Country, new { htmlAttributes = new { @class = "form-control", @id = "Country" } })
+                @Html.ValidationMessageFor(model => model.Billing_Address_Country, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Billing_Address_Postcode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Billing_Address_Postcode, new { htmlAttributes = new { @class = "form-control", @id = "Postcode" } })
+                @Html.ValidationMessageFor(model => model.Billing_Address_Postcode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Continue" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(function () {
+        $(".sameaddress").change(function () {
+            if(this.checked ) {
+                $.post("/DeliveryAddress/GetDeliveryAddress",
+                    function (data) {
+                        $('#Address_Line1').val(data.AddressLine1);
+                        $('#Address_Line2').val(data.AddressLine2);
+                        $('#City').val(data.City);
+                        $('#County').val(data.County);
+                        $('#Country').val(data.Country);
+                        $('#Postcode').val(data.Postcode);
+                    });
+                }
+                else {
+                        $('#Address_Line1').val("");
+                        $('#Address_Line2').val("");
+                        $('#City').val("");
+                        $('#County').val("");
+                        $('#Country').val("");
+                        $('#Postcode').val("");
+                }
+            });
+        }
+    );
+</script>

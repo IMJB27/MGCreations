@@ -49,7 +49,9 @@ namespace MGCreations.Controllers
                     else 
                     {
                         pi.Product_ID = (int) TempData["Product_ID"];
+                        pi.Product_Image_Name = product_Images.Product_Image_Name;
                         pi.Product_Image_URL = filePath;
+                        pi.isPersonalisable = product_Images.isPersonalisable;
                         db.product_images.Add(pi);
                         db.SaveChanges();
                         ModelState.Clear();
@@ -107,6 +109,13 @@ namespace MGCreations.Controllers
                 TempData["Product_ID"] = Product.Product_ID;
                 TempData["Product_Name"] = Product.Product_Name;
             }
+        }
+
+        [HttpGet]
+        public ActionResult Personalise_Product()
+        {
+            product_images ProductImage = db.product_images.Where(x => x.Product_ID == 25 && x.isPersonalisable == 1).SingleOrDefault();
+            return View(ProductImage);
         }
     }
 }

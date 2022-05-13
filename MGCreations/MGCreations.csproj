@@ -192,7 +192,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\BillingAddressController.cs" />
+    <Compile Include="Controllers\DeliveryAddressController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -204,10 +205,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\billing_address.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\cart.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\customer_address.cs">
+    <Compile Include="Models\delivery_address.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model1.Context.cs">
@@ -315,13 +319,14 @@
     <Content Include="Views\Product\Update_Product_Details.cshtml" />
     <Content Include="Views\Product\Delete_Product.cshtml" />
     <Content Include="Views\Cart\View_Cart.cshtml" />
-    <Content Include="Views\Order\View_Order.cshtml" />
-    <Content Include="Views\Address\Add_Delivery_Address.cshtml" />
-    <Content Include="Views\Address\Add_Billing_Address.cshtml" />
-    <Content Include="Views\Address\Delivery_Address_List.cshtml" />
-    <Content Include="Views\Address\Billing_Address_List.cshtml" />
+    <Content Include="Views\DeliveryAddress\Add_Delivery_Address.cshtml" />
+    <Content Include="Views\DeliveryAddress\Delivery_Address_List.cshtml" />
+    <Content Include="Views\BillingAddress\Billing_Address_List.cshtml" />
     <Content Include="Views\Paypal\FailureView.cshtml" />
-    <Content Include="Views\Paypal\SuccessView.cshtml" />
+    <Content Include="Views\BillingAddress\Add_Billing_Address.cshtml" />
+    <Content Include="Views\Order\View_Order.cshtml" />
+    <Content Include="Views\Product\Personalise_Product.cshtml" />
+    <Content Include="Views\ProductImages\Personalise_Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

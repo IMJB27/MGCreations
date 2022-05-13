@@ -1,0 +1,34 @@
+﻿@model MGCreations.Models.product_images
+
+@{
+    ViewBag.Title = "Personalise_Product";
+}
+
+<h2>Personalise_Product</h2>
+
+<svg width="100%" height="100%">
+    <text id="textid" x="0" y="15" fill="red">I love SVG!</text>
+    <img src="@Url.Content(Model.Product_Image_URL)" width="500" height="500" />
+</svg>
+<div>
+    <input type="text" id="textbox"/>
+    <input type="file" />
+</div>
+
+
+<svg height="30" width="200">
+
+    Sorry, your browser does not support inline SVG.
+</svg>
+
+<button onclick="changeText()">Click here to change text</button>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    $(function () {
+        $(".textbox").onchange(function () {
+            document.getElementById('textid').textContent = $('#textbox').val();
+        });
+    }
+</script>

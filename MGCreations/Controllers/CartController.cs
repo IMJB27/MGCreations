@@ -35,11 +35,10 @@ namespace MGCreations.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Checkout(List<cart> Cart)
         {
-            return RedirectToAction("PaymentWithPaypal", "Paypal");
+            return RedirectToAction("Place_Order", "Order");
         }
 
         [HttpPost]
-     
         public ActionResult Update_Cart(int c_id, int quantity)
         {
             if(quantity<=0)

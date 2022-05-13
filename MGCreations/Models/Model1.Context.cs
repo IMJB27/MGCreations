@@ -25,12 +25,13 @@ namespace MGCreations.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<billing_address> billing_address { get; set; }
         public virtual DbSet<cart> carts { get; set; }
+        public virtual DbSet<delivery_address> delivery_address { get; set; }
         public virtual DbSet<order> orders { get; set; }
         public virtual DbSet<product> products { get; set; }
         public virtual DbSet<product_category> product_category { get; set; }
         public virtual DbSet<product_images> product_images { get; set; }
         public virtual DbSet<user> users { get; set; }
-        public virtual DbSet<customer_address> customer_address { get; set; }
     }
 }

@@ -266,5 +266,8 @@ namespace MGCreations.Controllers
             int Quantity = Product.Product_Quantity;
             return Quantity;
         }
+
+
+
     }
 }

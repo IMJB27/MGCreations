@@ -1,9 +1,11 @@
 ﻿@model IEnumerable<MGCreations.Models.cart>
 @using MGCreations.Controllers
+@using MGCreations.Models
 @{
     ViewBag.Title = "View_Cart";
     ProductController productController = new ProductController();
     decimal total = 0;
+    TempData.Keep();
 }
 
 <h2>View_Cart</h2>
@@ -51,6 +53,9 @@ else
         }
 
     </table>
+
+
+
     using (Html.BeginForm("Checkout", "Cart", FormMethod.Post))
     {
         @Html.AntiForgeryToken();
@@ -58,8 +63,70 @@ else
         {
             total = total + item.Cart_Total;
         }
-        <p>Subtotal= </p> <p id="Sub-Total">@total</p>
+        <div>
+            Subtotal
+            <div id="Sub-Total">@total</div>
+        </div>
+        <div class="row">
+            <div calss="col">
+                @{
+                    delivery_address delivery_Address = TempData["DeliveryAddress"] as delivery_address;
+
+                    if (delivery_Address == null)
+                    {
+                        <input type="button" value="Add Delivery Address" class="btn btn-default" onclick="location.href='@Url.Action("Delivery_Address_List", "DeliveryAddress")'" />
+                    }
+                    else
+                    {
+                        <label class="control-label">@delivery_Address.Delivery_Address_Line1</label>
+                        if (delivery_Address.Delivery_Address_Line2 != null)
+                        {
+                            <label class="control-label">@delivery_Address.Delivery_Address_Line2</label>
+                        }
+
+                        <label class="control-label">@delivery_Address.Delivery_Address_City</label>
+                        if (delivery_Address.Delivery_Address_County != null)
+                        {
+                            <label class="control-label">@delivery_Address.Delivery_Address_County</label>
+                        }
+                        <label class="control-label">@delivery_Address.Delivery_Address_Country</label>
+                        <label class="control-label">@delivery_Address.Delivery_Address_Postcode</label>
+                    }
+                }
+            </div>
+
+            <div calss="col">
+                @{
+                    billing_address billing_Address = TempData["BillingAddress"] as billing_address;
+
+                    if (billing_Address == null)
+                    {
+                        <input type="button" value="Add Billing Address" class="btn btn-default" onclick="location.href='@Url.Action("Billing_Address_List", "BillingAddress")'" />
+                    }
+                    else
+                    {
+                        <label class="control-label">@billing_Address.Billing_Address_Line1</label>
+                        if (billing_Address.Billing_Address_Line2 != null)
+                        {
+                            <label class="control-label">@billing_Address.Billing_Address_Line2</label>
+                        }
+
+                        <label class="control-label">@billing_Address.Billing_Address_City</label>
+                        if (billing_Address.Billing_Address_County != null)
+                        {
+                            <label class="control-label">@billing_Address.Billing_Address_County</label>
+                        }
+                        <label class="control-label">@billing_Address.Billing_Address_Country</label>
+                        <label class="control-label">@billing_Address.Billing_Address_Postcode</label>
+                    }
+                }
+            </div>
+        </div>
+
+       if((TempData["DeliveryAddress"]!=null)&&(TempData["BillingAddress"] != null))
+       { 
         <input type="submit" value="Place Order" class="btn btn-success" />
+       }
     }
 
 }

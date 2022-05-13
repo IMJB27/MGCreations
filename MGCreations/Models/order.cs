@@ -17,11 +17,16 @@ namespace MGCreations.Models
         public int Order_ID { get; set; }
         public int User_ID { get; set; }
         public int Cart_ID { get; set; }
+        public int Delivery_Address_ID { get; set; }
+        public int Billing_Address_ID { get; set; }
+        public string Order_Reference_No { get; set; }
         public decimal Order_TotalAmount { get; set; }
         public string Order_Status { get; set; }
         public System.DateTime Order_Date { get; set; }
     
+        public virtual billing_address billing_address { get; set; }
         public virtual cart cart { get; set; }
+        public virtual delivery_address delivery_address { get; set; }
         public virtual user user { get; set; }
     }
 }

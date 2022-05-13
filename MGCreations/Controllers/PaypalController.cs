@@ -67,7 +67,7 @@ namespace MGCreations.Controllers
                 return View("FailureView");
             }
             //on successful payment, show success page to user.  
-            return View("SuccessView");
+            return RedirectToAction("Confirm_Order", "Order");
         }
         private PayPal.Api.Payment payment;
         private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
@@ -143,15 +143,18 @@ namespace MGCreations.Controllers
                 total = ordertotal.ToString(), // Total must be equal to sum of tax, shipping and subtotal.  
                 details = details
             };
+            string orderref = TempData["OrderReference"].ToString();
+            TempData.Keep();
             var transactionList = new List<Transaction>();
             // Adding description about the transaction  
             transactionList.Add(new Transaction()
             {
                 description = "Transaction description",
-                invoice_number = "1", //Generate an Invoice No  
+                invoice_number = orderref, //Generate an Invoice No  
                 amount = amount,
                 item_list = itemList
             });
+            
             this.payment = new Payment()
             {
                 intent = "sale",

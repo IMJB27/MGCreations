@@ -10,7 +10,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="navbar  navbar-fixed-top">
+    <div class="navbar navbar-fixed-top navbar-default">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -18,11 +18,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+
+                <center>
+                    <a class="navbar-brand" rel="home" href="#">
+                        <img src="~/Content/Logo/Logo.jpeg" alt="..." style="height: 50px; width: 50px; margin-top: -14px;" />
+                    </a>
+                    @Html.ActionLink("MGCreations", "Index", "Home", null, new { @class = "navbar-brand" })
+                </center>
               
-                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
-                    <img src="~/Content/Logo/Logo.jpeg" alt="Site Logo" style="height:50px; width: 50px" />
-                </a>
-                @Html.ActionLink("MGCreations", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -38,9 +41,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (Session["User_ID"] == null)
                     {
-
                         {
-
                             <li>@Html.ActionLink("Login", "User_Login", "User")</li>
                             <li>@Html.ActionLink("Register", "Register_User", "User")</li>
                         }
@@ -48,16 +49,19 @@
 
                     @if ((Session["User_Name"] != null))
                     {
-
-                        <li>@Html.ActionLink("Hello " + Session["User_Name"].ToString(), "User_Details", "User", new { u_id = Session["User_ID"].ToString() }, null)</li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Hello @Session["User_Name"].ToString()
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <div class="dropdown-item"> @Html.ActionLink("View Your Profile", "User_Details", "User", new { u_id = Session["User_ID"].ToString() })</div>
+                                <div class="dropdown-item">  @Html.ActionLink("Manage Your Orders", "User_Details", "User", new { u_id = Session["User_ID"].ToString() })</div>
+                                <div class="dropdown-item">@Html.ActionLink("Logout", "User_Logout", "User")</div>
+                            </div>
+                        </li>
+      
+                        <li>@Html.ActionLink("Cart", "View_Cart", "Cart")</li>
                     }
-
-                    @if (Session["User_ID"] != null)
-                    {
-                        <li>@Html.ActionLink("Logout", "User_Logout", "User")</li>
-                    <li>@Html.ActionLink("Cart", "View_Cart", "Cart")</li>
-                    }
-
                 </ul>
             </div>
         </div>

@@ -14,7 +14,6 @@ namespace MGCreations.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Web;
 
     public partial class product_images
     {
@@ -24,10 +23,24 @@ namespace MGCreations.Models
         [DisplayName("Product")]
         public int Product_ID { get; set; }
 
-
         [DisplayName("Select Pictures")]
         [DataType(DataType.ImageUrl)]
         public string Product_Image_URL { get; set; }
+
+        [DisplayName("Select Pictures")]
+        [DataType(DataType.ImageUrl)]
+        public string Product_Image_Name { get; set; }
+
+        [Required(ErrorMessage = "This Field is Required")]
+        [DisplayName("Personalisable")]
+        public Nullable<sbyte> isPersonalisable { get; set; }
+
+        [NotMapped]
+        public bool isPersonalisableBool
+        {
+            get { return isPersonalisable > 0; }
+            set { isPersonalisable = (sbyte)(value ? 1 : 0); }
+        }
 
         public virtual product product { get; set; }
     }

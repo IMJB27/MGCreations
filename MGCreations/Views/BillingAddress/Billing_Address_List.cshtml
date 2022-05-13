@@ -1,0 +1,69 @@
+﻿@model IEnumerable<MGCreations.Models.billing_address>
+
+@{
+    ViewBag.Title = "Billing_Address_List";
+}
+
+<h2>Address_List</h2>
+
+<p>
+    @Html.ActionLink("Add New Billing Address", "Add_Billing_Address")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Billing_Address_Line1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Billing_Address_Line2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Billing_Address_City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Billing_Address_County)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Billing_Address_Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Billing_Address_Postcode)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Billing_Address_Line1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Billing_Address_Line2)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Billing_Address_City)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Billing_Address_County)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Billing_Address_Country)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Billing_Address_Postcode)
+    </td>
+    @using (Html.BeginForm("Select_Billing_Address", "BillingAddress", new { ba_id = item.Billing_Address_ID }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <td>
+            <input type="submit" class="btn btn-default" value="Select" />
+        </td>
+    }
+</tr>
+
+    }
+
+</table>
