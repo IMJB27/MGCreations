@@ -20,15 +20,21 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Add_Product_Images(int? p_id)
         {
-            if (p_id == null)
+
+            if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            else
-            {
+                if (p_id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
                 Product_ID = p_id;
                 Get_Product(p_id);
                 return View();
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
 
@@ -116,6 +122,47 @@ namespace MGCreations.Controllers
         {
             product_images ProductImage = db.product_images.Where(x => x.Product_ID == 25 && x.isPersonalisable == 1).SingleOrDefault();
             return View(ProductImage);
+        }
+
+        [HttpGet]
+        public ActionResult Product_Images_List(int p_id)
+        {
+            if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+            {
+                if (p_id == 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                TempData["ProductID"] = p_id;
+                List<product_images> product_Images = db.product_images.Where(x => x.Product_ID.Equals(p_id)).ToList();
+                return View(product_Images);
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Delete_Product_Image(int? pi_id)
+        {
+            if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+            {
+                if (pi_id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+               product_images product_Image = db.product_images.Find(pi_id);
+               db.product_images.Remove(product_Image);
+               db.SaveChanges();
+               return RedirectToAction("Product_Images_List", new { p_id = TempData["ProductID"] });
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
         }
     }
 }

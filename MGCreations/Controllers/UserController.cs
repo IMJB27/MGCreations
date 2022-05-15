@@ -77,6 +77,13 @@ namespace MGCreations.Controllers
             }
             else
             {
+                List<String> UserType = new List<String>();
+
+                UserType.Add("Admin");
+                UserType.Add("Customer");
+
+                TempData["UserType"] = new SelectList(UserType); //new SelectList(Category_List, "Category_ID", "Category_Name");
+
                 return View();
             }
         }
@@ -87,16 +94,16 @@ namespace MGCreations.Controllers
         {
             try
             {
-                int count = db.users.Where(x => x.User_Username.Contains(User.User_Username)).Count();
-                if (count == 0)
+                string ErrorMessage = CheckData(User);
+                if (ErrorMessage == "")
                 {
                     user u = new user();
                     
                     u.User_Username = User.User_Username;
                     u.User_Password = User.User_Password;
                     u.Confirm_Password = User.Confirm_Password;
-                    u.User_FirstName = User.User_FirstName;
-                    u.User_LastName = User.User_LastName;
+                    u.User_FirstName = ToUpperCase(User.User_FirstName);
+                    u.User_LastName = ToUpperCase(User.User_LastName);
                     u.User_Email = User.User_Email;
                     u.User_ContactNo = User.User_ContactNo;
                     u.User_DOB = User.User_DOB;
@@ -115,7 +122,7 @@ namespace MGCreations.Controllers
                 }
                 else
                 {
-                    ViewBag.Error = "Username Already Exist";
+                    ViewBag.Errors = ErrorMessage;
                 }
                 return View();
             }
@@ -138,6 +145,44 @@ namespace MGCreations.Controllers
             }
         }
 
+        private string ToUpperCase(string str)
+        {
+            if(str.Equals(null))
+            {
+                return string.Empty;
+            }
+            return char.ToUpper(str[0]) + str.Substring(1);
+        }
+        
+        private string CheckData(user User)
+        {
+
+            int countUserName = db.users.Where(x => x.User_Username.Equals(User.User_Username)).Count();
+            
+            int countEmail = db.users.Where(x => x.User_Email.Equals(User.User_Email)).Count();
+            int countContactNo = db.users.Where(x => x.User_ContactNo.Equals(User.User_ContactNo)).Count();
+            string ErrorMessage = "" ;
+
+            if (get_age(User.User_DOB) < 16)
+            {
+                ErrorMessage = ErrorMessage + "Must be 16" + Environment.NewLine;
+            }
+
+            if (countUserName > 0)
+            {
+                ErrorMessage = ErrorMessage + "Username Already Exist" + Environment.NewLine;
+            }
+            if(countEmail > 0)
+            {
+                ErrorMessage = ErrorMessage  +"Email Already Exist" + Environment.NewLine;
+            }
+            if(countContactNo > 0)
+            {
+                ErrorMessage = ErrorMessage  + "Contact Number Already Exist";
+            }
+    
+            return ErrorMessage;
+        }
 
         [HttpGet]
         public ActionResult User_Logout()
@@ -216,6 +261,12 @@ namespace MGCreations.Controllers
                 {
                     return HttpNotFound();
                 }
+                List<String> UserType = new List<String>();
+
+                UserType.Add("Admin");
+                UserType.Add("Customer");
+
+                TempData["UserType"] = new SelectList(UserType); //new SelectList(Category_List, "Category_ID", "Category_Name");
                 return View(user1);
             }
         }
@@ -224,19 +275,49 @@ namespace MGCreations.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Update_User(user User)
         {
+            try
+            {
+                int UserID = Convert.ToInt32(Session["User_ID"].ToString());
+          
+                //if (db.users.Where(x => x.User_ID.Equals(UserID) && x.User_Password.Equals(User.User_Password)).Count() > 0)
+                {
+                    user u = db.users.Where(x => x.User_ID.Equals(User.User_ID)).SingleOrDefault();
+                    u.User_Username = User.User_Username;
+                    u.User_Password = u.User_Password;
+                    u.Confirm_Password = u.User_Password;
+                    u.User_FirstName = User.User_FirstName;
+                    u.User_LastName = User.User_LastName;
+                    u.User_Email = User.User_Email;
+                    u.User_ContactNo = User.User_ContactNo;
+                    u.User_DOB = User.User_DOB;
+                    u.User_Type = User.User_Type;
+                    db.Entry(u).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("User_Details", new { u_id = User.User_ID });
+                }
+                //else
+                //{
+                //    return View();
+                //}
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            {
+                Exception raise = dbEx;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        string message = string.Format("{0}:{1}",
+                            validationErrors.Entry.Entity.ToString(),
+                            validationError.ErrorMessage);
+                        // raise a new exception nesting  
+                        // the current instance as InnerException  
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+                throw raise;
+            }
 
-            user u = new user();
-            u.User_Username = User.User_Username;
-            u.User_Password = User.User_Password;
-            u.User_FirstName = User.User_FirstName;
-            u.User_LastName = User.User_LastName;
-            u.User_Email = User.User_Email;
-            u.User_ContactNo = User.User_ContactNo;
-            u.User_DOB = User.User_DOB;
-            u.User_Type = User.User_Type;
-            db.Entry(User).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("User_Details", new { u_id = User.User_ID });
         }
 
         [HttpGet]
@@ -282,6 +363,10 @@ namespace MGCreations.Controllers
             }
             else
             {
+                db.delivery_address.RemoveRange(db.delivery_address.Where(x => x.User_ID.Equals(User.User_ID)).ToList());
+                db.billing_address.RemoveRange(db.billing_address.Where(x => x.User_ID.Equals(User.User_ID)).ToList());
+                db.orders.RemoveRange(db.orders.Where(x => x.User_ID.Equals(User.User_ID)).ToList());
+                db.carts.RemoveRange(db.carts.Where(x=>x.User_ID.Equals(User.User_ID)).ToList());
                 db.users.Remove(User);
                 db.SaveChanges();
                 if (Session["User_Type"].ToString() == "Customer")
@@ -312,6 +397,26 @@ namespace MGCreations.Controllers
             return View();
         }
 
+        [HttpGet]
+        public int get_age(DateTime dob)
+        {
+            DateTime today = DateTime.Today;
+
+            int months = today.Month - dob.Month;
+            int years = today.Year - dob.Year;
+
+            if (today.Day < dob.Day)
+            {
+                months--;
+            }
+
+            if (months < 0)
+            {
+                years--;
+                months += 12;
+            }
+            return years;
+        }
 
     }
 }

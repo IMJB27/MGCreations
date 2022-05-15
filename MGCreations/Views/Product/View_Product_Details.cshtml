@@ -79,10 +79,14 @@
         }
 
     }
+
     @if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
     {
-    <p>
+
         @Html.ActionLink("Edit", "Update_Product_Details", new { p_id = Model.Product_ID })
-    </p>
+        <br />
+        @Html.ActionLink("Delete", "Delete_Product", new { p_id = Model.Product_ID })
+        <br />
+        @Html.ActionLink("Manage Product Images", "Product_Images_List", "ProductImages", new { p_id = Model.Product_ID }, null)
     }
 </div>

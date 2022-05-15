@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - MGCreations</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+  
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 </head>
@@ -46,20 +48,22 @@
                             <li>@Html.ActionLink("Register", "Register_User", "User")</li>
                         }
                     }
-
+                   
+                  
                     @if ((Session["User_Name"] != null))
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Hello @Session["User_Name"].ToString()
+
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <div class="dropdown-item"> @Html.ActionLink("View Your Profile", "User_Details", "User", new { u_id = Session["User_ID"].ToString() })</div>
-                                <div class="dropdown-item">  @Html.ActionLink("Manage Your Orders", "User_Details", "User", new { u_id = Session["User_ID"].ToString() })</div>
-                                <div class="dropdown-item">@Html.ActionLink("Logout", "User_Logout", "User")</div>
+                                <div class="dropdown-item"> @Html.ActionLink("View Your Profile", "User_Details", "User", new { u_id = Session["User_ID"].ToString() }, htmlAttributes:new { @class="btn btn-default btn-block"})</div>
+                                <div class="dropdown-item">  @Html.ActionLink("Manage Your Orders", "User_Details", "User", new { u_id = Session["User_ID"].ToString() }, htmlAttributes: new { @class = "btn btn-default  btn-block" })</div>
+                                <div class="dropdown-item">@Html.ActionLink("Logout", "User_Logout", "User", new { u_id = Session["User_ID"].ToString() }, htmlAttributes: new { @class = "btn btn-danger btn-block" })</div>
                             </div>
                         </li>
-      
+
                         <li>@Html.ActionLink("Cart", "View_Cart", "Cart")</li>
                     }
                 </ul>

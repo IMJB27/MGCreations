@@ -6,29 +6,34 @@
 
 <h2>Personalise_Product</h2>
 
-<svg width="100%" height="100%">
-    <text id="textid" x="0" y="15" fill="red">I love SVG!</text>
-    <img src="@Url.Content(Model.Product_Image_URL)" width="500" height="500" />
+<svg xmlns:xlink="http://www.w3.org/2000/svg" width="500px" height="500px">
+    <g id="editor">
+
+        <image xlink:href="@Url.Content(Model.Product_Image_URL)" x="0" y="0" width="500px" height="500px" />
+        <text id="textid" fill="black" font-size="50px" font-family="verdana" x="200" y="250" >hello</text>
+
+
+    </g>
 </svg>
 <div>
-    <input type="text" id="textbox"/>
+    <input type="text" id="textbox" />
     <input type="file" />
 </div>
-
-
-<svg height="30" width="200">
-
-    Sorry, your browser does not support inline SVG.
-</svg>
-
-<button onclick="changeText()">Click here to change text</button>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script>
-    $(function () {
-        $(".textbox").onchange(function () {
-            document.getElementById('textid').textContent = $('#textbox').val();
-        });
-    }
+    $(document).ready(function () {
+        $("#textbox").on('input', function () {
+            document.getElementById("textid").textContent = $(this).val();
+        }
+        );
+        window.addEventListener('mousedown', function (e) {
+
+            let posX = this.document.getElementById("textid").get
+
+            //alert(e.clientX + "  " + e.clientY);
+        }
+        );
+    });  
 </script>

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<MGCreations.Models.product_images>
+
+@{
+    ViewBag.Title = "Product_Image_List";
+    TempData.Keep();
+}
+
+<div class="container-fluid py-4">
+    <h4 class="text-center text-uppercase">Product Images</h4>
+    <table class="table table-striped table-bordered">
+        <thead class="bg-dark text-white">
+            <tr>
+                @Html.ActionLink("Add Images", "Add_Product_Images", new { p_id = Convert.ToInt32(TempData["ProductID"].ToString()) })
+            </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product_Image_Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product_Image_URL)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.isPersonalisable)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.product.Product_Name)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product_Image_Name)
+                </td>
+                <td>
+                    <img class="img-responsive" src="@Url.Content(@item.Product_Image_URL)" width="100px" height="100px" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isPersonalisable)
+                </td>
+                <td >
+
+                    @Html.DisplayFor(modelItem => item.product.Product_Name)
+                </td>
+   
+                <td class="align-middle">
+                    <center>
+                        <a class="btn btn-danger" href="@Url.Action("Delete_Product_Image", "ProductImages", new { pi_id = item.Product_Images_ID}) "><i class="fa fa-trash"></i></a>
+                    </center>
+                </td>
+      
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

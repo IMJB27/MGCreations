@@ -13,10 +13,11 @@ namespace MGCreations.Controllers
 {
     public class HomeController : Controller
     {
+        mgcreationsEntities db = new mgcreationsEntities();
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            return View(db.products.ToList());
         }
         [HttpGet]
         public ActionResult About()

@@ -53,7 +53,7 @@ namespace MGCreations.Controllers
                     TempData["BillingAddressID"] = billing_Address.Billing_Address_ID;
                     TempData.Keep();
                     ModelState.Clear();
-                    return RedirectToAction("Place_Order", "Order");
+                    return RedirectToAction("View_Cart", "Cart");
 
                 }
             }

@@ -1,0 +1,48 @@
+﻿@model MGCreations.Models.product_images
+
+@{
+    ViewBag.Title= "Delete_Product_Image";
+}
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>product_images</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dd>
+                <img class="img-responsive" src="@Url.Content(Model.Product_Image_URL)" width="100px" height="100px" />
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Product_Image_Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Product_Image_Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.isPersonalisable)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.isPersonalisable)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.product.Product_Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.product.Product_Name)
+            </dd>
+
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger" /> |
+                @Html.ActionLink("Back to List", "Product_Images_List")
+            </div>
+        }
+    </div>
