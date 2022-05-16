@@ -15,6 +15,7 @@ namespace MGCreations.Controllers
     {
         mgcreationsEntities db = new mgcreationsEntities();
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult User_Login()
         {
             if (Session["User_ID"] != null)
@@ -23,11 +24,13 @@ namespace MGCreations.Controllers
             }
             else
             {
+                
                 return View();
             }
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult User_Login(user User)
         {
@@ -39,7 +42,7 @@ namespace MGCreations.Controllers
                     {
                         usercookie["Username"] = User.User_Username;
                         usercookie["password"] = User.User_Password;
-                        usercookie.Expires = DateTime.Now.AddMinutes(120);
+                        usercookie.Expires = DateTime.Now.AddMinutes(600);
                         HttpContext.Response.Cookies.Add(usercookie);
                     }
                     else
@@ -53,7 +56,7 @@ namespace MGCreations.Controllers
                     Session["User_ID"] = u.User_ID.ToString();
                     Session["User_Name"] = u.User_Username.ToString();
                     Session["User_Type"] = u.User_Type.ToString();
-                    FormsAuthentication.SetAuthCookie(u.User_Username, false);
+                    FormsAuthentication.SetAuthCookie(u.User_Username, User.User_RememberMe);
                     return Redirect("~/Home/Index");
                 }
                 else

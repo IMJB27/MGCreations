@@ -6,10 +6,22 @@
     <title>@ViewBag.Title - MGCreations</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-  
+
     <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="~/Content/ie10-viewport-bug-workaround.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/Content/dashboard.css" rel="stylesheet" />
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="~/Scripts/ie-emulation-modes-warning.js"></script>
+
 </head>
 <body>
     <div class="navbar navbar-fixed-top navbar-default">
@@ -59,7 +71,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <div class="dropdown-item"> @Html.ActionLink("View Your Profile", "User_Details", "User", new { u_id = Session["User_ID"].ToString() }, htmlAttributes:new { @class="btn btn-default btn-block"})</div>
-                                <div class="dropdown-item">  @Html.ActionLink("Manage Your Orders", "User_Details", "User", new { u_id = Session["User_ID"].ToString() }, htmlAttributes: new { @class = "btn btn-default  btn-block" })</div>
+                                <div class="dropdown-item">  @Html.ActionLink("Manage Your Orders", "User_Manage_Order", "Order", new { u_id = Session["User_ID"].ToString() }, htmlAttributes: new { @class = "btn btn-default  btn-block" })</div>
                                 <div class="dropdown-item">@Html.ActionLink("Logout", "User_Logout", "User", new { u_id = Session["User_ID"].ToString() }, htmlAttributes: new { @class = "btn btn-danger btn-block" })</div>
                             </div>
                         </li>

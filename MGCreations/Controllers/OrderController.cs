@@ -15,7 +15,7 @@ namespace MGCreations.Controllers
         CartController cartController = new CartController();
     
         [HttpGet]
-        public ActionResult View_Order()
+        public ActionResult Order_Confirmation()
         {
             if (Session["User_ID"] == null)
             {
@@ -28,15 +28,29 @@ namespace MGCreations.Controllers
             else
             {
                 int userid = Convert.ToInt32(Session["User_ID"].ToString());
-                string orderref = TempData["OrderReference"].ToString();
+                var Order = GetOrders().Where(x => x.Order.Order_Reference_No.Equals(TempData["OrderReference"]) && x.User.User_ID.Equals(userid)).ToList();
                 TempData.Keep();
-                List<order> orders = db.orders.Where(x => x.Order_Reference_No.Equals(orderref) && x.Order_Status.Equals("Paid")).ToList();
-                //TempData.Remove("OrderReference");
-                //TempData.Remove("DeliveryAddressID");
-                //TempData.Remove("DeliveryAddress");
-                //TempData.Remove("BillingAddress");
-                //TempData.Remove("BillingAddressID");
-                return View(orders);
+                TempData.Remove("DeliveryAddressID");
+                TempData.Remove("DeliveryAddress");
+                TempData.Remove("BillingAddress");
+                TempData.Remove("BillingAddressID");
+                return View(Order);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult View_Order_Details(int? o_id)
+        {
+            if (Session["User_ID"] == null)
+            {
+                return RedirectToAction("User_Login", "User");
+            }
+            else
+            {
+                int userid = Convert.ToInt32(Session["User_ID"].ToString());
+                JoinModel Order = GetOrders().Where(x => x.Order.Order_ID.Equals(o_id)).SingleOrDefault();
+
+                return View(Order);
             }
         }
 
@@ -121,7 +135,7 @@ namespace MGCreations.Controllers
                     db.Entry(item).State = System.Data.Entity.EntityState.Modified;
                 }
                 db.SaveChanges();
-                return RedirectToAction("View_Order");
+                return RedirectToAction("Order_Confirmation");
             }
         }
 
@@ -138,35 +152,7 @@ namespace MGCreations.Controllers
             }
             else
             {
-                int UserID = Convert.ToInt32(Session["User_ID"].ToString());
-                List<order> orders = db.orders.ToList();
-                List<product> products = db.products.ToList();
-                List<user> users = db.users.ToList();
-                List<cart> carts = db.carts.ToList();
-                List<delivery_address> delivery_Addresses = db.delivery_address.ToList();
-                List<billing_address> billing_addressess = db.billing_address.ToList();
-
-                var test = from o in orders
-                           join u in users on o.User_ID equals u.User_ID into table1
-                           from u in table1.ToList()
-                           join da in delivery_Addresses on o.Delivery_Address_ID equals da.Delivery_Address_ID into table2
-                           from da in table2.ToList()
-                           join ba in billing_addressess on o.Billing_Address_ID equals ba.Billing_Address_ID into table3
-                           from ba in table3.ToList()
-                           join c in carts on o.Cart_ID equals c.Cart_ID into table4
-                           from c in table4.ToList()
-                           join p in products on c.Product_ID equals p.Product_ID into table5
-                           from p in table5.ToList()
-                           select new JoinModel
-                           {
-                               Order = o,
-                               User = u,
-                               delivery_Address = da,
-                               billing_Address = ba,
-                               Cart = c,
-                               Product = p
-                           };
-
+                var test = GetOrders();
                 int count = test.Count();
                 return View(test);
             }
@@ -179,41 +165,45 @@ namespace MGCreations.Controllers
             {
                 return RedirectToAction("User_Login", "User");
             }
-  
             else
             {
                 int UserID = Convert.ToInt32(Session["User_ID"].ToString());
-                List<order> orders = db.orders.ToList();
-                List<product> products = db.products.ToList();
-                List<user> users = db.users.ToList();
-                List<cart> carts = db.carts.ToList();
-                List<delivery_address> delivery_Addresses = db.delivery_address.ToList();
-                List<billing_address> billing_addressess = db.billing_address.ToList();
-
-                var test = from o in orders
-                           join u in users on o.User_ID equals u.User_ID into table1
-                           from u in table1.ToList()
-                           join da in delivery_Addresses on o.Delivery_Address_ID equals da.Delivery_Address_ID into table2
-                           from da in table2.ToList()
-                           join ba in billing_addressess on o.Billing_Address_ID equals ba.Billing_Address_ID into table3
-                           from ba in table3.ToList()
-                           join c in carts on o.Cart_ID equals c.Cart_ID into table4
-                           from c in table4.ToList()
-                           join p in products on c.Product_ID equals p.Product_ID into table5
-                           from p in table5.ToList()
-                           select new JoinModel
-                           {
-                               Order = o,
-                               User = u,
-                               delivery_Address = da,
-                               billing_Address = ba,
-                               Cart = c,
-                               Product = p
-                           };
-
-                List<JoinModel> User_Orders = test.Where(x => x.Order.User_ID.Equals(u_id)).ToList();
+                var Orders = GetOrders();
+                List<JoinModel> User_Orders = Orders.Where(x => x.Order.User_ID.Equals(u_id) && x.Order.Order_Status != "Not Paid").ToList();
                 return View(User_Orders);
             }
+        }
+
+        private List<JoinModel> GetOrders()
+        {
+            List<order> orders = db.orders.ToList();
+            List<product> products = db.products.ToList();
+            List<user> users = db.users.ToList();
+            List<cart> carts = db.carts.ToList();
+            List<delivery_address> delivery_Addresses = db.delivery_address.ToList();
+            List<billing_address> billing_addressess = db.billing_address.ToList();
+
+            var Order_Details = from o in orders
+                       join u in users on o.User_ID equals u.User_ID into table1
+                       from u in table1.ToList()
+                       join da in delivery_Addresses on o.Delivery_Address_ID equals da.Delivery_Address_ID into table2
+                       from da in table2.ToList()
+                       join ba in billing_addressess on o.Billing_Address_ID equals ba.Billing_Address_ID into table3
+                       from ba in table3.ToList()
+                       join c in carts on o.Cart_ID equals c.Cart_ID into table4
+                       from c in table4.ToList()
+                       join p in products on c.Product_ID equals p.Product_ID into table5
+                       from p in table5.ToList()
+                       select new JoinModel
+                       {
+                           Order = o,
+                           User = u,
+                           delivery_Address = da,
+                           billing_Address = ba,
+                           Cart = c,
+                           Product = p
+                       };
+            return Order_Details.ToList();
         }
 
         [HttpPost]
@@ -225,6 +215,24 @@ namespace MGCreations.Controllers
             db.Entry(Order).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("View_Order_List", "Order");
+        }
+
+        [HttpGet]
+        public ActionResult Delete_Order(int? o_id)
+        {
+            if (Session["User_ID"] == null)
+            {
+                return RedirectToAction("User_Login", "User");
+            }
+  
+            else
+            {
+                order Order = db.orders.Find(o_id);
+
+                db.orders.Remove(Order);
+                db.SaveChanges();
+                return Redirect(Request.UrlReferrer.ToString());
+            }
         }
     }
 }

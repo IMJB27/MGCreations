@@ -251,6 +251,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dashboard.css" />
+    <Content Include="Content\ie10-viewport-bug-workaround.css" />
     <Content Include="Content\Logo\Logo.jpeg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -277,6 +279,7 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\ie-emulation-modes-warning.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.js" />
@@ -312,7 +315,6 @@
     <Content Include="Views\User\User_Details.cshtml" />
     <Content Include="Views\User\Update_User.cshtml" />
     <Content Include="Views\User\Delete_User.cshtml" />
-    <Content Include="Views\User\Admin_Dashboard.cshtml" />
     <Content Include="Views\Product\Product_List.cshtml" />
     <Content Include="Views\Product\Add_Product.cshtml" />
     <Content Include="Views\ProductImages\Add_Product_Images.cshtml" />
@@ -325,13 +327,14 @@
     <Content Include="Views\BillingAddress\Billing_Address_List.cshtml" />
     <Content Include="Views\Paypal\FailureView.cshtml" />
     <Content Include="Views\BillingAddress\Add_Billing_Address.cshtml" />
-    <Content Include="Views\Order\View_Order.cshtml" />
-    <Content Include="Views\Product\Personalise_Product.cshtml" />
+    <Content Include="Views\Order\Order_Confirmation.cshtml" />
     <Content Include="Views\ProductImages\Personalise_Product.cshtml" />
     <Content Include="Views\Order\View_Order_List.cshtml" />
     <Content Include="Views\ProductImages\Product_Images_List.cshtml" />
     <Content Include="Views\ProductImages\Delete_Product_Image.cshtml" />
     <Content Include="Views\Order\User_Manage_Order.cshtml" />
+    <Content Include="Views\User\Admin_Dashboard.cshtml" />
+    <Content Include="Views\Order\View_Order_Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

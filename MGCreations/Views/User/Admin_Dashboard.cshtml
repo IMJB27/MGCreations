@@ -1,10 +1,122 @@
-﻿@model MGCreations.Models.user
-
+﻿
 @{
-    ViewBag.Title = "Admin_Dashboard";
+    Layout = null;
 }
 
-<h2>Admin_Dashboard</h2>
 
-@Html.ActionLink("User List", "User_List")
-@Html.ActionLink("View Categories", "Product_Category_List", "ProductCategory")
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="canonical" href="https://getbootstrap.com/docs/3.4/examples/dashboard/">
+
+    <title>Admin Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+ 
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="~/Content/ie10-viewport-bug-workaround.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/Content/dashboard.css" rel="stylesheet" />
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="~/Scripts/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <div class="navbar navbar-fixed-top navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <center>
+                    <a class="navbar-brand" rel="home" href="#">
+                        <img src="~/Content/Logo/Logo.jpeg" alt="..." style="height: 50px; width: 50px; margin-top: -14px;" />
+                    </a>
+                    @Html.ActionLink("MGCreations", "Index", "Home", null, new { @class = "navbar-brand" })
+                </center>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar navbar-collapse collapse">
+                <ul class="nav nav-sidebar">
+                    <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Manage Category", "Product_Category_List", "ProductCategory")</li>
+                    <li>@Html.ActionLink("Manage Products", "Product_List", "Product")</li>
+                    <li>@Html.ActionLink("Manage Customers", "User_List", "User")</li>
+                    <li>@Html.ActionLink("Manage Orders", "View_Order_List", "Order")</li>
+                </ul>
+                    <ul class="nav nav-sidebar ">
+                        @if (Session["User_ID"] == null)
+                        {
+                            {
+                                <li>@Html.ActionLink("Login", "User_Login", "User")</li>
+                                <li>@Html.ActionLink("Register", "Register_User", "User")</li>
+                            }
+                        }
+                        @if ((Session["User_Name"] != null))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Hello @Session["User_Name"].ToString()
+
+                                </a>
+                                <div class="dropdown-menu btn-block" aria-labelledby="navbarDropdownMenuLink">
+                                    <div class="dropdown-item"> @Html.ActionLink("View Your Profile", "User_Details", "User", new { u_id = Session["User_ID"].ToString() }, htmlAttributes: new { @class = "btn btn-default btn-block" })</div>
+                                    <div class="dropdown-item">  @Html.ActionLink("Manage Your Orders", "User_Details", "User", new { u_id = Session["User_ID"].ToString() }, htmlAttributes: new { @class = "btn btn-default  btn-block" })</div>
+                                    <div class="dropdown-item">@Html.ActionLink("Logout", "User_Logout", "User", new { u_id = Session["User_ID"].ToString() }, htmlAttributes: new { @class = "btn btn-danger btn-block" })</div>
+                                </div>
+                            </li>
+
+                            <li>@Html.ActionLink("Cart", "View_Cart", "Cart")</li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    <h1 class="page-header">Dashboard</h1>
+                </div>
+            </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+
+    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="https://getbootstrap.com/docs/3.4/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="https://getbootstrap.com/docs/3.4/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+</body>
+</html>

@@ -51,6 +51,7 @@ namespace MGCreations.Controllers
                     db.billing_address.Add(billing_Address);
                     db.SaveChanges();
                     TempData["BillingAddressID"] = billing_Address.Billing_Address_ID;
+                    TempData["BillingAddress"] = billing_Address;
                     TempData.Keep();
                     ModelState.Clear();
                     return RedirectToAction("View_Cart", "Cart");

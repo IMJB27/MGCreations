@@ -33,9 +33,9 @@
                 @using(Html.BeginForm("Update_Order_Status", "Order",new { o_id = item.Order.Order_ID} , FormMethod.Post))
                 {
                     @Html.AntiForgeryToken();
-                    @*<td>@item.Order.Order_Status</td>*@
                     <td>
                     @Html.DropDownList("Order_Status", new List<SelectListItem>{
+                                                                             new SelectListItem {Value = "Paid", Text = "Not Paid", Selected = item.Order.Order_Status == "Not Paid"},
                                                                              new SelectListItem {Value = "Paid", Text = "Paid", Selected = item.Order.Order_Status == "Paid"},
                                                                              new SelectListItem {Value = "Confirm Order", Text = "Confirm Order", Selected = item.Order.Order_Status == "Confirm Order" },
                                                                              new SelectListItem {Value = "In Progress", Text = "In Progress", Selected = item.Order.Order_Status == "In Progress" },
@@ -46,20 +46,15 @@
                                                                      )
                     </td>
                     <td>
-                        <input type="submit" class="btn btn-success" value="Update" />
+                        <input type="submit" class="btn btn-success" value="Update" />    
                     </td>
+                    <td><a class ="btn btn-primary" href="@Url.Action("View_Order_Details","Order",new { o_id = item.Order.Order_ID })"><i class="fa fa-list"></i></a></td>
+                    <td><a class="btn btn-danger" href="@Url.Action("Delete_Order","Order",new { o_id = item.Order.Order_ID })"><i class="fa fa-trash"></i></a></td>
                  }
                     
             </tr>
-
+             
             }
         </tbody>
     </table>
 </div>
-<script type="text/javascript">
-    $(document).ready(function (){
-
-        $("#order_Status").select("Paid");
-    
-    });
-</script>

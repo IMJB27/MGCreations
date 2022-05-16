@@ -1,12 +1,11 @@
-﻿
+﻿@model IEnumerable<MGCreations.Models.JoinModel>
+
 @{
     ViewBag.Title = "User_Manage_Order";
 }
 
-<h2>User_Manage_Order</h2>
-
 <div class="container-fluid py-4">
-    <h4 class="text-center text-uppercase">Order List</h4>
+    <h4 class="text-center text-uppercase">Your Orders</h4>
     <table class="table table-striped table-bordered">
         <thead class="bg-dark text-white">
             <tr>
@@ -33,7 +32,7 @@
                     <td>@item.Product.Product_Price</td>
                     <td>@item.Order.Order_TotalAmount</td>
                     <td>@item.Order.Order_Status</td>
-                       
+                    <td><a class="btn btn-danger" href="@Url.Action("Delete_Order","Order",new { o_id = item.Order.Order_ID })"><i class="fa fa-trash"></i></a></td>
                 </tr>
 
             }

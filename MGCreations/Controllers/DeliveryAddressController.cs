@@ -48,11 +48,12 @@ namespace MGCreations.Controllers
                     delivery_Address.Delivery_Address_Postcode = da.Delivery_Address_Postcode;
 
                     db.delivery_address.Add(delivery_Address);
-                    TempData["DeliveryAddress"] = delivery_Address;
                     TempData["DeliveryAddressID"] = delivery_Address.Delivery_Address_ID;
+                    TempData["DeliveryAddress"] = delivery_Address;
+                    TempData.Keep();
                     db.SaveChanges();
                     ModelState.Clear();
-                    return RedirectToAction("Add_Billing_Address", "BillingAddress");  
+                    return RedirectToAction("View_Cart", "Cart");
                 }
             }
             catch (Exception ex)
@@ -92,7 +93,6 @@ namespace MGCreations.Controllers
             TempData["DeliveryAddress"] = delivery_Address;
             TempData["DeliveryAddressID"] = delivery_Address.Delivery_Address_ID;
             TempData.Keep();
-            //return RedirectToAction("Billing_Address_List", "BillingAddress");
             return RedirectToAction("View_Cart", "Cart");
         }
 
@@ -102,10 +102,9 @@ namespace MGCreations.Controllers
         public ActionResult GetDeliveryAddress()
         {
            delivery_address Address = TempData["DeliveryAddress"] as delivery_address;
-            TempData.Keep();
-            
-           // int UserID = Convert.ToInt32(Session["User_ID"].ToString());
-           // Address = db.customer_address.Where(x => x.User_ID.Equals(UserID)).SingleOrDefault();
+            TempData["DeliveryAddressID"] = Address.Delivery_Address_ID;
+           TempData.Keep();
+    
             var jsonresult = new
             {
                 AddressLine1 = Address.Delivery_Address_Line1,

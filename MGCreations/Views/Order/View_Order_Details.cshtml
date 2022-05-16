@@ -1,0 +1,143 @@
+﻿@model MGCreations.Models.JoinModel
+
+@{
+    ViewBag.Title = "View_Order_Details";
+
+
+}
+
+<div class="container-fluid py-4">
+    <h4 class="text-center text-uppercase">Customer Order Detail</h4>
+    <table class="table table-striped table-bordered">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th>Order Reference No.</th>
+                <th>Order Date</th>
+                <th>Product Name</th>
+                <th>Product Quantity</th>
+                <th>Product Price</th>
+                <th>Order Total</th>
+                <th>Order Status</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Order.Order_Reference_No</td>
+                <td>@Model.Order.Order_Date</td>
+                <td>@Model.Product.Product_Name</td>
+                <td>@Model.Cart.Product_Quantity</td>
+                <td>@Model.Product.Product_Price</td>
+                <td>@Model.Order.Order_TotalAmount</td>
+                @using (Html.BeginForm("Update_Order_Status", "Order", new { o_id = Model.Order.Order_ID }, FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken();
+                    <td>
+                        @Html.DropDownList("Order_Status", new List<SelectListItem>{
+                                                                                 new SelectListItem {Value = "Paid", Text = "Not Paid", Selected = Model.Order.Order_Status == "Not Paid"},
+                                                                                 new SelectListItem {Value = "Paid", Text = "Paid", Selected = Model.Order.Order_Status == "Paid"},
+                                                                                 new SelectListItem {Value = "Confirm Order", Text = "Confirm Order", Selected = Model.Order.Order_Status == "Confirm Order" },
+                                                                                 new SelectListItem {Value = "In Progress", Text = "In Progress", Selected = Model.Order.Order_Status == "In Progress" },
+                                                                                 new SelectListItem {Value = "Delivery on Progress", Text = "Delivery on Progress", Selected = Model.Order.Order_Status == "Delivery on Progress" },
+                                                                                 new SelectListItem {Value = "Completed", Text = "Completed", Selected = Model.Order.Order_Status == "Completed" }
+                                                                          },
+                                                                            new { @class = "form-control", @id = "Order_Status", name = "Order_Status" }
+                                                                         )
+                    </td>
+                    <td>
+                        <input type="submit" class="btn btn-success" value="Update" />
+                    </td>
+                    <td><a class="btn btn-primary" href="@Url.Action("View_Order_Details","Order",new { o_id = item.Order.Order_ID })"><i class="fa fa-list"></i></a></td>
+
+                }
+
+            </tr>
+        </tbody>
+    </table>
+    <h4 class="text-center text-uppercase">Customer Detail</h4>
+    <table class="table table-striped table-bordered">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Contact No.</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.User.User_FirstName</td>
+                <td>@Model.User.User_LastName</td>
+                <td>@Model.User.User_Username</td>
+                <td>@Model.User.User_Email</td>
+                <td>@Model.User.User_ContactNo</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4 class="text-center text-uppercase">Customer Delivery Address</h4>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Address Line 1</th>
+                <th>Address Line 2</th>
+                <th>City</th>
+                <th>County</th>
+                <th>Country</th>
+                <th>Postcode</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Model.delivery_Address.Delivery_Address_Line1
+                </td>
+
+                <td> @Model.delivery_Address.Delivery_Address_Line2</td>
+
+                <td> @Model.delivery_Address.Delivery_Address_City</td>
+
+                <td> @Model.delivery_Address.Delivery_Address_County</td>
+
+                <td> @Model.delivery_Address.Delivery_Address_Country</td>
+
+                <td> @Model.delivery_Address.Delivery_Address_Postcode</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4 class="text-center text-uppercase">Customer Billing Address</h4>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Address Line 1</th>
+                <th>Address Line 2</th>
+                <th>City</th>
+                <th>County</th>
+                <th>Country</th>
+                <th>Postcode</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Model.billing_Address.Billing_Address_Line1
+                </td>
+
+                <td> @Model.billing_Address.Billing_Address_Line2</td>
+
+                <td> @Model.billing_Address.Billing_Address_City</td>
+
+                <td> @Model.billing_Address.Billing_Address_County</td>
+
+                <td> @Model.billing_Address.Billing_Address_Country</td>
+
+                <td> @Model.billing_Address.Billing_Address_Postcode</td>
+            </tr>
+
+        </tbody>
+       
+    </table>
+</div>
+    <a class="fa-arrow-circle-left" href="@Url.Action("View_Order_List","Order")"> Back to List</a>

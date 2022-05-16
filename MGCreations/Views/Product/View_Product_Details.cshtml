@@ -6,9 +6,7 @@
     ProductController productController = new ProductController();
 }
 
-<h2>View_Product_Details</h2>
 
-    @Html.AntiForgeryToken()
 
 <div>
     <h4>product</h4>
@@ -66,6 +64,7 @@
 
     @using (Html.BeginForm("AddtoCart", "Product", new { p_id = Model.Product_ID, }, FormMethod.Post))
     {
+        @Html.AntiForgeryToken()
         if (Model.Product_Quantity < 1)
         {
             <p style="color:Red"> Out of Stock </p>
@@ -82,7 +81,7 @@
 
     @if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
     {
-
+       
         @Html.ActionLink("Edit", "Update_Product_Details", new { p_id = Model.Product_ID })
         <br />
         @Html.ActionLink("Delete", "Delete_Product", new { p_id = Model.Product_ID })
