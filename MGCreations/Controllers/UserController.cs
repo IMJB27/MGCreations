@@ -8,6 +8,9 @@ using MySql.Data;
 using System.Net;
 using System.Web.Security;
 using System.Data.Entity.Validation;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web.UI;
 
 namespace MGCreations.Controllers
 {
@@ -24,7 +27,14 @@ namespace MGCreations.Controllers
             }
             else
             {
-                
+                HttpCookie usercookie = HttpContext.Request.Cookies.Get("Users");
+                if (usercookie != null) {
+                    string username = usercookie["Username"].ToString();
+                    string password = usercookie["Password"].ToString();
+                    user User = db.users.Where(x => x.User_Username.Equals(username) && x.User_Password.Equals(password)).SingleOrDefault();
+                    User.User_RememberMe = true;
+                    return View(User);
+                }
                 return View();
             }
         }
@@ -41,7 +51,7 @@ namespace MGCreations.Controllers
                     if (User.User_RememberMe == true)
                     {
                         usercookie["Username"] = User.User_Username;
-                        usercookie["password"] = User.User_Password;
+                        usercookie["Password"] = User.User_Password;
                         usercookie.Expires = DateTime.Now.AddMinutes(600);
                         HttpContext.Response.Cookies.Add(usercookie);
                     }
@@ -145,6 +155,23 @@ namespace MGCreations.Controllers
                     }
                 }
                 throw raise;
+            }
+        }
+
+        public static String getSHA256(String data)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(data));
+
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
             }
         }
 
