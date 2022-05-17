@@ -51,7 +51,7 @@ namespace MGCreations.Controllers
                         HttpContext.Response.Cookies.Add(usercookie);
                     }
                     user u = db.users.Where(x => x.User_Username == User.User_Username && x.User_Password == User.User_Password).SingleOrDefault();
-                if (u != null)
+                if ((u != null)&&(u.is_Active == 1))
                 {
                     Session["User_ID"] = u.User_ID.ToString();
                     Session["User_Name"] = u.User_Username.ToString();
@@ -177,7 +177,9 @@ namespace MGCreations.Controllers
             }
             if(countEmail > 0)
             {
-                ErrorMessage = ErrorMessage  +"Email Already Exist" + Environment.NewLine;
+               
+                    ErrorMessage = ErrorMessage + "Email Already Exist" + Environment.NewLine;
+                
             }
             if(countContactNo > 0)
             {
@@ -293,15 +295,22 @@ namespace MGCreations.Controllers
                     u.User_Email = User.User_Email;
                     u.User_ContactNo = User.User_ContactNo;
                     u.User_DOB = User.User_DOB;
-                    u.User_Type = User.User_Type;
+                    if (Session["User_Type"].ToString() == "Admin")
+                    {
+                        u.User_Type = User.User_Type;
+                        u.is_Active = User.is_Active;
+                    }
+                    else
+                    {
+                        u.User_Type = "Customer";
+                        u.is_Active = 1;
+                    }
+                  
+
                     db.Entry(u).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("User_Details", new { u_id = User.User_ID });
                 }
-                //else
-                //{
-                //    return View();
-                //}
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
             {
@@ -366,12 +375,24 @@ namespace MGCreations.Controllers
             }
             else
             {
-                db.delivery_address.RemoveRange(db.delivery_address.Where(x => x.User_ID.Equals(User.User_ID)).ToList());
-                db.billing_address.RemoveRange(db.billing_address.Where(x => x.User_ID.Equals(User.User_ID)).ToList());
-                db.orders.RemoveRange(db.orders.Where(x => x.User_ID.Equals(User.User_ID)).ToList());
-                db.carts.RemoveRange(db.carts.Where(x=>x.User_ID.Equals(User.User_ID)).ToList());
-                db.users.Remove(User);
+                //db.delivery_address.RemoveRange(db.delivery_address.Where(x => x.User_ID.Equals(User.User_ID)).ToList());
+                //db.billing_address.RemoveRange(db.billing_address.Where(x => x.User_ID.Equals(User.User_ID)).ToList());
+                //db.orders.RemoveRange(db.orders.Where(x => x.User_ID.Equals(User.User_ID)).ToList());
+                //db.carts.RemoveRange(db.carts.Where(x=>x.User_ID.Equals(User.User_ID)).ToList());
+                //db.users.Remove(User);
+                User.User_Username = User.User_Username;
+                User.User_Password = User.User_Password;
+                User.Confirm_Password = User.User_Password;
+                User.User_FirstName = User.User_FirstName;
+                User.User_LastName = User.User_LastName;
+                User.User_Email = User.User_Email;
+                User.User_ContactNo = User.User_ContactNo;
+                User.User_DOB = User.User_DOB;
+                User.User_Type = User.User_Type;
+                User.is_Active = 0;
+                db.Entry(User).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
+
                 if (Session["User_Type"].ToString() == "Customer")
                 {
                     return RedirectToAction("User_Logout");

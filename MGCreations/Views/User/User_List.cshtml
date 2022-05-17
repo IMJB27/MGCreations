@@ -34,41 +34,53 @@
                 <th>
                     @Html.DisplayNameFor(model => model.User_Type)
                 </th>
-                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.is_Active)
+                </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User_Username)
-                    </td>
-                   
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User_FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User_LastName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User_Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User_ContactNo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User_DOB)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.User_Type)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Update_User", new { u_id = item.User_ID }) |
-                        @Html.ActionLink("Details", "User_Details", new { u_id = item.User_ID }) |
-                        @Html.ActionLink("Delete", "Delete_User", new { u_id = item.User_ID })
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_Username)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_ContactNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_DOB)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_Type)
+                </td>
+                
+                    @if (item.is_Active == 1)
+                     {
+                        <td>Yes</td>
+                     }
+                     else
+                     {
+                          <td>No</td>
+                     }
+                    }
+                <td>
+                    @Html.ActionLink("Edit", "Update_User", new { u_id = item.User_ID }) |
+                    @Html.ActionLink("Details", "User_Details", new { u_id = item.User_ID }) |
+                    @Html.ActionLink("Delete", "Delete_User", new { u_id = item.User_ID })
+                </td>
+            </tr>
             }
 
         </tbody>

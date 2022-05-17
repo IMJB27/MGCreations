@@ -18,6 +18,19 @@
             @Html.DisplayFor(model => model.Category_Name)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.is_Active)
+        </dt>
+
+        @if (Model.is_Active == 1)
+        {
+            <dd>Yes</dd>
+        }
+        else
+        {
+            <dd>No</dd>
+        }
+
     </dl>
 </div>
 <p>

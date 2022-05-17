@@ -68,6 +68,7 @@
           <Property Name="Product_Quantity" Type="int" Nullable="false" />
           <Property Name="Product_Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="isPersonalisable" Type="tinyint" Nullable="false" />
+          <Property Name="is_Active" Type="tinyint" />
         </EntityType>
         <EntityType Name="product_category">
           <Key>
@@ -75,6 +76,7 @@
           </Key>
           <Property Name="Category_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Category_Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="is_Active" Type="tinyint" />
         </EntityType>
         <EntityType Name="product_images">
           <Key>
@@ -99,6 +101,7 @@
           <Property Name="User_ContactNo" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="User_DOB" Type="date" Nullable="false" />
           <Property Name="User_Type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="is_Active" Type="tinyint" />
         </EntityType>
         <Association Name="Billing_Address1">
           <End Role="billing_address" Type="Self.billing_address" Multiplicity="1" />
@@ -349,6 +352,7 @@
           <Property Name="Product_Quantity" Type="Int32" Nullable="false" />
           <Property Name="Product_Price" Type="Decimal" Nullable="false" />
           <Property Name="isPersonalisable" Type="SByte" Nullable="false" />
+          <Property Name="is_Active" Type="SByte" />
           <NavigationProperty Name="carts" Relationship="Self.Products" FromRole="product" ToRole="cart" />
           <NavigationProperty Name="product_category" Relationship="Self.Product_Category1" FromRole="product" ToRole="product_category" />
           <NavigationProperty Name="product_images" Relationship="Self.Product_ID" FromRole="product" ToRole="product_images" />
@@ -359,6 +363,7 @@
           </Key>
           <Property Name="Category_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Category_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="is_Active" Type="SByte" />
           <NavigationProperty Name="products" Relationship="Self.Product_Category1" FromRole="product_category" ToRole="product" />
         </EntityType>
         <EntityType Name="product_images">
@@ -385,6 +390,7 @@
           <Property Name="User_ContactNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="User_DOB" Type="DateTime" Nullable="false" />
           <Property Name="User_Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="is_Active" Type="SByte" />
           <NavigationProperty Name="billing_address" Relationship="Self.User_Billing_Address" FromRole="users" ToRole="billing_address" />
           <NavigationProperty Name="carts" Relationship="Self.User_Cart" FromRole="users" ToRole="cart" />
           <NavigationProperty Name="delivery_address" Relationship="Self.User_Delivery_Address" FromRole="users" ToRole="delivery_address" />
@@ -632,6 +638,7 @@
                 <ScalarProperty Name="Product_Quantity" ColumnName="Product_Quantity" />
                 <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
                 <ScalarProperty Name="isPersonalisable" ColumnName="isPersonalisable" />
+                <ScalarProperty Name="is_Active" ColumnName="is_Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -640,6 +647,7 @@
               <MappingFragment StoreEntitySet="product_category">
                 <ScalarProperty Name="Category_ID" ColumnName="Category_ID" />
                 <ScalarProperty Name="Category_Name" ColumnName="Category_Name" />
+                <ScalarProperty Name="is_Active" ColumnName="is_Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -666,6 +674,7 @@
                 <ScalarProperty Name="User_ContactNo" ColumnName="User_ContactNo" />
                 <ScalarProperty Name="User_DOB" ColumnName="User_DOB" />
                 <ScalarProperty Name="User_Type" ColumnName="User_Type" />
+                <ScalarProperty Name="is_Active" ColumnName="is_Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

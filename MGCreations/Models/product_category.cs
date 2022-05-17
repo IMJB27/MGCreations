@@ -13,6 +13,7 @@ namespace MGCreations.Models
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class product_category
     {
@@ -28,6 +29,13 @@ namespace MGCreations.Models
         [DisplayName("Category Name")]
         public string Category_Name { get; set; }
 
+        public Nullable<sbyte> is_Active { get; set; }
+        [NotMapped]
+        public bool isActiveBool
+        {
+            get { return is_Active > 0; }
+            set { is_Active = (sbyte)(value ? 1 : 0); }
+        }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<product> products { get; set; }
     }

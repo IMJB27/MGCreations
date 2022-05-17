@@ -37,7 +37,20 @@
                                 <div>
                                     £ @Html.DisplayFor(modelItem => item.Product_Price)
                                 </div>
-                               
+                                @if ((Session["User_Type"] != null) && (Session["User_Type"].ToString() == "Admin"))
+                                {
+
+                                    
+                                    if (item.is_Active == 1)
+                                    {
+                                        <div>Is Active: Yes</div>
+                                    }
+                                    else
+                                    {
+                                        <div>Is Active: No</div>
+                                    }
+
+                                }
                             </button>
                         </div>
                         }

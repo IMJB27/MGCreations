@@ -16,7 +16,23 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Product_List()
         {
-            return View(db.products.ToList());
+            List<product> product_List = new List<product>();
+            if (Session["User_Type"] != null)
+            {
+                if (Session["User_Type"].ToString() == "Admin")
+                {
+                    product_List = db.products.ToList();
+                }
+                else
+                {
+                    product_List = db.products.Where(x => x.is_Active == 1).ToList();
+                }
+            }
+            else
+            {
+                product_List = db.products.Where(x => x.is_Active == 1).ToList();
+            }
+            return View(product_List);
         }
 
         [HttpGet]
@@ -66,7 +82,7 @@ namespace MGCreations.Controllers
                     Product.Product_Quantity = product_Details.Product_Quantity;
                     Product.Product_Price = product_Details.Product_Price;
                     Product.isPersonalisable = product_Details.isPersonalisable;
-
+                    Product.is_Active = 1;
                     db.products.Add(Product);
                     db.SaveChanges();
                     ModelState.Clear();
@@ -126,7 +142,7 @@ namespace MGCreations.Controllers
                     Product.Product_Quantity = product_Details.Product_Quantity;
                     Product.Product_Price = product_Details.Product_Price;
                     Product.isPersonalisable = product_Details.isPersonalisable;
-
+                    Product.is_Active = product_Details.is_Active;
                     db.Entry(product_Details).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Product_List");
@@ -177,9 +193,8 @@ namespace MGCreations.Controllers
                 try
                 {
                     product Product = db.products.Find(p_id);
-                    List<product_images> product_Images_List = Get_Product_Images(p_id);
-                    db.product_images.RemoveRange(product_Images_List);
-                    db.products.Remove(Product);
+                    Product.is_Active = 0;
+                    db.Entry(Product).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Product_List");
                 }
@@ -253,7 +268,7 @@ namespace MGCreations.Controllers
         [HttpGet]
         public List<product_category> Get_Categories()
         {
-            List<product_category> Category_List = db.product_category.ToList<product_category>();
+            List<product_category> Category_List = db.product_category.Where(x => x.is_Active == 1).ToList<product_category>();
             TempData["Category_List"] = new SelectList(Category_List, "Category_ID", "Category_Name");
             return Category_List;                  
         }

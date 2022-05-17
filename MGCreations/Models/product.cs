@@ -56,7 +56,13 @@ namespace MGCreations.Models
             get { return isPersonalisable > 0; }
             set { isPersonalisable = (sbyte)(value ? 1 : 0); }
         }
-
+        public Nullable<sbyte> is_Active { get; set; }
+        [NotMapped]
+        public bool isActiveBool
+        {
+            get { return is_Active > 0; }
+            set { is_Active = (sbyte)(value ? 1 : 0); }
+        }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cart> carts { get; set; }
         public virtual product_category product_category { get; set; }

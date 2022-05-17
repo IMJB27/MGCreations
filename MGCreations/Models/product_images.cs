@@ -27,11 +27,11 @@ namespace MGCreations.Models
         [DataType(DataType.ImageUrl)]
         public string Product_Image_URL { get; set; }
 
-      
+
         [DisplayName("Image Name")]
         public string Product_Image_Name { get; set; }
 
-      
+
         [DisplayName("Personalisable")]
         public Nullable<sbyte> isPersonalisable { get; set; }
 

@@ -31,14 +31,14 @@ namespace MGCreations.Models
         public int User_ID { get; set; }
 
         [Required(ErrorMessage = "This field is Required")]
-        [RegularExpression(@"^[A-Za-z][A-Za-z0-9_]{2,30}$", ErrorMessage ="Username must be between 3 to 30 in length<br/>"+
+        [RegularExpression(@"^[A-Za-z][A-Za-z0-9_]{2,30}$", ErrorMessage = "Username must be between 3 to 30 in length<br/>" +
                                                                            "First letter must be an Alphabet")]
         [DisplayName("Username")]
         public string User_Username { get; set; }
 
         [Required(ErrorMessage = "This field is Required")]
         [DisplayName("Password")]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$", ErrorMessage = "At least one upper case letter<br/>"+
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$", ErrorMessage = "At least one upper case letter<br/>" +
                                                                                                                    "At least one lower case letter<br/>" +
                                                                                                                    "At least one Number<br/>" +
                                                                                                                    "At least one special character @, $, !, %, *, ?, & <br/>" +
@@ -48,7 +48,7 @@ namespace MGCreations.Models
 
 
         [NotMapped]
-     
+
         [DisplayName("Confirm Password")]
         [Compare("User_Password", ErrorMessage = "The password and confirmation password do not match.")]
         [DataType(DataType.Password)]
@@ -86,6 +86,14 @@ namespace MGCreations.Models
         [NotMapped]
         public bool User_RememberMe { get; set; }
 
+        public Nullable<sbyte> is_Active { get; set; }
+        
+        [NotMapped]
+        public bool isActiveBool
+        {
+            get { return is_Active > 0; }
+            set { is_Active = (sbyte)(value ? 1 : 0); }
+        }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<billing_address> billing_address { get; set; }

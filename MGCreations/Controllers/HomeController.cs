@@ -17,7 +17,23 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View(db.products.ToList());
+            List<product> product_List = new List<product>();
+            if (Session["User_Type"] != null)
+            {
+                if (Session["User_Type"].ToString() == "Admin")
+                {
+                    product_List = db.products.ToList();
+                }
+                else
+                {
+                    product_List = db.products.Where(x => x.is_Active == 1).ToList();
+                }
+            }
+            else
+            {
+                product_List = db.products.Where(x => x.is_Active == 1).ToList();
+            }
+            return View(product_List);
         }
         [HttpGet]
         public ActionResult About()

@@ -21,7 +21,7 @@ namespace MGCreations.Models
         {
             this.orders = new HashSet<order>();
         }
-    
+
         public int Billing_Address_ID { get; set; }
         public int User_ID { get; set; }
 
@@ -46,7 +46,7 @@ namespace MGCreations.Models
         [Required(ErrorMessage = "This Field is Required")]
         [DisplayName("Postcode")]
         public string Billing_Address_Postcode { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> orders { get; set; }
         public virtual user user { get; set; }

@@ -16,6 +16,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Category_Name)
             </th>
+            @if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
+            {
+                <th>@Html.DisplayNameFor(model => model.is_Active)</th>
+            }
             <th></th>
         </tr>
 
@@ -27,13 +31,21 @@
         </td>
         @if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
         {
+            if (item.is_Active == 1)
+            {
+                <td>Yes</td>
+            }
+            else
+            {
+                <td>No</td>
+            }
             <td>
                 @Html.ActionLink("Edit", "Update_Product_Category", new { pc_id = item.Category_ID }) |
                 @Html.ActionLink("Details", "Product_Category_Details", new { pc_id = item.Category_ID }) |
                 @Html.ActionLink("Delete", "Delete_Product_Category", new { pc_id = item.Category_ID })
             </td>
         }
-        </tr>
+    </tr>
         }
 
     </table>

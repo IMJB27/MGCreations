@@ -51,7 +51,21 @@
         <dd>
             @Html.DisplayFor(model => model.isPersonalisable)
         </dd>
+        @if ((Session["User_Type"] != null) && (Session["User_Type"].ToString() == "Admin"))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.is_Active)
+            </dt>
 
+            if (Model.is_Active == 1)
+            {
+                <dd>Yes</dd>
+            }
+            else
+            {
+                <dd>No</dd>
+            }
+        }
         <dt>
             @Html.DisplayNameFor(model => model.product_category.Category_Name)
         </dt>
