@@ -158,6 +158,5 @@ namespace MGCreations.Controllers
             db.SaveChanges();
             return RedirectToAction("Product_Category_List");
         }
-
     }
 }

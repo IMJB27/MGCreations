@@ -210,52 +210,7 @@ namespace MGCreations.Controllers
             }  
         }
 
-
-        [HttpPost]
-        public ActionResult AddToCart(int p_id, string Quantity)
-        {
-            product Product = db.products.Find(p_id);
-            if (Session["User_ID"] == null)
-            {
-                return RedirectToAction("User_Login", "User");
-            }
-            else
-            {
-                try
-                {
-                    int userid = Convert.ToInt32(Session["User_ID"].ToString());
-                    cart Cart = new cart();
-                    if ((db.carts.Any(x => x.User_ID == userid && x.Product_ID == p_id && x.Cart_Status.Equals(1))))
-                    {   
-                        Cart = db.carts.Single(x => x.User_ID == userid && x.Product_ID == p_id);
-                        Cart.Product_Quantity = Cart.Product_Quantity + Convert.ToInt32(Quantity);
-                        Cart.Cart_Total = Product.Product_Price * Cart.Product_Quantity;
-
-                        db.Entry(Cart).State = System.Data.Entity.EntityState.Modified;
-                    }
-                    else
-                    {
-                        Cart.User_ID = Convert.ToInt32(Session["User_ID"].ToString());
-                        Cart.Product_ID = Product.Product_ID;
-                        Cart.Product_Quantity = Convert.ToInt32(Quantity);
-                        Cart.Product_Price = Product.Product_Price;
-                        Cart.Cart_Total = Product.Product_Price * Convert.ToInt32(Quantity);
-                        Cart.Cart_Status = 1;
-
-                        db.carts.Add(Cart);    
-                    }
-                    db.SaveChanges();
-                    Response.Write("<script>alert('" + Product.Product_Name + " Added to Cart!');</script>");
-
-                }
-                catch (Exception ex)
-                {
-                    Response.Write("<script>alert('" + ex.Message + "');</script>");
-                }
-                return RedirectToAction("View_Product_Details", "Product", new { p_id = Product.Product_ID });
-            }
-        }
-
+        
 
         [HttpGet]
         public List<product_images> Get_Product_Images(int p_id)

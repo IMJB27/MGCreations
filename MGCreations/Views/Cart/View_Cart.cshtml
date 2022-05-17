@@ -32,10 +32,10 @@ else
                         @Html.DisplayNameFor(model => model.product.Product_Name)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Product_Quantity)
+                        @Html.DisplayNameFor(model => model.Cart_Quantity)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Product_Price)
+                        @Html.DisplayNameFor(model => model.product.Product_Price)
                     </th>
                 </tr>
             </thead>
@@ -48,11 +48,11 @@ else
                             @Html.DisplayFor(modelItem => item.product.Product_Name)
                         </td>
                         <td>
-                            <input type="number" class="form-control Quantity" value="@item.Product_Quantity" data-id="@item.Cart_ID" id="Quantity" name="Quantityof-@item.product.Product_Name" min="1" max="@productController.Get_Product_Quantity(item.Product_ID)" />
+                            <input type="number" class="form-control Quantity" value="@item.Cart_Quantity" data-id="@item.Cart_ID" id="Quantity" name="Quantityof-@item.product.Product_Name" min="1" max="@productController.Get_Product_Quantity(item.Product_ID)" />
 
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Product_Price)
+                            @Html.DisplayFor(modelItem => item.product.Product_Price)
                         </td>
 
                         <td>
@@ -82,7 +82,7 @@ else
             </tbody>
         </table>
     </div>
-    using (Html.BeginForm("Checkout", "Cart", FormMethod.Post))
+    using (Html.BeginForm("Place_Order", "Order", FormMethod.Post))
     {
         @Html.AntiForgeryToken();
         <div class="container-fluid py-4">

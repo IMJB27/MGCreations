@@ -101,7 +101,7 @@ namespace MGCreations.Controllers
                 product Product = db.products.Where(x => x.Product_ID.Equals(item.Product_ID)).SingleOrDefault();
                 string Name = Product.Product_Name;
                 decimal Price = Product.Product_Price;
-                int Quantity = item.Product_Quantity;
+                int Quantity = item.Cart_Quantity;
                 int Sku = Product.Product_ID;
                 itemList.items.Add(new Item()
                 {

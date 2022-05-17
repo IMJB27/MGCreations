@@ -13,48 +13,11 @@ namespace MGCreations.Controllers
     {
         mgcreationsEntities db = new mgcreationsEntities();
         CartController cartController = new CartController();
-    
-        [HttpGet]
-        public ActionResult Order_Confirmation()
-        {
-            if (Session["User_ID"] == null)
-            {
-                return RedirectToAction("User_Login", "User");
-            }
-            else if (TempData["OrderReference"] == null)
-            {
-                return HttpNotFound();
-            }
-            else
-            {
-                int userid = Convert.ToInt32(Session["User_ID"].ToString());
-                var Order = GetOrders().Where(x => x.Order.Order_Reference_No.Equals(TempData["OrderReference"]) && x.User.User_ID.Equals(userid)).ToList();
-                TempData.Keep();
-                TempData.Remove("DeliveryAddressID");
-                TempData.Remove("DeliveryAddress");
-                TempData.Remove("BillingAddress");
-                TempData.Remove("BillingAddressID");
-                return View(Order);
-            }
-        }
 
-        [HttpGet]
-        public ActionResult View_Order_Details(int? o_id)
-        {
-            if (Session["User_ID"] == null)
-            {
-                return RedirectToAction("User_Login", "User");
-            }
-            else
-            {
-                int userid = Convert.ToInt32(Session["User_ID"].ToString());
-                JoinModel Order = GetOrders().Where(x => x.Order.Order_ID.Equals(o_id)).SingleOrDefault();
+        
 
-                return View(Order);
-            }
-        }
-
-        [HttpGet]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Place_Order()
         {
             if (Session["User_ID"] == null)
@@ -123,7 +86,7 @@ namespace MGCreations.Controllers
                     db.Entry(item).State = System.Data.Entity.EntityState.Modified;
                     product Product = db.products.Find(item.Product_ID);
 
-                    Product.Product_Quantity = Product.Product_Quantity - item.Product_Quantity;
+                    Product.Product_Quantity = Product.Product_Quantity - item.Cart_Quantity;
                     db.Entry(Product).State = System.Data.Entity.EntityState.Modified;
                 }
 
@@ -140,6 +103,30 @@ namespace MGCreations.Controllers
         }
 
         [HttpGet]
+        public ActionResult Order_Confirmation()
+        {
+            if (Session["User_ID"] == null)
+            {
+                return RedirectToAction("User_Login", "User");
+            }
+            else if (TempData["OrderReference"] == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                int userid = Convert.ToInt32(Session["User_ID"].ToString());
+                var Order = GetOrders().Where(x => x.Order.Order_Reference_No.Equals(TempData["OrderReference"]) && x.User.User_ID.Equals(userid)).ToList();
+                TempData.Keep();
+                TempData.Remove("DeliveryAddressID");
+                TempData.Remove("DeliveryAddress");
+                TempData.Remove("BillingAddress");
+                TempData.Remove("BillingAddressID");
+                return View(Order);
+            }
+        }
+
+        [HttpGet]
         public ActionResult View_Order_List()
         {
             if (Session["User_ID"] == null)
@@ -152,9 +139,24 @@ namespace MGCreations.Controllers
             }
             else
             {
-                var test = GetOrders();
-                int count = test.Count();
-                return View(test);
+                var orders = GetOrders();
+                return View(orders);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult View_Order_Details(int? o_id)
+        {
+            if (Session["User_ID"] == null)
+            {
+                return RedirectToAction("User_Login", "User");
+            }
+            else
+            {
+                int userid = Convert.ToInt32(Session["User_ID"].ToString());
+                JoinModel Order = GetOrders().Where(x => x.Order.Order_ID.Equals(o_id)).SingleOrDefault();
+
+                return View(Order);
             }
         }
 

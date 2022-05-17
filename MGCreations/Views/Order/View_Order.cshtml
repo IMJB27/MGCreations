@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MGCreations.Models.order>
+@using MGCreations.Models
+
+@{
+    ViewBag.Title = "View_Order";
+    mgcreationsEntities db = new mgcreationsEntities();
+    decimal OrderTotalAmount = 0;
+    TempData.Keep();
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <h2>Order Confirmed</h2>
+                            </center>
+                        </div>
+                        <div class="col">
+                            <Center>
+                                <h3>
+                                    Order Reference Number:  @TempData["OrderReference"].ToString()
+
+                                </h3>
+                            </Center>
+                        </div>
+                    </div>
+
+                    @foreach (var item in Model)
+                    {
+
+                        product Product = db.products.Where(x => x.Product_ID.Equals(item.cart.Product_ID)).SingleOrDefault();
+                        <div>
+                            @Product.Product_Name
+                            </div>
+                            <div>
+                            @Product.Product_Price
+                            @item.cart.Product_Quantity
+                        </div>
+
+
+                        OrderTotalAmount = item.Order_TotalAmount;
+
+                        @Html.DisplayFor(modelItem => item.Order_Status)
+
+
+
+                        @Html.DisplayFor(modelItem => item.billing_address.Billing_Address_Line1)
+
+
+
+                        @Html.DisplayFor(modelItem => item.delivery_address.Delivery_Address_Line1)
+                    }
+
+                    <div> @OrderTotalAmount.ToString()</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

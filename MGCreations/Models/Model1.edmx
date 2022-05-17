@@ -25,8 +25,7 @@
           <Property Name="Cart_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="User_ID" Type="int" Nullable="false" />
           <Property Name="Product_ID" Type="int" Nullable="false" />
-          <Property Name="Product_Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="Product_Quantity" Type="int" Nullable="false" />
+          <Property Name="Cart_Quantity" Type="int" Nullable="false" />
           <Property Name="Cart_Total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Cart_Status" Type="tinyint" Nullable="false" />
         </EntityType>
@@ -300,8 +299,7 @@
           <Property Name="Cart_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="User_ID" Type="Int32" Nullable="false" />
           <Property Name="Product_ID" Type="Int32" Nullable="false" />
-          <Property Name="Product_Price" Type="Decimal" Nullable="false" />
-          <Property Name="Product_Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Cart_Quantity" Type="Int32" Nullable="false" />
           <Property Name="Cart_Total" Type="Decimal" Nullable="false" />
           <Property Name="Cart_Status" Type="SByte" Nullable="false" />
           <NavigationProperty Name="orders" Relationship="Self.Cart1" FromRole="cart" ToRole="order" />
@@ -592,8 +590,7 @@
                 <ScalarProperty Name="Cart_ID" ColumnName="Cart_ID" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
-                <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
-                <ScalarProperty Name="Product_Quantity" ColumnName="Product_Quantity" />
+                <ScalarProperty Name="Cart_Quantity" ColumnName="Cart_Quantity" />
                 <ScalarProperty Name="Cart_Total" ColumnName="Cart_Total" />
                 <ScalarProperty Name="Cart_Status" ColumnName="Cart_Status" />
               </MappingFragment>

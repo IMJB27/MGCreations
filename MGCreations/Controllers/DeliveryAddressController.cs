@@ -96,9 +96,7 @@ namespace MGCreations.Controllers
             return RedirectToAction("View_Cart", "Cart");
         }
 
-
         [HttpPost]
-       
         public ActionResult GetDeliveryAddress()
         {
            delivery_address Address = TempData["DeliveryAddress"] as delivery_address;
@@ -116,60 +114,6 @@ namespace MGCreations.Controllers
             };
 
             return Json(jsonresult);
-        }
-
-        [HttpGet]
-        public ActionResult Address_List()
-        {
-            if (Session["User_ID"] == null)
-            {
-                return HttpNotFound();
-            }
-            else
-            {
-                int UserID = Convert.ToInt32(Session["User_ID"]);
-
-                List<delivery_address> address = db.delivery_address.Where(x => x.User_ID.Equals(UserID)).ToList();
-
-                return View(address);
-            }
-        }
-
-        [HttpGet]
-        public ActionResult Delete_Address(int? a_id)
-        {
-            if (Session["User_ID"] == null)
-            {
-                return RedirectToAction("User_Login");
-            }
-            else
-            {
-                if (a_id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-
-                delivery_address Address = db.delivery_address.Find(a_id);
-
-                if (Address == null)
-                {
-                    return HttpNotFound();
-                }
-
-                return View(Address);
-            }
-        }
-
-        [HttpPost, ActionName("Delete_Address")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int da_id)
-        {
-            delivery_address delivery_Address = db.delivery_address.Find(da_id);
-            {
-                db.delivery_address.Remove(delivery_Address);
-                db.SaveChanges();
-                return Redirect("~/Home/Index");
-            }
         }
 
     }

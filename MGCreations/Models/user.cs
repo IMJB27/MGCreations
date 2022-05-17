@@ -87,7 +87,7 @@ namespace MGCreations.Models
         public bool User_RememberMe { get; set; }
 
         public Nullable<sbyte> is_Active { get; set; }
-        
+
         [NotMapped]
         public bool isActiveBool
         {

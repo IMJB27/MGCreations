@@ -128,6 +128,7 @@ namespace MGCreations.Controllers
                     {
                         u.User_Type = User.User_Type;
                     }
+                    u.is_Active = 1;
                     db.users.Add(u);
                     db.SaveChanges();
                     ModelState.Clear();
@@ -158,64 +159,6 @@ namespace MGCreations.Controllers
             }
         }
 
-        public static String getSHA256(String data)
-        {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                // ComputeHash - returns byte array  
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(data));
-
-                // Convert byte array to a string   
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
-        }
-
-        private string ToUpperCase(string str)
-        {
-            if(str.Equals(null))
-            {
-                return string.Empty;
-            }
-            return char.ToUpper(str[0]) + str.Substring(1);
-        }
-        
-        private string CheckData(user User)
-        {
-
-            int countUserName = db.users.Where(x => x.User_Username.Equals(User.User_Username)).Count();
-            
-            int countEmail = db.users.Where(x => x.User_Email.Equals(User.User_Email)).Count();
-            int countContactNo = db.users.Where(x => x.User_ContactNo.Equals(User.User_ContactNo)).Count();
-            string ErrorMessage = "" ;
-
-            if (get_age(User.User_DOB) < 16)
-            {
-                ErrorMessage = ErrorMessage + "Must be 16" + Environment.NewLine;
-            }
-
-            if (countUserName > 0)
-            {
-                ErrorMessage = ErrorMessage + "Username Already Exist" + Environment.NewLine;
-            }
-            if(countEmail > 0)
-            {
-               
-                    ErrorMessage = ErrorMessage + "Email Already Exist" + Environment.NewLine;
-                
-            }
-            if(countContactNo > 0)
-            {
-                ErrorMessage = ErrorMessage  + "Contact Number Already Exist";
-            }
-    
-            return ErrorMessage;
-        }
-
         [HttpGet]
         public ActionResult User_Logout()
         {
@@ -226,9 +169,7 @@ namespace MGCreations.Controllers
             return Redirect("~/Home/Index");
         }
 
-
         [HttpGet]
-     
         public ActionResult User_List()
         {
             if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
@@ -402,11 +343,6 @@ namespace MGCreations.Controllers
             }
             else
             {
-                //db.delivery_address.RemoveRange(db.delivery_address.Where(x => x.User_ID.Equals(User.User_ID)).ToList());
-                //db.billing_address.RemoveRange(db.billing_address.Where(x => x.User_ID.Equals(User.User_ID)).ToList());
-                //db.orders.RemoveRange(db.orders.Where(x => x.User_ID.Equals(User.User_ID)).ToList());
-                //db.carts.RemoveRange(db.carts.Where(x=>x.User_ID.Equals(User.User_ID)).ToList());
-                //db.users.Remove(User);
                 User.User_Username = User.User_Username;
                 User.User_Password = User.User_Password;
                 User.Confirm_Password = User.User_Password;
@@ -441,6 +377,7 @@ namespace MGCreations.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Admin_Dashboard(user user1)
@@ -448,8 +385,65 @@ namespace MGCreations.Controllers
             return View();
         }
 
-        [HttpGet]
-        public int get_age(DateTime dob)
+        //private static string getSHA256(string data)
+        //{
+        //    using (SHA256 sha256Hash = SHA256.Create())
+        //    {
+        //        // ComputeHash - returns byte array  
+        //        byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(data));
+
+        //        // Convert byte array to a string   
+        //        StringBuilder builder = new StringBuilder();
+        //        for (int i = 0; i < bytes.Length; i++)
+        //        {
+        //            builder.Append(bytes[i].ToString("x2"));
+        //        }
+        //        return builder.ToString();
+        //    }
+        //}
+
+        private string ToUpperCase(string str)
+        {
+            if (str.Equals(null))
+            {
+                return string.Empty;
+            }
+            return char.ToUpper(str[0]) + str.Substring(1);
+        }
+
+        private string CheckData(user User)
+        {
+
+            int countUserName = db.users.Where(x => x.User_Username.Equals(User.User_Username)).Count();
+
+            int countEmail = db.users.Where(x => x.User_Email.Equals(User.User_Email)).Count();
+            int countContactNo = db.users.Where(x => x.User_ContactNo.Equals(User.User_ContactNo)).Count();
+            string ErrorMessage = "";
+
+            if (get_age(User.User_DOB) < 16)
+            {
+                ErrorMessage = ErrorMessage + "Must be 16" + Environment.NewLine;
+            }
+
+            if (countUserName > 0)
+            {
+                ErrorMessage = ErrorMessage + "Username Already Exist" + Environment.NewLine;
+            }
+            if (countEmail > 0)
+            {
+
+                ErrorMessage = ErrorMessage + "Email Already Exist" + Environment.NewLine;
+
+            }
+            if (countContactNo > 0)
+            {
+                ErrorMessage = ErrorMessage + "Contact Number Already Exist";
+            }
+
+            return ErrorMessage;
+        }
+
+        private int get_age(DateTime dob)
         {
             DateTime today = DateTime.Today;
 

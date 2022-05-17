@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4438c32a7c3745e28af3469b101c0dbc" Name="Diagram1">
+      <Diagram DiagramId="880085dfa1ec4022a9f3d6e24bce2150" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="mgcreationsModel.billing_address" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.cart" Width="1.5" PointX="7.875" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.delivery_address" Width="1.5" PointX="3.125" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.order" Width="1.5" PointX="7.75" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.product" Width="1.5" PointX="3" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.cart" Width="1.5" PointX="5.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.delivery_address" Width="1.5" PointX="0.625" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.order" Width="1.5" PointX="7.625" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.product" Width="1.5" PointX="3.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="mgcreationsModel.product_category" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.product_images" Width="1.5" PointX="5.625" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mgcreationsModel.user" Width="1.5" PointX="0.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.product_images" Width="1.5" PointX="5.625" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="mgcreationsModel.user" Width="1.5" PointX="0.5" PointY="3.5" IsExpanded="true" />
         <AssociationConnector Association="mgcreationsModel.Billing_Address1" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.User_Billing_Address" ManuallyRouted="false" />
         <AssociationConnector Association="mgcreationsModel.Cart1" ManuallyRouted="false" />

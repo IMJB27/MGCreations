@@ -20,7 +20,6 @@ namespace MGCreations.Controllers
         [HttpGet]
         public ActionResult Add_Product_Images(int? p_id)
         {
-
             if ((Session["User_ID"] != null) && (Session["User_Type"].ToString() == "Admin"))
             {
                 if (p_id == null)

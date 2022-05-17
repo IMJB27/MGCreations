@@ -23,8 +23,7 @@ namespace MGCreations.Models
         public int Cart_ID { get; set; }
         public int User_ID { get; set; }
         public int Product_ID { get; set; }
-        public decimal Product_Price { get; set; }
-        public int Product_Quantity { get; set; }
+        public int Cart_Quantity { get; set; }
         public decimal Cart_Total { get; set; }
         public sbyte Cart_Status { get; set; }
     
