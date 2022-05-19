@@ -11,37 +11,15 @@ namespace MGCreations.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class product_images
     {
         public int Product_Images_ID { get; set; }
-
-        [Required(ErrorMessage = "This Field is Important")]
-        [DisplayName("Product")]
         public int Product_ID { get; set; }
-
-        [DisplayName("Select Pictures")]
-        [DataType(DataType.ImageUrl)]
-        public string Product_Image_URL { get; set; }
-
-
-        [DisplayName("Image Name")]
         public string Product_Image_Name { get; set; }
-
-
-        [DisplayName("Personalisable")]
+        public string Product_Image_URL { get; set; }
         public Nullable<sbyte> isPersonalisable { get; set; }
-
-        [NotMapped]
-        public bool isPersonalisableBool
-        {
-            get { return isPersonalisable > 0; }
-            set { isPersonalisable = (sbyte)(value ? 1 : 0); }
-        }
-
+    
         public virtual product product { get; set; }
     }
 }

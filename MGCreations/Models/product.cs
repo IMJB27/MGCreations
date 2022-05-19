@@ -11,10 +11,7 @@ namespace MGCreations.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,46 +20,16 @@ namespace MGCreations.Models
             this.carts = new HashSet<cart>();
             this.product_images = new HashSet<product_images>();
         }
-
+    
         public int Product_ID { get; set; }
-
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("Product Name")]
         public string Product_Name { get; set; }
-
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("Choose Category")]
         public int Category_ID { get; set; }
-
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("Product Description")]
         public string Product_Description { get; set; }
-
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("Quantity")]
         public int Product_Quantity { get; set; }
-
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("Price")]
         public decimal Product_Price { get; set; }
-
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("Personalisable")]
         public sbyte isPersonalisable { get; set; }
-
-        [NotMapped]
-        public bool isPersonalisableBool
-        {
-            get { return isPersonalisable > 0; }
-            set { isPersonalisable = (sbyte)(value ? 1 : 0); }
-        }
         public Nullable<sbyte> is_Active { get; set; }
-        [NotMapped]
-        public bool isActiveBool
-        {
-            get { return is_Active > 0; }
-            set { is_Active = (sbyte)(value ? 1 : 0); }
-        }
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<cart> carts { get; set; }
         public virtual product_category product_category { get; set; }
