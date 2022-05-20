@@ -46,7 +46,7 @@ namespace MGCreations.Controllers
             {
                 try
                 {
-                    string filePath = Upload_Image(Image_Path);
+                    string filePath = Upload_Image(Image_Path, product_Images.Product_Image_Name);
                     if(filePath == null)
                     {
                         ViewBag.Error = "Error While Uploading Image";
@@ -75,10 +75,10 @@ namespace MGCreations.Controllers
             }
         }
 
-        public string Upload_Image(HttpPostedFileBase Image_Path)
+        public string Upload_Image(HttpPostedFileBase Image_Path, string Image_Name)
         {
             string filePath = null;
-            int count = 1;
+            
             if(Image_Path != null && Image_Path.ContentLength > 0)
             {
                 string imageExtension = Path.GetExtension(Image_Path.FileName);
@@ -86,9 +86,9 @@ namespace MGCreations.Controllers
                 {
                     try
                     {
-                        filePath = Path.Combine(Server.MapPath("~/Content/ProductImages"), TempData["Product_Name"].ToString() + count + Path.GetFileName(Image_Path.FileName));
+                        filePath = Path.Combine(Server.MapPath("~/Content/ProductImages"), TempData["Product_Name"].ToString() + Image_Name + Path.GetFileName(Image_Path.FileName));
                         Image_Path.SaveAs(filePath);
-                        filePath = "~/Content/ProductImages/" + TempData["Product_Name"].ToString() + count + Path.GetFileName(Image_Path.FileName);
+                        filePath = "~/Content/ProductImages/"+ TempData["Product_Name"].ToString() + Image_Name + Path.GetFileName(Image_Path.FileName);
                     }
                     catch (Exception ex)
                     {

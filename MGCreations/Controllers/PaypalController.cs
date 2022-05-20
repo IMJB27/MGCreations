@@ -12,6 +12,8 @@ namespace MGCreations.Controllers
     {
         mgcreationsEntities db = new mgcreationsEntities();
         CartController cartController = new CartController();
+
+
         public ActionResult PaymentWithPaypal(string Cancel = null)
         {
             //getting the apiContext  
@@ -84,9 +86,6 @@ namespace MGCreations.Controllers
         }
         private Payment CreatePayment(APIContext apiContext, string redirectUrl)
         {
-            //create itemlist and add item objects to it
-            //
-
             int UserID = Convert.ToInt32(Session["User_ID"].ToString());
 
             List<cart> carts = db.carts.Where(x => x.User_ID.Equals(UserID) && x.Cart_Status.Equals(1)).ToList();
@@ -134,9 +133,7 @@ namespace MGCreations.Controllers
                 subtotal = ordertotal.ToString()
             };
             //Final amount with details  
-
-
-            
+  
             var amount = new Amount()
             {
                 currency = "GBP",

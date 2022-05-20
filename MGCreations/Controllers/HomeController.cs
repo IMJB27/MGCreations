@@ -51,7 +51,6 @@ namespace MGCreations.Controllers
         [HttpPost] /*https://stackoverflow.com/questions/30323183/contact-us-form-asp-net-mvc */
         public async Task<ActionResult> ContactUs(String name, String email, String subject, String message)
         {
-
             if (ModelState.IsValid)
             {
                 try
@@ -85,7 +84,6 @@ namespace MGCreations.Controllers
                 }
             }
             return View();
-
         }
     }
 }

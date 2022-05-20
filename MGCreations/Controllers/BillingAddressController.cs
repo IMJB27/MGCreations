@@ -47,8 +47,6 @@ namespace MGCreations.Controllers
                     billing_Address.Billing_Address_County = ba.Billing_Address_County;
                     billing_Address.Billing_Address_Country = ba.Billing_Address_Country;
                     billing_Address.Billing_Address_Postcode = ba.Billing_Address_Postcode;
-                    
-
                     db.billing_address.Add(billing_Address);
                     db.SaveChanges();
                     TempData["BillingAddressID"] = billing_Address.Billing_Address_ID;
@@ -61,7 +59,6 @@ namespace MGCreations.Controllers
             }
             catch (Exception ex)
             {
-
                 return View();
             }
         }

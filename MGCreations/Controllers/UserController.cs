@@ -95,7 +95,7 @@ namespace MGCreations.Controllers
                 UserType.Add("Admin");
                 UserType.Add("Customer");
 
-                TempData["UserType"] = new SelectList(UserType); //new SelectList(Category_List, "Category_ID", "Category_Name");
+                TempData["UserType"] = new SelectList(UserType);
 
                 return View();
             }
@@ -140,22 +140,10 @@ namespace MGCreations.Controllers
                 }
                 return View();
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            catch (Exception ex)
             {
-                Exception raise = dbEx;
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        string message = string.Format("{0}:{1}",
-                            validationErrors.Entry.Entity.ToString(),
-                            validationError.ErrorMessage);
-                        // raise a new exception nesting  
-                        // the current instance as InnerException  
-                        raise = new InvalidOperationException(message, raise);
-                    }
-                }
-                throw raise;
+                ViewBag.Errors = ex.ToString();
+                return View();
             }
         }
 
@@ -239,7 +227,7 @@ namespace MGCreations.Controllers
                 UserType.Add("Admin");
                 UserType.Add("Customer");
 
-                TempData["UserType"] = new SelectList(UserType); //new SelectList(Category_List, "Category_ID", "Category_Name");
+                TempData["UserType"] = new SelectList(UserType);
                 return View(user1);
             }
         }
@@ -251,34 +239,29 @@ namespace MGCreations.Controllers
             try
             {
                 int UserID = Convert.ToInt32(Session["User_ID"].ToString());
-          
-                //if (db.users.Where(x => x.User_ID.Equals(UserID) && x.User_Password.Equals(User.User_Password)).Count() > 0)
+                user u = db.users.Where(x => x.User_ID.Equals(User.User_ID)).SingleOrDefault();
+                u.User_Username = User.User_Username;
+                u.User_Password = u.User_Password;
+                u.Confirm_Password = u.User_Password;
+                u.User_FirstName = User.User_FirstName;
+                u.User_LastName = User.User_LastName;
+                u.User_Email = User.User_Email;
+                u.User_ContactNo = User.User_ContactNo;
+                u.User_DOB = User.User_DOB;
+                if (Session["User_Type"].ToString() == "Admin")
                 {
-                    user u = db.users.Where(x => x.User_ID.Equals(User.User_ID)).SingleOrDefault();
-                    u.User_Username = User.User_Username;
-                    u.User_Password = u.User_Password;
-                    u.Confirm_Password = u.User_Password;
-                    u.User_FirstName = User.User_FirstName;
-                    u.User_LastName = User.User_LastName;
-                    u.User_Email = User.User_Email;
-                    u.User_ContactNo = User.User_ContactNo;
-                    u.User_DOB = User.User_DOB;
-                    if (Session["User_Type"].ToString() == "Admin")
-                    {
-                        u.User_Type = User.User_Type;
-                        u.is_Active = User.is_Active;
-                    }
-                    else
-                    {
-                        u.User_Type = "Customer";
-                        u.is_Active = 1;
-                    }
-                  
-
-                    db.Entry(u).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("User_Details", new { u_id = User.User_ID });
+                    u.User_Type = User.User_Type;
+                    u.is_Active = User.is_Active;
                 }
+                else
+                {
+                    u.User_Type = "Customer";
+                    u.is_Active = 1;
+                }
+                
+                db.Entry(u).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("User_Details", new { u_id = User.User_ID });
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
             {

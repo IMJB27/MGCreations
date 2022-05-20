@@ -12,9 +12,7 @@ namespace MGCreations.Controllers
     public class OrderController : Controller
     {
         mgcreationsEntities db = new mgcreationsEntities();
-        CartController cartController = new CartController();
-
-        
+        CartController cartController = new CartController();      
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -186,16 +184,16 @@ namespace MGCreations.Controllers
             List<billing_address> billing_addressess = db.billing_address.ToList();
 
             var Order_Details = from o in orders
-                       join u in users on o.User_ID equals u.User_ID into table1
-                       from u in table1.ToList()
-                       join da in delivery_Addresses on o.Delivery_Address_ID equals da.Delivery_Address_ID into table2
-                       from da in table2.ToList()
-                       join ba in billing_addressess on o.Billing_Address_ID equals ba.Billing_Address_ID into table3
-                       from ba in table3.ToList()
-                       join c in carts on o.Cart_ID equals c.Cart_ID into table4
-                       from c in table4.ToList()
-                       join p in products on c.Product_ID equals p.Product_ID into table5
-                       from p in table5.ToList()
+                       join u in users on o.User_ID equals u.User_ID into usertable
+                       from u in usertable.ToList()
+                       join da in delivery_Addresses on o.Delivery_Address_ID equals da.Delivery_Address_ID into deliveryaddresstable
+                       from da in deliveryaddresstable.ToList()
+                       join ba in billing_addressess on o.Billing_Address_ID equals ba.Billing_Address_ID into billingaddresstable
+                       from ba in billingaddresstable.ToList()
+                       join c in carts on o.Cart_ID equals c.Cart_ID into carttable
+                       from c in carttable.ToList()
+                       join p in products on c.Product_ID equals p.Product_ID into producttable
+                       from p in producttable.ToList()
                        select new JoinModel
                        {
                            Order = o,

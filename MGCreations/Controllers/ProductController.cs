@@ -75,7 +75,6 @@ namespace MGCreations.Controllers
                 try
                 {
                     product Product = new product();
-
                     Product.Product_Name = product_Details.Product_Name;
                     Product.Category_ID = product_Details.Category_ID;
                     Product.Product_Description = product_Details.Product_Description;
@@ -100,8 +99,7 @@ namespace MGCreations.Controllers
             else
             {
                 return View();
-            }
-            
+            }        
         }
 
         [HttpGet]
@@ -210,8 +208,6 @@ namespace MGCreations.Controllers
             }  
         }
 
-        
-
         [HttpGet]
         public List<product_images> Get_Product_Images(int p_id)
         {
@@ -223,7 +219,7 @@ namespace MGCreations.Controllers
         [HttpGet]
         public List<product_category> Get_Categories()
         {
-            List<product_category> Category_List = db.product_category.Where(x => x.is_Active == 1).ToList<product_category>();
+            List<product_category> Category_List = db.product_category.Where(x => x.is_Active == 1).ToList();
             TempData["Category_List"] = new SelectList(Category_List, "Category_ID", "Category_Name");
             return Category_List;                  
         }
