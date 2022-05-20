@@ -11,7 +11,9 @@ namespace MGCreations.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class delivery_address
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,16 +21,32 @@ namespace MGCreations.Models
         {
             this.orders = new HashSet<order>();
         }
-    
+
         public int Delivery_Address_ID { get; set; }
         public int User_ID { get; set; }
+
+        [Required(ErrorMessage = "This Field is Required")]
+        [DisplayName("Address Line 1")]
         public string Delivery_Address_Line1 { get; set; }
+
+        [DisplayName("Address Line 2")]
         public string Delivery_Address_Line2 { get; set; }
+
+        [Required(ErrorMessage = "This Field is Required")]
+        [DisplayName("City")]
         public string Delivery_Address_City { get; set; }
+
+        [DisplayName("County")]
         public string Delivery_Address_County { get; set; }
+
+        [Required(ErrorMessage = "This Field is Required")]
+        [DisplayName("Country")]
         public string Delivery_Address_Country { get; set; }
+
+        [Required(ErrorMessage = "This Field is Required")]
+        [DisplayName("Postcode")]
         public string Delivery_Address_Postcode { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> orders { get; set; }
         public virtual user user { get; set; }

@@ -11,7 +11,11 @@ namespace MGCreations.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+
     public partial class user
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,18 +26,75 @@ namespace MGCreations.Models
             this.delivery_address = new HashSet<delivery_address>();
             this.orders = new HashSet<order>();
         }
-    
+
+
         public int User_ID { get; set; }
+
+        [Required(ErrorMessage = "This field is Required")]
+        [RegularExpression(@"^[A-Za-z][A-Za-z0-9_]{2,30}$", ErrorMessage = "Username must be between 3 to 30 in length<br/>" +
+                                                                           "First letter must be an Alphabet")]
+        [DisplayName("Username")]
         public string User_Username { get; set; }
+
+        [Required(ErrorMessage = "This field is Required")]
+        [DisplayName("Password")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$", ErrorMessage = "At least one upper case letter<br/>" +
+                                                                                                                   "At least one lower case letter<br/>" +
+                                                                                                                   "At least one Number<br/>" +
+                                                                                                                   "At least one special character @, $, !, %, *, ?, & <br/>" +
+                                                                                                                   "Minimum Six Characters<br/>")]
+        [DataType(DataType.Password)]
         public string User_Password { get; set; }
+
+
+        [NotMapped]
+
+        [DisplayName("Confirm Password")]
+        [Compare("User_Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [DataType(DataType.Password)]
+        public string Confirm_Password { get; set; }
+
+        [Required(ErrorMessage = "This field is Required")]
+        [DisplayName("Firstname")]
         public string User_FirstName { get; set; }
+
+        [Required(ErrorMessage = "This field is Required")]
+        [DisplayName("Lastname")]
         public string User_LastName { get; set; }
+
+        [Required(ErrorMessage = "This field is Required")]
+        [EmailAddress(ErrorMessage = "Incorrect Email Address Format")]
+        [DisplayName("Email Address")]
         public string User_Email { get; set; }
+
+        [Required(ErrorMessage = "This field is Required")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$", ErrorMessage = "Not a valid phone number")]
+        [DisplayName("Contact Number")]
         public string User_ContactNo { get; set; }
+
+        [Required(ErrorMessage = "This field is Required")]
+        [DataType(DataType.Date, ErrorMessage = "Date only")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayName("Date of Birth")]
         public System.DateTime User_DOB { get; set; }
+
+        [Required(ErrorMessage = "This field is Required")]
+        [DisplayName("User Type")]
         public string User_Type { get; set; }
+
+        [NotMapped]
+        public bool User_RememberMe { get; set; }
+
         public Nullable<sbyte> is_Active { get; set; }
-    
+
+        [NotMapped]
+        public bool isActiveBool
+        {
+            get { return is_Active > 0; }
+            set { is_Active = (sbyte)(value ? 1 : 0); }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<billing_address> billing_address { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
